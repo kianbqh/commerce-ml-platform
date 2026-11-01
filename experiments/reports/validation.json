@@ -1,0 +1,22 @@
+{
+  "executed_notebook_cells": 6,
+  "notebook_errors": 0,
+  "consistency_checks": "fixed tests, absolute/relative bootstrap CIs, CUPED, sequential replay",
+  "figures": {
+    "cuped_spend_ci.png": [
+      840,
+      420
+    ],
+    "msprt_visit.png": [
+      840,
+      420
+    ]
+  },
+  "sha256": {
+    "reports/results.json": "3a12ea1746ea0fc0a708078814d0ee1d4c9985f57f129a63f2fb387823abfb27",
+    "notebooks/ab_test_readout.ipynb": "cc2b718c8ddfdbac43f64bee423c29986d7bdaa03585cf6684ecb3dd3efb7bfe",
+    "notebooks/ab_test_readout.html": "01a0c8d984aa605d3046299a2bec1b51c5d3f1f54a84ded84f221e0dae72986e",
+    "reports/figures/cuped_spend_ci.png": "cd4d1182d91c0a04a2b699a99ec4b86723057b1d4878a63c2a2d0458573bfa84",
+    "reports/figures/msprt_visit.png": "aa3fc5bfea65191ef99138b8492d21435e3c98fc12be11c301662a1ff9eb271c"
+  }
+}
