@@ -1,0 +1,85 @@
+{
+  "status": "passed",
+  "unique_nodes": 41,
+  "models": 11,
+  "data_tests": 30,
+  "attempts": [
+    {
+      "file": "dbt-initial-results.json",
+      "nodes": 41,
+      "statuses": {
+        "error": 1,
+        "pass": 23,
+        "skipped": 11,
+        "success": 6
+      }
+    },
+    {
+      "file": "dbt-native-staging-results.json",
+      "nodes": 5,
+      "statuses": {
+        "success": 5
+      }
+    },
+    {
+      "file": "dbt-native-recovered-test-results.json",
+      "nodes": 1,
+      "statuses": {
+        "pass": 1
+      }
+    },
+    {
+      "file": "dbt-native-downstream-results.json",
+      "nodes": 11,
+      "statuses": {
+        "pass": 6,
+        "success": 5
+      }
+    }
+  ],
+  "recovery": "Initial p9 CSV read returned ENOMEM. SHA-identical native working copies were verified; five staging views redirected, only the failed test and eleven skipped downstream nodes executed. Earlier passing data tests were retained.",
+  "timing_note": "Initial command includes coordinated SIGSTOP I/O windows; node elapsed values are execution evidence, not an ETL performance comparison.",
+  "final_node_status": {
+    "model.instacart_analytics.stg_departments": "success",
+    "model.instacart_analytics.stg_aisles": "success",
+    "test.instacart_analytics.not_null_stg_departments_department_id.ce7f6f5cf8": "pass",
+    "test.instacart_analytics.unique_stg_departments_department_id.8e1b8b707b": "pass",
+    "test.instacart_analytics.not_null_stg_aisles_aisle_id.33a6bdd00b": "pass",
+    "test.instacart_analytics.unique_stg_aisles_aisle_id.e09673d693": "pass",
+    "model.instacart_analytics.stg_products": "success",
+    "test.instacart_analytics.not_null_stg_products_product_id.6373b0acf3": "pass",
+    "test.instacart_analytics.relationships_stg_products_aisle_id__aisle_id__ref_stg_aisles_.09c4595f9f": "pass",
+    "test.instacart_analytics.relationships_stg_products_department_id__department_id__ref_stg_departments_.3f00a66b25": "pass",
+    "test.instacart_analytics.unique_stg_products_product_id.7d950a1467": "pass",
+    "model.instacart_analytics.stg_orders": "success",
+    "test.instacart_analytics.accepted_values_stg_orders_eval_set__prior__train__test.b1d9607c8a": "pass",
+    "test.instacart_analytics.is_between_stg_orders_days_since_prior_order__30__0.3257a739ea": "pass",
+    "test.instacart_analytics.is_between_stg_orders_order_dow__6__0.a77ab9b978": "pass",
+    "model.instacart_analytics.stg_order_products": "success",
+    "test.instacart_analytics.not_null_stg_orders_user_id.7d129d0209": "pass",
+    "test.instacart_analytics.is_between_stg_orders_order_hour_of_day__23__0.7cba5d4145": "pass",
+    "test.instacart_analytics.unique_stg_orders_order_id.e3b841c71a": "pass",
+    "test.instacart_analytics.not_null_stg_orders_order_id.81cfe2fe64": "pass",
+    "test.instacart_analytics.not_null_stg_order_products_product_id.e79007bec5": "pass",
+    "test.instacart_analytics.not_null_stg_order_products_order_id.c13875b2ca": "pass",
+    "test.instacart_analytics.accepted_values_stg_order_products_reordered__False__0__1.347f72e832": "pass",
+    "test.instacart_analytics.relationships_stg_order_products_order_id__order_id__ref_stg_orders_.87d3c00544": "pass",
+    "test.instacart_analytics.unique_combination_stg_order_products_order_id__product_id.19e68622b4": "pass",
+    "test.instacart_analytics.relationships_stg_order_products_product_id__product_id__ref_stg_products_.7cd2cd56c4": "pass",
+    "model.instacart_analytics.rec_order_split": "success",
+    "test.instacart_analytics.not_null_rec_order_split_order_id.108c46ef78": "pass",
+    "test.instacart_analytics.accepted_values_rec_order_split_split__train__validation__test.342e925f36": "pass",
+    "test.instacart_analytics.unique_rec_order_split_order_id.e126060999": "pass",
+    "model.instacart_analytics.rec_lines": "success",
+    "model.instacart_analytics.rec_history_product": "success",
+    "model.instacart_analytics.rec_product_prior": "success",
+    "test.instacart_analytics.unique_combination_rec_history_product_stage__user_id__product_id.d82defa686": "pass",
+    "test.instacart_analytics.assert_train_only_product_prior": "pass",
+    "test.instacart_analytics.not_null_rec_product_prior_product_id.053f27ab10": "pass",
+    "test.instacart_analytics.unique_rec_product_prior_product_id.49afd73962": "pass",
+    "model.instacart_analytics.rec_history_category": "success",
+    "model.instacart_analytics.rec_history_user": "success",
+    "test.instacart_analytics.assert_recommendation_cutoffs": "pass",
+    "test.instacart_analytics.unique_combination_rec_history_user_stage__user_id.ba5d7a0b1c": "pass"
+  }
+}

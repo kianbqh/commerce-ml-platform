@@ -1,58 +1,62 @@
-"""FastAPI serving: user embedding -> FAISS HNSW candidate retrieval -> LambdaMART re-rank -> top-k."""
-from __future__ import annotations
-import os, pickle, time
-import numpy as np, faiss, lightgbm as lgb
-from fastapi import FastAPI, HTTPException, Query
-from .features import make_features
-
-ART = os.environ.get("RECSYS_ARTIFACTS", "artifacts")
-K_CAND = 100
+"""Instacart IDs -> FAISS products -> dbt cutoff features -> LambdaMART."""
+from contextlib import asynccontextmanager
+import json
+import os
+from pathlib import Path
+import time
+import faiss
+import lightgbm as lgb
+import numpy as np
+from fastapi import FastAPI,HTTPException,Query
+from .data import Dataset
+from .features import Context,make_features
 
 
 class Recommender:
-    def __init__(self, art=ART):
-        self.ue = np.load(f"{art}/user_emb.npy"); self.index = faiss.read_index(f"{art}/items_hnsw.faiss")
-        self.index.hnsw.efSearch = 128
-        self.ranker = lgb.Booster(model_file=f"{art}/ranker.txt")
-        d = pickle.load(open(f"{art}/context.pkl", "rb")); self.ctx, self.titles = d["ctx"], d["titles"]
-        self.n_items = len(self.titles)
+    def __init__(self,artifacts):
+        art=Path(artifacts); settings=json.loads((art/'serving.json').read_text())
+        self.ds=Dataset(settings['feature_cache']); self.ctx=Context(self.ds,'test')
+        assert settings['feature_fingerprint']==self.ds.manifest['feature_fingerprint'],'Serving features differ from the trained artifact'
+        self.users=np.load(art/'user_emb.npy',mmap_mode='r')
+        self.index=faiss.read_index(str(art/'items_hnsw.faiss')); self.index.hnsw.efSearch=128
+        assert len(self.users)==self.ds.n_users and self.index.ntotal==self.ds.n_items
+        self.ranker=lgb.Booster(model_file=str(art/'ranker.txt'))
+        self.names=json.loads((self.ds.root/'products.json').read_text()); self.k=settings['candidates']
+        self.run_id=settings['model_run_id']
 
-    def candidates(self, uid: int, k: int = K_CAND):
-        seen = self.ctx.seen[uid]
-        kk = min(self.n_items, k + len(seen))
-        s, i = self.index.search(self.ue[uid:uid + 1], kk)
-        m = (i[0] >= 0) & ~np.isin(i[0], seen)
-        return i[0][m][:k], s[0][m][:k]
-
-    def recommend(self, uid: int, k: int = 10, rerank: bool = True):
-        c, s = self.candidates(uid)
+    def recommend(self,user_id,k=10,rerank=True):
+        faiss.omp_set_num_threads(1)
+        u=int(np.searchsorted(self.ds.user_ids,user_id))
+        if u==self.ds.n_users or int(self.ds.user_ids[u])!=user_id: raise KeyError(user_id)
+        scores,candidates=self.index.search(np.ascontiguousarray(self.users[u:u+1]),self.k)
         if rerank:
-            p = self.ranker.predict(make_features(np.array([uid]), c[None], s[None], self.ctx))
-            o = np.argsort(-p); c, s = c[o], p[o]
-        return [{"item_id": int(i), "title": self.titles[i], "score": float(x)} for i, x in zip(c[:k], s[:k])]
+            scores=self.ranker.predict(make_features(np.array([u]),candidates,scores,self.ctx),num_threads=1)[None,:]
+            order=np.argsort(-scores,axis=1,kind='stable'); candidates=np.take_along_axis(candidates,order,1)
+            scores=np.take_along_axis(scores,order,1)
+        return [{'product_id':int(self.ds.product_ids[i]),'product_name':self.names[i],'score':float(s)}
+                for i,s in zip(candidates[0,:k],scores[0,:k])]
 
 
-faiss.omp_set_num_threads(1)
-app = FastAPI(title="recsys-ranking")
-_rec: Recommender | None = None
+def create_app(artifacts=None):
+    @asynccontextmanager
+    async def lifespan(app):
+        faiss.omp_set_num_threads(1)
+        app.state.recommender=Recommender(artifacts or os.environ.get('RECSYS_ARTIFACTS','artifacts'))
+        yield
+    app=FastAPI(title='Instacart recommendation service',lifespan=lifespan)
+    @app.get('/health')
+    def health():
+        r=app.state.recommender
+        return {'status':'ok','dataset':'Instacart 2017','users':r.ds.n_users,'products':r.ds.n_items,'model_run_id':r.run_id}
+    @app.get('/recommend/{user_id}')
+    def recommend(user_id:int,k:int=Query(10,ge=1,le=100),rerank:bool=True):
+        r=app.state.recommender
+        if k>r.k: raise HTTPException(400,'k exceeds candidate count')
+        start=time.perf_counter()
+        try: items=r.recommend(user_id,k,rerank)
+        except KeyError: raise HTTPException(404,'unknown user')
+        return {'user_id':user_id,'items':items,'handler_ms':(time.perf_counter()-start)*1000}
+    return app
 
 
-def rec() -> Recommender:
-    global _rec
-    if _rec is None:
-        _rec = Recommender()
-    return _rec
-
-
-@app.get("/health")
-def health():
-    return {"status": "ok", "items": rec().n_items, "users": len(rec().ue)}
-
-
-@app.get("/recommend/{user_id}")
-def recommend(user_id: int, k: int = Query(10, ge=1, le=100), rerank: bool = True):
-    r = rec()
-    if not 0 <= user_id < len(r.ue):
-        raise HTTPException(404, "unknown user")
-    t = time.perf_counter(); items = r.recommend(user_id, k, rerank)
-    return {"user_id": user_id, "items": items, "server_ms": round((time.perf_counter() - t) * 1e3, 3)}
+app=create_app()

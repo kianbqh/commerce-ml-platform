@@ -14,4 +14,5 @@ mkdir -p "$TMPDIR" "$MPLCONFIGDIR" "$JUPYTER_CONFIG_DIR" "$JUPYTER_DATA_DIR" "$J
 "$PY" -m jupyter nbconvert --execute --to notebook --inplace --ExecutePreprocessor.timeout=600 notebooks/ab_test_readout.ipynb
 "$PY" -m jupyter nbconvert --to html --embed-images notebooks/ab_test_readout.ipynb
 "$PY" scripts/verify_outputs.py
+"$PY" ../scripts/report.py --sync-experiments-only
 echo ANALYSIS_COMPLETE

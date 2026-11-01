@@ -1,70 +1,140 @@
+"""Real dbt -> learned retrieval/ranking -> API contracts on synthetic CI baskets."""
+import json
 import os
-import numpy as np, pandas as pd, pytest
-from recsys import metrics
-from recsys.features import retrieve_exact, make_features, build_context, FEATURES
+from pathlib import Path
+import subprocess
+import duckdb
+import numpy as np
+import pytest
+import torch
+from recsys.data import Labels,export
+from recsys.features import Context,FEATURES,make_features
+from recsys.fixture import write_fixture
+from recsys.metrics import BasketMetrics
+from recsys.pipeline import run
+from recsys.twotower import TwoTower
 
-ROOT = os.path.dirname(os.path.dirname(__file__))
-
-
-def test_metrics_hand_computed():
-    ranked = np.array([[5, 1, 2], [3, 4, 9], [7, 8, 0]]); target = np.array([5, 9, 1])
-    r = metrics.rank_of_target(ranked, target)
-    assert r.tolist() == [0, 2, -1]
-    assert metrics.recall_at_k(r, 1) == pytest.approx(1 / 3)
-    assert metrics.recall_at_k(r, 3) == pytest.approx(2 / 3)
-    assert metrics.ndcg_at_k(r, 3) == pytest.approx((1 + 1 / np.log2(4)) / 3)
-    assert metrics.mrr(r) == pytest.approx((1 + 1 / 3) / 3)
-
-
-def test_retrieve_excludes_seen_and_is_sorted():
-    rng = np.random.default_rng(0); ue = rng.normal(size=(4, 8)).astype("float32"); ie = rng.normal(size=(50, 8)).astype("float32")
-    seen = [np.arange(10), np.array([], int), np.arange(40), np.array([3])]
-    c, s = retrieve_exact(ue, ie, np.arange(4), seen, 5)
-    for u in range(4):
-        assert not np.isin(c[u], seen[u]).any()
-        assert np.all(np.diff(s[u]) <= 1e-6)
-    full = ue[1] @ ie.T
-    assert set(c[1]) == set(np.argsort(-full)[:5])
+WAREHOUSE=Path(__file__).resolve().parents[2]/'warehouse'
 
 
-@pytest.fixture(scope="module")
-def ds():
-    if not os.path.exists(os.path.join(ROOT, "data/ml-1m/ratings.dat")):
-        pytest.skip("MovieLens-1M not downloaded")
-    from recsys import data
-    cwd = os.getcwd(); os.chdir(ROOT)
-    try:
-        return data.load("data")
-    finally:
-        os.chdir(cwd)
+def build(root,change_test=False):
+    raw=root/'raw'; write_fixture(raw,change_test)
+    database=root/'fixture.duckdb'
+    env={**os.environ,'RAW_DIR':str(raw),'DUCKDB_PATH':str(database),'DBT_PROFILES_DIR':str(WAREHOUSE),
+         'DBT_SEND_ANONYMOUS_USAGE_STATS':'false'}
+    command=['dbt','build','--select','path:models/staging','path:models/recommendations',
+             '--indirect-selection','cautious','--target-path',str(root/'target'),'--log-path',str(root/'logs')]
+    result=subprocess.run(command,cwd=WAREHOUSE,env=env,capture_output=True,text=True)
+    (root/'dbt.log').write_text(result.stdout+result.stderr)
+    assert result.returncode==0,result.stdout[-8000:]+result.stderr[-2000:]
+    return database,export(database,root/'features')
 
 
-def test_split_is_temporal_and_leak_free(ds):
-    assert len(ds.val) == len(ds.test) == ds.n_users
-    last_train = ds.train.groupby("uid").ts.max()
-    v = ds.val.set_index("uid").ts; t = ds.test.set_index("uid").ts
-    assert (v >= last_train.reindex(v.index)).all() and (t >= v).all()
-    assert len(ds.train) + 2 * ds.n_users == 1_000_209
+@pytest.fixture(scope='module')
+def prepared(tmp_path_factory):
+    root=tmp_path_factory.mktemp('commerce'); database,ds=build(root)
+    return root,database,ds
 
 
-def test_features_shape_and_finite(ds):
-    ie = np.random.default_rng(0).normal(size=(ds.n_items, 16)).astype("float32")
-    ctx = build_context(ds.train, ds, ie)
-    c = np.tile(np.arange(20), (3, 1)); s = np.zeros((3, 20), "float32")
-    X = make_features(np.array([0, 1, 2]), c, s, ctx)
-    assert X.shape == (60, len(FEATURES)) and np.isfinite(X).all()
+@pytest.fixture(scope='module')
+def trained(prepared):
+    root,database,ds=prepared
+    result=run(database,root/'features',root/'artifacts',root/'metrics.json',epochs=1,rounds=3,candidates=12)
+    return root,ds,result
 
 
-def test_api_end_to_end():
-    if not os.path.exists(os.path.join(ROOT, "artifacts/ranker.txt")):
-        pytest.skip("run the pipeline first")
-    os.environ["RECSYS_ARTIFACTS"] = os.path.join(ROOT, "artifacts")
+def test_multi_positive_metrics_hand_computed():
+    labels=Labels(np.array([0,3,4]),np.array([1,2,5,4]))
+    metrics=BasketMetrics((3,)); metrics.add(np.array([[1,9,2],[8,4,0]]),np.array([0,1]),labels)
+    result=metrics.result()
+    assert result['recall@3']==pytest.approx((2/3+1)/2)
+    expected=((1+1/np.log2(4))/(1+1/np.log2(3)+1/np.log2(4))+1/np.log2(3))/2
+    assert result['ndcg@3']==pytest.approx(expected)
+    assert result['micro_recall@3']==pytest.approx(3/4)
+
+
+def test_metrics_reject_duplicate_recommendations():
+    with pytest.raises(ValueError,match='Duplicate'):
+        BasketMetrics((2,)).add(np.array([[1,1]]),np.array([0]),Labels(np.array([0,1]),np.array([1])))
+
+
+def test_temporal_basket_split_and_unlabeled_exclusions(prepared):
+    _,database,ds=prepared
+    assert (ds.n_users,ds.n_items)==(40,24)
+    assert ds.manifest['order_counts']=={'train':160,'validation':40,'test':40}
+    assert ds.manifest['unlabeled_orders']==40
+    assert ds.manifest['excluded_users_fewer_than_three_labeled_baskets']==1
+    assert ds.manifest['excluded_labeled_orders']==2
+    with duckdb.connect(str(database),read_only=True) as con:
+        rows=con.execute("select split,min(order_number),max(order_number) from recommendations.rec_order_split group by split").fetchall()
+        assert dict((s,(a,b)) for s,a,b in rows)=={'train':(1,4),'validation':(5,5),'test':(6,6)}
+
+
+def test_features_equal_actual_dbt_cutoff_values(prepared):
+    _,database,ds=prepared; ctx=Context(ds,'validation')
+    with duckdb.connect(str(database),read_only=True) as con:
+        product,count,last,reorders=con.execute("select product_id,purchase_count,last_order_number,reorder_count from recommendations.rec_history_product where stage='validation' and user_id=1001 order by product_id limit 1").fetchone()
+    item=int(np.searchsorted(ds.product_ids,product))
+    values=make_features(np.array([0]),np.array([[item]]),np.zeros((1,1),np.float32),ctx)
+    assert values.shape==(1,len(FEATURES)) and np.isfinite(values).all()
+    assert values[0,FEATURES.index('user_product_count')]==count
+    assert values[0,FEATURES.index('orders_since_product')]==4-last
+    assert values[0,FEATURES.index('user_product_frequency')]==pytest.approx(count/4)
+    assert values[0,FEATURES.index('user_product_reorder_share')]==pytest.approx(reorders/count)
+
+
+def test_test_basket_perturbation_cannot_change_training_features(prepared,tmp_path):
+    _,_,original=prepared; _,changed=build(tmp_path,change_test=True)
+    for name in ('train_users','train_items','item_prior','item_features','validation_user_features',
+                 'validation_pair_keys','validation_pair_values','test_user_features','test_pair_values'):
+        np.testing.assert_array_equal(original.array(name),changed.array(name))
+    assert not np.array_equal(original.labels('test').items,changed.labels('test').items)
+    assert original.manifest['normalizers']==changed.manifest['normalizers']
+
+
+def test_learned_two_tower_consumes_history_features(trained):
+    root,ds,result=trained
+    saved=torch.load(root/'artifacts/two_tower.pt',map_location='cpu',weights_only=False)
+    model=TwoTower(ds); model.load_state_dict(saved['state']); model.eval()
+    features=torch.from_numpy(np.array(ds.user_features('validation')[:2])); users=torch.tensor([0,1])
+    with torch.inference_mode():
+        a=model.users(users,features).numpy(); b=model.users(users,features+.5).numpy()
+    assert not np.allclose(a,b)
+    fit=result['two_tower']; assert fit['initial_weights_sha256']!=fit['final_weights_sha256']
+    assert fit['epochs'][0]['examples']==len(ds.train_users)
+
+
+def test_all_fixture_users_evaluated_with_disjoint_ranking_groups(trained):
+    root,ds,result=trained
+    fit=np.load(root/'artifacts/rank_fit_users.npy'); stop=np.load(root/'artifacts/rank_early_stop_users.npy')
+    assert not np.intersect1d(fit,stop).size and len(fit)+len(stop)==ds.n_users
+    for metrics in result['test'].values():
+        assert metrics['users']==40
+        assert metrics['heldout_positive_products']==len(ds.labels('test').items)
+        assert 0<=metrics['recall@10']<=1 and 0<=metrics['ndcg@10']<=1
+    assert result['ranker']['labels'].startswith('validation baskets only')
+
+
+def test_instacart_api_returns_external_ids_and_products(trained):
     from fastapi.testclient import TestClient
-    from recsys import serve
-    cl = TestClient(serve.app)
-    assert cl.get("/health").json()["status"] == "ok"
-    r = cl.get("/recommend/10", params={"k": 10}).json()
-    ids = [x["item_id"] for x in r["items"]]
-    assert len(ids) == 10 == len(set(ids))
-    assert not np.isin(ids, serve.rec().ctx.seen[10]).any()
-    assert cl.get("/recommend/999999").status_code == 404
+    from recsys.serve import create_app
+    root,ds,_=trained
+    with TestClient(create_app(root/'artifacts')) as client:
+        assert client.get('/health').json()['dataset']=='Instacart 2017'
+        response=client.get('/recommend/1001',params={'k':10}); assert response.status_code==200
+        body=response.json(); items=body['items']
+        assert body['user_id']==1001 and len(items)==len({x['product_id'] for x in items})==10
+        assert all(x['product_id'] in ds.product_ids and x['product_name'].startswith('fixture grocery') and np.isfinite(x['score']) for x in items)
+        assert client.get('/recommend/0').status_code==404
+        assert client.get('/recommend/1001',params={'k':13}).status_code==400
+
+
+def test_changed_feature_definition_rejects_stale_model(trained,prepared,tmp_path,monkeypatch):
+    from recsys import data
+    root,_,_=trained; _,database,_=prepared
+    monkeypatch.setattr(data,'definition_hash',lambda:'changed_feature_contract')
+    changed=export(database,tmp_path/'features')
+    old=json.loads((root/'features/manifest.json').read_text())
+    assert changed.manifest['feature_fingerprint']!=old['feature_fingerprint']
+    with pytest.raises(AssertionError,match='different run'):
+        run(database,tmp_path/'features',root/'artifacts',tmp_path/'metrics.json',epochs=1,rounds=3,candidates=12)

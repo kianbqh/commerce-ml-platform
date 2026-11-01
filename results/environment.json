@@ -1,0 +1,31 @@
+{
+  "recorded_utc": "2026-11-01T09:34:28.248484+00:00",
+  "python": "3.12.3",
+  "system": "Linux-6.18.54.1-microsoft-standard-WSL2-x86_64-with-glibc2.39",
+  "cpu": "12th Gen Intel(R) Core(TM) i7-12700KF",
+  "threads": 4,
+  "device": "cpu",
+  "packages": {
+    "torch": "2.15.0",
+    "numpy": "2.5.4",
+    "scipy": "1.18.1",
+    "pandas": "3.1.0",
+    "duckdb": "2.0.0",
+    "dbt-core": "1.12.6",
+    "dbt-duckdb": "1.11.1",
+    "faiss-cpu": "1.15.1",
+    "lightgbm": "4.7.0",
+    "fastapi": "0.162.0",
+    "uvicorn": "0.54.0",
+    "httpx": "0.28.1",
+    "pytest": "9.2.0"
+  },
+  "database_memory_limit": "4GB",
+  "raw_dir": "/opt/codex-resume/consolidation-f4/raw",
+  "database": "/opt/codex-resume/consolidation-f4/commerce.duckdb",
+  "feature_cache": "/opt/codex-resume/consolidation-f4/features",
+  "artifacts": "/opt/codex-resume/consolidation-f4/artifacts",
+  "storage": "G: source/results and G-backed native WSL private runtime",
+  "torch_source": "read-only package links from /opt/codex-resume/portfolio-ml/venv; other dependencies private",
+  "pip_check": "passed in finish-environment.sh"
+}

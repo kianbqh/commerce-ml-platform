@@ -1,0 +1,10 @@
+    PID STAT %CPU COMMAND
+      1 Sl+   0.0 /init
+      4 Sl+   0.0 plan9 --control-socket 6 --log-level 4 --server-fd 7 --pipe-fd 9 --log-truncate
+     18 Ss    0.0 /init
+     19 S     0.0 /init
+     20 Ss+   0.0 sleep 43200
+     32 Ss    0.0 /init
+     33 S     0.0 /init
+     34 Ss+   0.0 bash /mnt/g/ResumeProject/.runtime/consolidation/f4/run-api.sh
+     35 R+    0.0 ps -eo pid,stat,pcpu,args

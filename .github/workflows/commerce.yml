@@ -1,0 +1,46 @@
+name: commerce
+on: [push, pull_request, workflow_dispatch]
+permissions:
+  contents: read
+env:
+  OMP_NUM_THREADS: '4'
+  MKL_NUM_THREADS: '4'
+  OPENBLAS_NUM_THREADS: '4'
+  DBT_SEND_ANONYMOUS_USAGE_STATS: 'false'
+jobs:
+  warehouse:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: {python-version: '3.12', cache: pip}
+      - run: python -m pip install -r warehouse/requirements-lock.txt
+      - run: python -m pytest --capture=sys -q warehouse/pytests
+  recommendation:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      PYTHONPATH: recsys
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: {python-version: '3.12', cache: pip}
+      - run: python -m pip install torch --index-url https://download.pytorch.org/whl/cpu
+      - run: python -m pip install -r recsys/requirements.txt
+      - name: Real dbt, learned miniature pipeline, leakage and HTTP contracts
+        run: python -m pytest --capture=sys -q recsys/tests
+  experiments:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    defaults:
+      run:
+        working-directory: experiments
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: {python-version: '3.12', cache: pip}
+      - run: python -m pip install -r requirements.txt
+      - run: bash scripts/run_all.sh
+      - uses: actions/upload-artifact@v4
+        with: {name: hillstrom-analysis, path: results/experiments/}

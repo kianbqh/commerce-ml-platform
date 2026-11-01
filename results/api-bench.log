@@ -1,0 +1,31 @@
+{
+  "started_utc": "2026-11-01T09:26:24.489344+00:00",
+  "finished_utc": "2026-11-01T09:28:00.659549+00:00",
+  "requests": 5000,
+  "concurrency": 8,
+  "warmup_requests": 50,
+  "seed": 0,
+  "k": 10,
+  "users": 206209,
+  "products": 49688,
+  "model_run_id": "c9f3f9052ae6a10793dc0ed2887a1f37e517079b7ee49aeca60e3f2ecfac6106",
+  "successful_responses": 5000,
+  "errors": 0,
+  "failures": {},
+  "status_counts": {
+    "200": 5000
+  },
+  "elapsed_seconds": 89.236428382,
+  "throughput_rps": 56.030929191789085,
+  "client_latency_ms": {
+    "p50": 69.21391499999174,
+    "p95": 129.72723669999772,
+    "p99": 363.7295544599971
+  },
+  "handler_latency_ms": {
+    "p50": 0.8167794999991429,
+    "p95": 1.0595285999876585,
+    "p99": 2.3752903099990874
+  },
+  "protocol": "closed-loop persistent localhost HTTP; client timer includes queueing within the server and network/serialization; handler timer covers retrieval/features/reranking/response construction"
+}

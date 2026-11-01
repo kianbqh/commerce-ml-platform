@@ -1,0 +1,90 @@
+[0m06:42:15  Running with dbt=1.12.6
+[0m06:42:15  Registered adapter: duckdb=1.11.1
+[0m06:42:15  Unable to do partial parsing because saved manifest not found. Starting full parse.
+[0m06:42:18  Found 20 models, 61 data tests, 6 sources, 515 macros
+[0m06:42:18  
+[0m06:42:18  Concurrency: 4 threads (target='duckdb')
+[0m06:42:18  
+[0m06:42:21  1 of 41 START sql view model staging.stg_aisles ................................ [RUN]
+[0m06:42:21  2 of 41 START sql view model staging.stg_departments ........................... [RUN]
+[0m06:42:21  3 of 41 START sql view model staging.stg_order_products ........................ [RUN]
+[0m06:42:21  4 of 41 START sql view model staging.stg_orders ................................ [RUN]
+[0m06:42:24  2 of 41 OK created sql view model staging.stg_departments ...................... [[32mOK[0m in 2.53s]
+[0m06:42:24  5 of 41 START sql view model staging.stg_products .............................. [RUN]
+[0m06:42:24  1 of 41 OK created sql view model staging.stg_aisles ........................... [[32mOK[0m in 2.54s]
+[0m06:42:24  6 of 41 START test not_null_stg_departments_department_id ...................... [RUN]
+[0m06:42:24  6 of 41 PASS not_null_stg_departments_department_id ............................ [[32mPASS[0m in 0.06s]
+[0m06:42:24  7 of 41 START test unique_stg_departments_department_id ........................ [RUN]
+[0m06:42:24  7 of 41 PASS unique_stg_departments_department_id .............................. [[32mPASS[0m in 0.02s]
+[0m06:42:24  8 of 41 START test not_null_stg_aisles_aisle_id ................................ [RUN]
+[0m06:42:24  8 of 41 PASS not_null_stg_aisles_aisle_id ...................................... [[32mPASS[0m in 0.02s]
+[0m06:42:24  9 of 41 START test unique_stg_aisles_aisle_id .................................. [RUN]
+[0m06:42:24  9 of 41 PASS unique_stg_aisles_aisle_id ........................................ [[32mPASS[0m in 0.02s]
+[0m06:42:29  5 of 41 OK created sql view model staging.stg_products ......................... [[32mOK[0m in 5.00s]
+[0m06:42:29  10 of 41 START test not_null_stg_products_product_id ........................... [RUN]
+[0m06:42:29  11 of 41 START test relationships_stg_products_aisle_id__aisle_id__ref_stg_aisles_  [RUN]
+[0m06:42:29  10 of 41 PASS not_null_stg_products_product_id ................................. [[32mPASS[0m in 0.07s]
+[0m06:42:29  12 of 41 START test relationships_stg_products_department_id__department_id__ref_stg_departments_  [RUN]
+[0m06:42:29  11 of 41 PASS relationships_stg_products_aisle_id__aisle_id__ref_stg_aisles_ ... [[32mPASS[0m in 0.09s]
+[0m06:42:29  13 of 41 START test unique_stg_products_product_id ............................. [RUN]
+[0m06:42:29  12 of 41 PASS relationships_stg_products_department_id__department_id__ref_stg_departments_  [[32mPASS[0m in 0.07s]
+[0m06:42:29  13 of 41 PASS unique_stg_products_product_id ................................... [[32mPASS[0m in 0.05s]
+[0m06:42:50  4 of 41 OK created sql view model staging.stg_orders ........................... [[32mOK[0m in 29.42s]
+[0m06:42:50  14 of 41 START test accepted_values_stg_orders_eval_set__prior__train__test .... [RUN]
+[0m06:42:50  15 of 41 START test is_between_stg_orders_days_since_prior_order__30__0 ........ [RUN]
+[0m06:42:50  16 of 41 START test is_between_stg_orders_order_dow__6__0 ...................... [RUN]
+[0m06:44:23  14 of 41 PASS accepted_values_stg_orders_eval_set__prior__train__test .......... [[32mPASS[0m in 92.52s]
+[0m06:44:23  17 of 41 START test is_between_stg_orders_order_hour_of_day__23__0 ............. [RUN]
+[0m06:44:23  15 of 41 PASS is_between_stg_orders_days_since_prior_order__30__0 .............. [[32mPASS[0m in 92.74s]
+[0m06:44:23  18 of 41 START test not_null_stg_orders_order_id ............................... [RUN]
+[0m06:44:31  16 of 41 PASS is_between_stg_orders_order_dow__6__0 ............................ [[32mPASS[0m in 100.56s]
+[0m06:44:31  19 of 41 START test not_null_stg_orders_user_id ................................ [RUN]
+[0m06:44:35  3 of 41 OK created sql view model staging.stg_order_products ................... [[32mOK[0m in 133.55s]
+[0m06:44:35  20 of 41 START test unique_stg_orders_order_id ................................. [RUN]
+[0m06:44:43  19 of 41 PASS not_null_stg_orders_user_id ...................................... [[32mPASS[0m in 12.44s]
+[0m06:44:43  17 of 41 PASS is_between_stg_orders_order_hour_of_day__23__0 ................... [[32mPASS[0m in 20.47s]
+[0m06:44:43  21 of 41 START test accepted_values_stg_order_products_reordered__False__0__1 .. [RUN]
+[0m06:44:43  22 of 41 START test not_null_stg_order_products_order_id ....................... [RUN]
+[0m06:44:54  20 of 41 PASS unique_stg_orders_order_id ....................................... [[32mPASS[0m in 19.28s]
+[0m06:44:54  18 of 41 PASS not_null_stg_orders_order_id ..................................... [[32mPASS[0m in 30.66s]
+[0m06:44:54  23 of 41 START test not_null_stg_order_products_product_id ..................... [RUN]
+[0m06:44:54  24 of 41 START test relationships_stg_order_products_order_id__order_id__ref_stg_orders_  [RUN]
+[0m06:58:17  23 of 41 PASS not_null_stg_order_products_product_id ........................... [[32mPASS[0m in 803.27s]
+[0m06:58:17  25 of 41 START test relationships_stg_order_products_product_id__product_id__ref_stg_products_  [RUN]
+[0m06:58:17  22 of 41 PASS not_null_stg_order_products_order_id ............................. [[32mPASS[0m in 813.72s]
+[0m06:58:17  26 of 41 START test unique_combination_stg_order_products_order_id__product_id . [RUN]
+[0m06:58:19  21 of 41 PASS accepted_values_stg_order_products_reordered__False__0__1 ........ [[32mPASS[0m in 815.76s]
+[0m06:58:26  24 of 41 PASS relationships_stg_order_products_order_id__order_id__ref_stg_orders_  [[32mPASS[0m in 812.38s]
+[0m06:58:29  26 of 41 PASS unique_combination_stg_order_products_order_id__product_id ....... [[32mPASS[0m in 11.79s]
+[0m06:58:29  27 of 41 START sql table model recommendations.rec_order_split ................. [RUN]
+[0m06:58:29  25 of 41 ERROR relationships_stg_order_products_product_id__product_id__ref_stg_products_  [[31mERROR[0m in 12.30s]
+[0m06:58:54  27 of 41 OK created sql table model recommendations.rec_order_split ............ [[32mOK[0m in 24.70s]
+[0m06:58:54  28 of 41 START test accepted_values_rec_order_split_split__train__validation__test  [RUN]
+[0m06:58:54  29 of 41 START test not_null_rec_order_split_order_id .......................... [RUN]
+[0m06:58:54  30 of 41 START test unique_rec_order_split_order_id ............................ [RUN]
+[0m06:58:54  29 of 41 PASS not_null_rec_order_split_order_id ................................ [[32mPASS[0m in 0.08s]
+[0m06:58:54  28 of 41 PASS accepted_values_rec_order_split_split__train__validation__test ... [[32mPASS[0m in 0.11s]
+[0m06:58:54  30 of 41 PASS unique_rec_order_split_order_id .................................. [[32mPASS[0m in 0.13s]
+[0m06:58:54  31 of 41 SKIP relation recommendations.rec_lines ............................... [[33mSKIP[0m]
+[0m06:58:54  32 of 41 SKIP relation recommendations.rec_history_product ..................... [[33mSKIP[0m]
+[0m06:58:54  33 of 41 SKIP relation recommendations.rec_product_prior ....................... [[33mSKIP[0m]
+[0m06:58:54  34 of 41 SKIP test unique_combination_rec_history_product_stage__user_id__product_id  [[33mSKIP[0m]
+[0m06:58:54  35 of 41 SKIP test assert_train_only_product_prior ............................. [[33mSKIP[0m]
+[0m06:58:54  36 of 41 SKIP test not_null_rec_product_prior_product_id ....................... [[33mSKIP[0m]
+[0m06:58:54  37 of 41 SKIP test unique_rec_product_prior_product_id ......................... [[33mSKIP[0m]
+[0m06:58:54  38 of 41 SKIP relation recommendations.rec_history_category .................... [[33mSKIP[0m]
+[0m06:58:54  39 of 41 SKIP relation recommendations.rec_history_user ........................ [[33mSKIP[0m]
+[0m06:58:54  40 of 41 SKIP test assert_recommendation_cutoffs ............................... [[33mSKIP[0m]
+[0m06:58:54  41 of 41 SKIP test unique_combination_rec_history_user_stage__user_id .......... [[33mSKIP[0m]
+[0m06:58:54  
+[0m06:58:54  Finished running 6 table models, 30 data tests, 5 view models in 0 hours 16 minutes and 35.69 seconds (995.69s).
+[0m06:58:54  
+[0m06:58:54  [31mCompleted with 1 error, 0 partial successes, and 0 warnings:[0m
+[0m06:58:54  
+[0m06:58:54  [[31mERROR[0m]: in test relationships_stg_order_products_product_id__product_id__ref_stg_products_ (models/staging/_staging.yml)
+[0m06:58:54    Runtime Error in test relationships_stg_order_products_product_id__product_id__ref_stg_products_ (models/staging/_staging.yml)
+  IO Error: Could not read from file "/mnt/g/ResumeProject/15_analytics_dbt_warehouse/analytics-dbt-warehouse/data/raw/order_products__prior.csv": Cannot allocate memory
+[0m06:58:54  
+[0m06:58:54    compiled code at /opt/codex-resume/consolidation-f4/dbt-target/compiled/instacart_analytics/models/staging/_staging.yml/relationships_stg_order_produc_03424526edc39215b22292f1426c9c9f.sql
+[0m06:58:54  
+[0m06:58:54  Done. PASS=29 WARN=0 ERROR=1 SKIP=11 NO-OP=0 REUSED=0 TOTAL=41

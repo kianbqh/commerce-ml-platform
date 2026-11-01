@@ -1,0 +1,34 @@
+[0m07:03:40  Running with dbt=1.12.6
+[0m07:03:40  Registered adapter: duckdb=1.11.1
+[0m07:03:41  Found 20 models, 61 data tests, 6 sources, 515 macros
+[0m07:03:41  
+[0m07:03:41  Concurrency: 4 threads (target='duckdb')
+[0m07:03:41  
+[0m07:03:41  1 of 11 START sql table model recommendations.rec_lines ........................ [RUN]
+[0m07:03:45  1 of 11 OK created sql table model recommendations.rec_lines ................... [[32mOK[0m in 4.33s]
+[0m07:03:45  2 of 11 START sql table model recommendations.rec_history_product .............. [RUN]
+[0m07:03:45  3 of 11 START sql table model recommendations.rec_product_prior ................ [RUN]
+[0m07:03:48  3 of 11 OK created sql table model recommendations.rec_product_prior ........... [[32mOK[0m in 2.61s]
+[0m07:03:48  4 of 11 START test assert_train_only_product_prior ............................. [RUN]
+[0m07:03:48  5 of 11 START test not_null_rec_product_prior_product_id ....................... [RUN]
+[0m07:03:48  6 of 11 START test unique_rec_product_prior_product_id ......................... [RUN]
+[0m07:03:49  5 of 11 PASS not_null_rec_product_prior_product_id ............................. [[32mPASS[0m in 0.40s]
+[0m07:03:49  6 of 11 PASS unique_rec_product_prior_product_id ............................... [[32mPASS[0m in 0.45s]
+[0m07:03:49  4 of 11 PASS assert_train_only_product_prior ................................... [[32mPASS[0m in 0.58s]
+[0m07:03:51  2 of 11 OK created sql table model recommendations.rec_history_product ......... [[32mOK[0m in 5.86s]
+[0m07:03:51  7 of 11 START test unique_combination_rec_history_product_stage__user_id__product_id  [RUN]
+[0m07:03:52  7 of 11 PASS unique_combination_rec_history_product_stage__user_id__product_id . [[32mPASS[0m in 0.69s]
+[0m07:03:52  8 of 11 START sql table model recommendations.rec_history_category ............. [RUN]
+[0m07:03:52  9 of 11 START sql table model recommendations.rec_history_user ................. [RUN]
+[0m07:03:54  9 of 11 OK created sql table model recommendations.rec_history_user ............ [[32mOK[0m in 1.90s]
+[0m07:03:54  10 of 11 START test assert_recommendation_cutoffs .............................. [RUN]
+[0m07:03:54  11 of 11 START test unique_combination_rec_history_user_stage__user_id ......... [RUN]
+[0m07:03:54  11 of 11 PASS unique_combination_rec_history_user_stage__user_id ............... [[32mPASS[0m in 0.22s]
+[0m07:03:54  10 of 11 PASS assert_recommendation_cutoffs .................................... [[32mPASS[0m in 0.41s]
+[0m07:03:56  8 of 11 OK created sql table model recommendations.rec_history_category ........ [[32mOK[0m in 4.14s]
+[0m07:03:56  
+[0m07:03:56  Finished running 5 table models, 6 data tests in 0 hours 0 minutes and 15.22 seconds (15.22s).
+[0m07:03:56  
+[0m07:03:56  [32mCompleted successfully[0m
+[0m07:03:56  
+[0m07:03:56  Done. PASS=11 WARN=0 ERROR=0 SKIP=0 NO-OP=0 REUSED=0 TOTAL=11

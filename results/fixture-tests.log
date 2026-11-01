@@ -1,0 +1,22 @@
+..EXPORTED_STAGE validation users 40 history_pairs 298 labels 154
+EXPORTED_STAGE test users 40 history_pairs 372 labels 152
+..EXPORTED_STAGE validation users 40 history_pairs 298 labels 154
+EXPORTED_STAGE test users 40 history_pairs 372 labels 152
+.TWO_TOWER_EPOCH {'epoch': 1, 'examples': 611, 'loss': 1.967146635055542, 'seconds': 5.375717562000091}
+RANKING_FEATURES fit users 36 rows 432 positives 68
+RANKING_FEATURES early_stop users 4 rows 48 positives 2
+Training until validation scores don't improve for 15 rounds
+Did not meet early stopping. Best iteration is:
+[1]	validation_unseen_users's ndcg@10: 0.732669
+EVALUATED_TEST_USERS 40 / 40
+COMMERCE_TRAIN_EVAL_COMPLETE /opt/codex-resume/consolidation-f4/tmp/pytest-of-root/pytest-0/commerce0/metrics.json
+...EXPORTED_STAGE validation users 40 history_pairs 298 labels 154
+EXPORTED_STAGE test users 40 history_pairs 372 labels 152
+.
+=============================== warnings summary ===============================
+tests/test_recsys.py::test_instacart_api_returns_external_ids_and_products
+  /opt/codex-resume/consolidation-f4/venv/lib/python3.12/site-packages/fastapi/testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+9 passed, 1 warning in 75.97s (0:01:15)

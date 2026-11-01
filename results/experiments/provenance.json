@@ -1,0 +1,47 @@
+{
+  "method": "byte-identical synchronization of executed outputs; no analysis rerun",
+  "files": [
+    {
+      "source": "experiments/reports/results.json",
+      "canonical": "results/experiments/results.json",
+      "bytes": 14401,
+      "source_sha256": "efcbf39a8cb0249edb3bd1579f38aed864467aea83e689c728e2ff3f321d021d",
+      "canonical_sha256": "efcbf39a8cb0249edb3bd1579f38aed864467aea83e689c728e2ff3f321d021d"
+    },
+    {
+      "source": "experiments/reports/validation.json",
+      "canonical": "results/experiments/validation.json",
+      "bytes": 829,
+      "source_sha256": "9e700b3d6aff46b006bc0edfc46efd064eaf377b6887d029d29c0ab9c862ff19",
+      "canonical_sha256": "9e700b3d6aff46b006bc0edfc46efd064eaf377b6887d029d29c0ab9c862ff19"
+    },
+    {
+      "source": "experiments/reports/figures/cuped_spend_ci.png",
+      "canonical": "results/experiments/figures/cuped_spend_ci.png",
+      "bytes": 20600,
+      "source_sha256": "cd4d1182d91c0a04a2b699a99ec4b86723057b1d4878a63c2a2d0458573bfa84",
+      "canonical_sha256": "cd4d1182d91c0a04a2b699a99ec4b86723057b1d4878a63c2a2d0458573bfa84"
+    },
+    {
+      "source": "experiments/reports/figures/msprt_visit.png",
+      "canonical": "results/experiments/figures/msprt_visit.png",
+      "bytes": 41685,
+      "source_sha256": "aa3fc5bfea65191ef99138b8492d21435e3c98fc12be11c301662a1ff9eb271c",
+      "canonical_sha256": "aa3fc5bfea65191ef99138b8492d21435e3c98fc12be11c301662a1ff9eb271c"
+    },
+    {
+      "source": "experiments/notebooks/ab_test_readout.ipynb",
+      "canonical": "results/experiments/notebooks/ab_test_readout.ipynb",
+      "bytes": 108950,
+      "source_sha256": "7c2d5d56095d40ea5158783ecdd2a80b931e9e00a4de2d86cb9fc2dd27a766d4",
+      "canonical_sha256": "7c2d5d56095d40ea5158783ecdd2a80b931e9e00a4de2d86cb9fc2dd27a766d4"
+    },
+    {
+      "source": "experiments/notebooks/ab_test_readout.html",
+      "canonical": "results/experiments/notebooks/ab_test_readout.html",
+      "bytes": 405108,
+      "source_sha256": "2bd8711a4350b8b04322c1fe651536852edf024d29ce1ad2f08a6eebde8a8fed",
+      "canonical_sha256": "2bd8711a4350b8b04322c1fe651536852edf024d29ce1ad2f08a6eebde8a8fed"
+    }
+  ]
+}

@@ -1,0 +1,100 @@
+..................                                                       [100%]
+18 passed in 39.61s
+Matplotlib is building the font cache; this may take a moment.
+{
+ "srm": {
+  "counts": {
+   "womens": 21387,
+   "mens": 21307,
+   "control": 21306
+  },
+  "expected": {
+   "womens": 21333.3,
+   "mens": 21333.3,
+   "control": 21333.3
+  },
+  "chi2": 0.20253125000000002,
+  "p_value": 0.9036929575604196,
+  "srm_detected": false
+ },
+ "power": {
+  "baseline_visit_rate": 0.10616727682343002,
+  "n_per_arm_available": 21306,
+  "mde_visit_abs_at_n": 0.008361637539166614,
+  "n_per_arm_for_1pp_visit_lift": 15504,
+  "n_per_arm_for_0.1pp_conversion_lift": 96971,
+  "n_per_arm_for_$0.25_spend_lift": 33729
+ },
+ "sequential": {
+  "method": "Gaussian mSPRT approximation, mens vs control, binary visit",
+  "tau2": 0.0001,
+  "sigma2": 0.09000000000000001,
+  "parameter_selection": "fixed planning baseline 0.10 and effect-prior SD 0.01",
+  "arrival_order": "seeded independent random permutation of each arm",
+  "stopped_at_n_per_arm": 372,
+  "fraction_of_full_sample": 0.017459870459025625,
+  "final_running_p": 1.2255970194235656e-140
+ },
+ "aa_simulation": {
+  "n_sims": 400,
+  "looks": 20,
+  "fixed_horizon_fpr": 0.045,
+  "naive_peeking_fpr": 0.22,
+  "msprt_peeking_fpr": 0.0125,
+  "rejections": {
+   "fixed_horizon": 18,
+   "naive_peeking": 88,
+   "gaussian_msprt": 5
+  },
+  "rejection_rate_ci95": {
+   "fixed_horizon": [
+    0.026884625615141773,
+    0.07018879549534222
+   ],
+   "naive_peeking": [
+    0.18035595725209105,
+    0.26384331582750836
+   ],
+   "gaussian_msprt": [
+    0.004070835844599721,
+    0.028928343785286817
+   ]
+  }
+ },
+ "runtime_s": 14.2
+}
+mens_vs_control/visit        diff=+0.07659 rel=+72.1% p=5.69e-112 | CUPED var red hist=0.4% multi=2.9% CIwidth x0.985
+mens_vs_control/conversion   diff=+0.00681 rel=+118.8% p=1.52e-13 | CUPED var red hist=0.1% multi=0.2% CIwidth x0.999
+mens_vs_control/spend        diff=+0.76983 rel=+117.9% p=1.16e-07 | CUPED var red hist=0.0% multi=0.1% CIwidth x0.999
+womens_vs_control/visit      diff=+0.04523 rel=+42.6% p=3.18e-44 | CUPED var red hist=0.4% multi=2.6% CIwidth x0.987
+womens_vs_control/conversion diff=+0.00311 rel=+54.3% p=1.57e-04 | CUPED var red hist=0.1% multi=0.2% CIwidth x0.999
+womens_vs_control/spend      diff=+0.42441 rel=+65.0% p=1.13e-03 | CUPED var red hist=0.0% multi=0.1% CIwidth x1.000
+[NbConvertApp] Converting notebook notebooks/ab_test_readout.ipynb to notebook
+[IPKernelApp] WARNING | Kernel is running over TCP without encryption. All communication (including code and outputs) is sent in plain text and is susceptible to eavesdropping. Use IPC transport or launch with kernel manager-provisioned CurveZMQ keys to enable transport encryption.
+[NbConvertApp] Writing 108950 bytes to notebooks/ab_test_readout.ipynb
+[NbConvertApp] Converting notebook notebooks/ab_test_readout.ipynb to html
+[NbConvertApp] WARNING | Alternative text is missing on 2 image(s).
+[NbConvertApp] Writing 405095 bytes to notebooks/ab_test_readout.html
+{
+  "executed_notebook_cells": 6,
+  "notebook_errors": 0,
+  "consistency_checks": "fixed tests, absolute/relative bootstrap CIs, CUPED, sequential replay",
+  "figures": {
+    "cuped_spend_ci.png": [
+      840,
+      420
+    ],
+    "msprt_visit.png": [
+      840,
+      420
+    ]
+  },
+  "sha256": {
+    "reports/results.json": "efcbf39a8cb0249edb3bd1579f38aed864467aea83e689c728e2ff3f321d021d",
+    "notebooks/ab_test_readout.ipynb": "7c2d5d56095d40ea5158783ecdd2a80b931e9e00a4de2d86cb9fc2dd27a766d4",
+    "notebooks/ab_test_readout.html": "2bd8711a4350b8b04322c1fe651536852edf024d29ce1ad2f08a6eebde8a8fed",
+    "reports/figures/cuped_spend_ci.png": "cd4d1182d91c0a04a2b699a99ec4b86723057b1d4878a63c2a2d0458573bfa84",
+    "reports/figures/msprt_visit.png": "aa3fc5bfea65191ef99138b8492d21435e3c98fc12be11c301662a1ff9eb271c"
+  }
+}
+ANALYSIS_COMPLETE

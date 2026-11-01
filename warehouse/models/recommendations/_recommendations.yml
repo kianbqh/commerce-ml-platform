@@ -1,0 +1,22 @@
+version: 2
+models:
+  - name: rec_order_split
+    columns:
+      - name: order_id
+        data_tests: [unique, not_null]
+      - name: split
+        data_tests:
+          - accepted_values:
+              arguments: {values: [train, validation, test]}
+  - name: rec_history_product
+    data_tests:
+      - unique_combination:
+          arguments: {columns: [stage, user_id, product_id]}
+  - name: rec_history_user
+    data_tests:
+      - unique_combination:
+          arguments: {columns: [stage, user_id]}
+  - name: rec_product_prior
+    columns:
+      - name: product_id
+        data_tests: [unique, not_null]

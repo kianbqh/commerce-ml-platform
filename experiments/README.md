@@ -1,6 +1,8 @@
-# ab-testing-analysis
+# Hillstrom experiment analysis
 
-[![Analysis](https://github.com/kianbqh/ab-testing-analysis/actions/workflows/ci.yml/badge.svg)](https://github.com/kianbqh/ab-testing-analysis/actions/workflows/ci.yml)
+[![Commerce checks](https://github.com/kianbqh/commerce-ml-platform/actions/workflows/commerce.yml/badge.svg)](https://github.com/kianbqh/commerce-ml-platform/actions/workflows/commerce.yml)
+
+This is the platform's separate experiment toolkit. The randomized e-mail campaign is independent of the Instacart recommendation dataset.
 
 I used the Hillstrom / MineThatData e-mail campaign to work through a full experiment readout. I was especially interested in whether past customer activity narrows the intervals, and how repeated checks change the test's behavior.
 
@@ -20,7 +22,7 @@ The [public experiment](https://www.tensorflow.org/datasets/catalog/hillstrom) h
 
 ## Results from the local run
 
-Run on 2026-10-31 with Python 3.12.3. Assignment counts were 21,306 control, 21,307 Mens e-mail, and 21,387 Womens e-mail; the equal-allocation check gives SRM p = 0.904. The data has no missing values.
+Run on 2026-11-01 with Python 3.12.3. Assignment counts were 21,306 control, 21,307 Mens e-mail, and 21,387 Womens e-mail; the equal-allocation check gives SRM p = 0.904. The data has no missing values.
 
 | E-mail | Metric | Control → treatment | Absolute effect (95% CI) | Relative lift (bootstrap 95% CI) | Holm p |
 |---|---|---|---|---|---|
@@ -45,7 +47,7 @@ The seeded visit replay first crosses p < 0.05 at 372 customers per arm, or 1.75
 
 The run passed all 18 tests and executed all six notebook code cells with no errors. Its numerical consistency assertions passed for every comparison.
 
-The complete values, dataset checks, seeds, and package versions are in [`reports/results.json`](reports/results.json). The [executed notebook](notebooks/ab_test_readout.ipynb) walks through the calculation, and the [HTML readout](notebooks/ab_test_readout.html) includes its tables and figures.
+The complete values, dataset checks, seeds, and package versions are in [the canonical results](../results/experiments/results.json). The [executed notebook](../results/experiments/notebooks/ab_test_readout.ipynb) walks through the calculation, and the [HTML readout](../results/experiments/notebooks/ab_test_readout.html) includes its tables and figures. [Provenance](../results/experiments/provenance.json) records each source output's SHA256 and its byte-identical canonical copy.
 
 ## Sequential replay
 
@@ -53,13 +55,13 @@ There are no arrival timestamps in this dataset, so I independently shuffle each
 
 The [Gaussian mSPRT result](https://arxiv.org/abs/1512.04922) assumes independent Gaussian streams with known common variance. Binary visits use the Gaussian approximation. The A/A rejection frequencies and their exact binomial Monte Carlo intervals describe calibration on random splits of this control group. The A/A simulation has a separate seed 43.
 
-![Sequential visit replay](reports/figures/msprt_visit.png)
+![Sequential visit replay](../results/experiments/figures/msprt_visit.png)
 
 ## CUPED
 
 The adjustment uses covariates from before the campaign: past-year spend, recency, earlier product-line purchases, new-customer status, ZIP category, and channel. I fit the coefficients on the pooled treatment/control sample, then compare adjusted means with Welch intervals. The reported variance reduction is the in-sample residual reduction from that fit.
 
-![Raw and CUPED spend intervals](reports/figures/cuped_spend_ci.png)
+![Raw and CUPED spend intervals](../results/experiments/figures/cuped_spend_ci.png)
 
 ## Run it
 
@@ -74,15 +76,15 @@ bash scripts/run_all.sh
 
 That runs the tests and analysis, rebuilds and executes the notebook, exports HTML, and verifies that the notebook recomputes the report's fixed tests, bootstrap intervals, CUPED results, and sequential replay. The bootstrap and replay use seed 42. Both absolute and relative bootstrap intervals reuse the same resampling draws.
 
-The script keeps caches and temporary files inside the project, and defaults to two numerical-library threads. It writes:
+The script keeps caches and temporary files inside the project, and defaults to two numerical-library threads. It retains the module's `reports/` and `notebooks/` outputs, then synchronizes verified copies into the root `results/experiments/` directory. The root report command performs the same synchronization. Canonical outputs are:
 
 | Output | Contents |
 |---|---|
-| [`reports/results.json`](reports/results.json) | Effects, intervals, adjusted p-values, power, CUPED, A/A calibration, and environment |
-| [`reports/figures/`](reports/figures/) | Sequential replay and spend intervals |
-| [`notebooks/ab_test_readout.ipynb`](notebooks/ab_test_readout.ipynb) | Executed calculations and consistency assertions |
-| [`notebooks/ab_test_readout.html`](notebooks/ab_test_readout.html) | Standalone readout with embedded figures |
-| [`reports/validation.json`](reports/validation.json) | Executed-cell checks, figure dimensions, and artifact hashes |
+| [results.json](../results/experiments/results.json) | Effects, intervals, adjusted p-values, power, CUPED, A/A calibration, and environment |
+| [figures/](../results/experiments/figures/) | Sequential replay and spend intervals |
+| [ab_test_readout.ipynb](../results/experiments/notebooks/ab_test_readout.ipynb) | Executed calculations and consistency assertions |
+| [ab_test_readout.html](../results/experiments/notebooks/ab_test_readout.html) | Standalone readout with embedded figures |
+| [validation.json](../results/experiments/validation.json) | Executed-cell checks, figure dimensions, and artifact hashes |
 
 GitHub Actions runs the same full pipeline and retains the generated reports. Tests cover SciPy/statsmodels parity, power calculations, CUPED on simulated data, SRM, bootstrap intervals, Gaussian mSPRT calibration and prefix independence, numerical stability, and dataset integrity.
 

@@ -1,0 +1,23 @@
+[0m07:03:28  Running with dbt=1.12.6
+[0m07:03:29  Registered adapter: duckdb=1.11.1
+[0m07:03:29  Unable to do partial parsing because saved manifest not found. Starting full parse.
+[0m07:03:31  Found 20 models, 61 data tests, 6 sources, 515 macros
+[0m07:03:31  
+[0m07:03:31  Concurrency: 4 threads (target='duckdb')
+[0m07:03:31  
+[0m07:03:31  1 of 5 START sql view model staging.stg_aisles ................................. [RUN]
+[0m07:03:31  2 of 5 START sql view model staging.stg_departments ............................ [RUN]
+[0m07:03:31  3 of 5 START sql view model staging.stg_order_products ......................... [RUN]
+[0m07:03:31  4 of 5 START sql view model staging.stg_orders ................................. [RUN]
+[0m07:03:32  2 of 5 OK created sql view model staging.stg_departments ....................... [[32mOK[0m in 0.63s]
+[0m07:03:32  5 of 5 START sql view model staging.stg_products ............................... [RUN]
+[0m07:03:32  1 of 5 OK created sql view model staging.stg_aisles ............................ [[32mOK[0m in 0.70s]
+[0m07:03:32  4 of 5 OK created sql view model staging.stg_orders ............................ [[32mOK[0m in 0.82s]
+[0m07:03:32  3 of 5 OK created sql view model staging.stg_order_products .................... [[32mOK[0m in 0.89s]
+[0m07:03:33  5 of 5 OK created sql view model staging.stg_products .......................... [[32mOK[0m in 0.46s]
+[0m07:03:33  
+[0m07:03:33  Finished running 5 view models in 0 hours 0 minutes and 1.30 seconds (1.30s).
+[0m07:03:33  
+[0m07:03:33  [32mCompleted successfully[0m
+[0m07:03:33  
+[0m07:03:33  Done. PASS=5 WARN=0 ERROR=0 SKIP=0 NO-OP=0 REUSED=0 TOTAL=5

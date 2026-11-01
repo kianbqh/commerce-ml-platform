@@ -1,0 +1,42 @@
+[
+  {
+    "file": "item_emb.npy",
+    "bytes": 6360192,
+    "sha256": "b57f30f76802039cb66a7543fc19bb291f5c31299dbbc83a82d124acc7e8bfdf"
+  },
+  {
+    "file": "items_hnsw.faiss",
+    "bytes": 19887490,
+    "sha256": "7145aeb9a87dd5c53ca19d76fd341cb2dd109398b46f96a87943aecce3063675"
+  },
+  {
+    "file": "rank_early_stop_users.npy",
+    "bytes": 82612,
+    "sha256": "e66f5bf14568af7715a87a5185aba1dbd9f3a7d06c70feea229a6c793fd6d224"
+  },
+  {
+    "file": "rank_fit_users.npy",
+    "bytes": 742480,
+    "sha256": "14bb4049cfe58a763e67b85cad687ae7d775ddb647a6271fefccf04952d54f39"
+  },
+  {
+    "file": "ranker.txt",
+    "bytes": 218226,
+    "sha256": "aa1a74fcc186ff2076cc6bbde38dcbd179f040f41884f354b1d56e693ff60542"
+  },
+  {
+    "file": "serving.json",
+    "bytes": 413,
+    "sha256": "b2d5cc10809383d22e0492b0654c212ea41ff2baf354a236b7b7e83e2a9b4d8c"
+  },
+  {
+    "file": "two_tower.pt",
+    "bytes": 34196708,
+    "sha256": "194da259dc0638bcc6dc8eda3014bb1e8cf4a5166a9ab288bc0816ffbd757307"
+  },
+  {
+    "file": "user_emb.npy",
+    "bytes": 26394880,
+    "sha256": "54ade6095e0fd326e7039c760cf114325b813b9f15cbdaa35a3e638a68a61c05"
+  }
+]

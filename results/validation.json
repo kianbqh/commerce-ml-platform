@@ -1,0 +1,11 @@
+{
+  "status": "passed",
+  "evaluated_all_users": 206209,
+  "training_rows_each_epoch": 29524435,
+  "multi_positive_test_labels": 2165417,
+  "feature_fingerprint": "936de0e402c75b6438fc68ea906f1c66235ddf15b490cbe6527bca3271530011",
+  "http_percentiles_recomputed": true,
+  "model_run_id": "c9f3f9052ae6a10793dc0ed2887a1f37e517079b7ee49aeca60e3f2ecfac6106",
+  "serving_model_run_id": "c9f3f9052ae6a10793dc0ed2887a1f37e517079b7ee49aeca60e3f2ecfac6106",
+  "http_validated_responses": 5000
+}

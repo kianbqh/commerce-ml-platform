@@ -1,12 +1,13 @@
 """Download the six CSVs atomically and record their actual bytes, rows and hashes."""
 import hashlib
 import json
+import os
 import time
 from pathlib import Path
 from urllib.request import urlopen
 
 ROOT = Path(__file__).resolve().parents[1]
-RAW = ROOT / "data/raw"
+RAW = Path(os.environ.get('RAW_DIR', ROOT / "data/raw"))
 BASE = "https://huggingface.co/datasets/attik/Instacart-Market-Basket-Analysis/resolve/main"
 FILES = ("aisles", "departments", "products", "orders", "order_products__train", "order_products__prior")
 

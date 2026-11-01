@@ -447,15 +447,15 @@
       ]
     }
   },
-  "runtime_s": 11.8,
+  "runtime_s": 14.2,
   "environment": {
-    "run_utc": "2026-11-01T01:30:18.314590+00:00",
+    "run_utc": "2026-11-01T07:07:00.996618+00:00",
     "platform": "Linux-6.18.54.1-microsoft-standard-WSL2-x86_64-with-glibc2.39",
     "python": "3.12.3",
     "thread_limits": {
-      "OMP_NUM_THREADS": "2",
-      "OPENBLAS_NUM_THREADS": "2",
-      "MKL_NUM_THREADS": "2"
+      "OMP_NUM_THREADS": "4",
+      "OPENBLAS_NUM_THREADS": "4",
+      "MKL_NUM_THREADS": "4"
     },
     "packages": {
       "numpy": "2.5.4",

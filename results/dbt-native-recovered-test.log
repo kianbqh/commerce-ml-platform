@@ -1,0 +1,14 @@
+[0m07:03:35  Running with dbt=1.12.6
+[0m07:03:36  Registered adapter: duckdb=1.11.1
+[0m07:03:37  Found 20 models, 61 data tests, 6 sources, 515 macros
+[0m07:03:37  
+[0m07:03:37  Concurrency: 4 threads (target='duckdb')
+[0m07:03:37  
+[0m07:03:37  1 of 1 START test relationships_stg_order_products_product_id__product_id__ref_stg_products_  [RUN]
+[0m07:03:38  1 of 1 PASS relationships_stg_order_products_product_id__product_id__ref_stg_products_  [[32mPASS[0m in 0.73s]
+[0m07:03:38  
+[0m07:03:38  Finished running 1 test in 0 hours 0 minutes and 0.85 seconds (0.85s).
+[0m07:03:38  
+[0m07:03:38  [32mCompleted successfully[0m
+[0m07:03:38  
+[0m07:03:38  Done. PASS=1 WARN=0 ERROR=0 SKIP=0 NO-OP=0 REUSED=0 TOTAL=1

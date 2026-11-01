@@ -1,0 +1,56 @@
+[
+  {
+    "file": "aisles.csv",
+    "url": "https://huggingface.co/datasets/attik/Instacart-Market-Basket-Analysis/resolve/main/aisles.csv",
+    "bytes": 2603,
+    "data_rows": 134,
+    "sha256": "2c5f4677761907d3a3ca01edd2d2abe67c147cc60e4905e68736d5f9f3046067",
+    "working_copy": "/opt/codex-resume/consolidation-f4/raw/aisles.csv",
+    "copy_verify_seconds": 0.34082891400021254
+  },
+  {
+    "file": "departments.csv",
+    "url": "https://huggingface.co/datasets/attik/Instacart-Market-Basket-Analysis/resolve/main/departments.csv",
+    "bytes": 270,
+    "data_rows": 21,
+    "sha256": "e6829cea3da95ec22eeb4e0294094a68b929f3bcfda48fdd7d1e33403110fc43",
+    "working_copy": "/opt/codex-resume/consolidation-f4/raw/departments.csv",
+    "copy_verify_seconds": 0.10411217399996531
+  },
+  {
+    "file": "products.csv",
+    "url": "https://huggingface.co/datasets/attik/Instacart-Market-Basket-Analysis/resolve/main/products.csv",
+    "bytes": 2166953,
+    "data_rows": 49688,
+    "sha256": "abc61fdd748003d280ae49cc5d71b65380805ab1ca55dba96fd9a49295ea78b9",
+    "working_copy": "/opt/codex-resume/consolidation-f4/raw/products.csv",
+    "copy_verify_seconds": 0.22799944700000196
+  },
+  {
+    "file": "orders.csv",
+    "url": "https://huggingface.co/datasets/attik/Instacart-Market-Basket-Analysis/resolve/main/orders.csv",
+    "bytes": 108968645,
+    "data_rows": 3421083,
+    "sha256": "92a60ced67ac33bd82271f66ff9675374f69482d17a0e1442ba42caa8b3bff89",
+    "working_copy": "/opt/codex-resume/consolidation-f4/raw/orders.csv",
+    "copy_verify_seconds": 2.77833163699961
+  },
+  {
+    "file": "order_products__train.csv",
+    "url": "https://huggingface.co/datasets/attik/Instacart-Market-Basket-Analysis/resolve/main/order_products__train.csv",
+    "bytes": 24680147,
+    "data_rows": 1384617,
+    "sha256": "d27c4034883051c85e37c2cb0379fecbbeccad932970e171461aa99f18f75aea",
+    "working_copy": "/opt/codex-resume/consolidation-f4/raw/order_products__train.csv",
+    "copy_verify_seconds": 2.4185310960001516
+  },
+  {
+    "file": "order_products__prior.csv",
+    "url": "https://huggingface.co/datasets/attik/Instacart-Market-Basket-Analysis/resolve/main/order_products__prior.csv",
+    "bytes": 577550706,
+    "data_rows": 32434489,
+    "sha256": "27b59dc9cf0d485f55e64e0bc9c5d6fb077ae167f8dfeab9246a03b5b0186359",
+    "working_copy": "/opt/codex-resume/consolidation-f4/raw/order_products__prior.csv",
+    "copy_verify_seconds": 15.70712856299997
+  }
+]
