@@ -1,0 +1,470 @@
+{
+  "parameters": {
+    "seed": 42,
+    "aa_seed": 43,
+    "alpha": 0.05,
+    "power": 0.8,
+    "bootstrap_reps": 4000,
+    "aa_sims": 400,
+    "sequential_planning_visit_rate": 0.1,
+    "sequential_tau2": 0.0001
+  },
+  "dataset": {
+    "rows": 64000,
+    "arms": {
+      "womens": 21387,
+      "mens": 21307,
+      "control": 21306
+    },
+    "source_url": "https://hillstorm1.s3.us-east-2.amazonaws.com/hillstorm_no_indices.csv.gz",
+    "sha256": "bab6578f60db5d792f1c2372c502f029152a5249cf5ea84390f3b7f885d7234f",
+    "missing_values": {
+      "recency": 0,
+      "history_segment": 0,
+      "history": 0,
+      "mens": 0,
+      "womens": 0,
+      "zip_code": 0,
+      "newbie": 0,
+      "channel": 0,
+      "segment": 0,
+      "visit": 0,
+      "conversion": 0,
+      "spend": 0,
+      "arm": 0
+    },
+    "descriptives": {
+      "control": {
+        "visit": {
+          "mean": 0.10616727682343002,
+          "sd": 0.308058826055964,
+          "median": 0.0,
+          "zero_fraction": 0.89383272317657
+        },
+        "conversion": {
+          "mean": 0.005726086548390125,
+          "sd": 0.07545572019078035,
+          "median": 0.0,
+          "zero_fraction": 0.9942739134516099
+        },
+        "spend": {
+          "mean": 0.6527893551112361,
+          "sd": 11.588199681271533,
+          "median": 0.0,
+          "zero_fraction": 0.9942739134516099
+        }
+      },
+      "mens": {
+        "visit": {
+          "mean": 0.18275684047496127,
+          "sd": 0.3864761154524209,
+          "median": 0.0,
+          "zero_fraction": 0.8172431595250387
+        },
+        "conversion": {
+          "mean": 0.01253109306800582,
+          "sd": 0.111241384173946,
+          "median": 0.0,
+          "zero_fraction": 0.9874689069319942
+        },
+        "spend": {
+          "mean": 1.422616511005773,
+          "sd": 17.75420510373683,
+          "median": 0.0,
+          "zero_fraction": 0.9874689069319942
+        }
+      },
+      "womens": {
+        "visit": {
+          "mean": 0.151400383410483,
+          "sd": 0.35844708801029573,
+          "median": 0.0,
+          "zero_fraction": 0.848599616589517
+        },
+        "conversion": {
+          "mean": 0.008837144059475383,
+          "sd": 0.09359197889585694,
+          "median": 0.0,
+          "zero_fraction": 0.9911628559405247
+        },
+        "spend": {
+          "mean": 1.0772015710478329,
+          "sd": 15.116106470737083,
+          "median": 0.0,
+          "zero_fraction": 0.9911628559405247
+        }
+      }
+    }
+  },
+  "srm": {
+    "counts": {
+      "womens": 21387,
+      "mens": 21307,
+      "control": 21306
+    },
+    "expected": {
+      "womens": 21333.3,
+      "mens": 21333.3,
+      "control": 21333.3
+    },
+    "chi2": 0.20253125000000002,
+    "p_value": 0.9036929575604196,
+    "srm_detected": false
+  },
+  "power": {
+    "baseline_visit_rate": 0.10616727682343002,
+    "n_per_arm_available": 21306,
+    "mde_visit_abs_at_n": 0.008361637539166614,
+    "n_per_arm_for_1pp_visit_lift": 15504,
+    "n_per_arm_for_0.1pp_conversion_lift": 96971,
+    "n_per_arm_for_$0.25_spend_lift": 33729
+  },
+  "tests": {
+    "mens_vs_control/visit": {
+      "test": "two-proportion z",
+      "fixed": {
+        "metric": "visit",
+        "control": 0.10616727682343002,
+        "treatment": 0.18275684047496127,
+        "diff": 0.07658956365153125,
+        "rel_lift": 0.721404616781399,
+        "ci_low": 0.06995350121810838,
+        "ci_high": 0.08322562608495411,
+        "stat": 22.48604082719282,
+        "p_value": 5.685165482802317e-112
+      },
+      "bootstrap_ci_diff": [
+        0.07015965581035635,
+        0.08334929038731637
+      ],
+      "bootstrap_ci_rel_lift": [
+        0.6425635361061693,
+        0.8066990537301922
+      ],
+      "cuped_history": {
+        "metric": "visit_cuped_history",
+        "control": 0.10625648701293455,
+        "treatment": 0.1826676344723526,
+        "diff": 0.07641114745941804,
+        "rel_lift": 0.7191198354799416,
+        "ci_low": 0.06978948517740673,
+        "ci_high": 0.08303280974142936,
+        "stat": 22.61781947255434,
+        "p_value": 1.4398592970282274e-112,
+        "variance_reduction": 0.004443884764389949
+      },
+      "cuped_multi": {
+        "metric": "visit_cuped_multi",
+        "control": 0.10643809722370921,
+        "treatment": 0.18248603278507772,
+        "diff": 0.0760479355613685,
+        "rel_lift": 0.7144804120420591,
+        "ci_low": 0.06950927410993062,
+        "ci_high": 0.08258659701280639,
+        "stat": 22.79605077697692,
+        "p_value": 2.6263554426419948e-114,
+        "variance_reduction": 0.029063333692070148,
+        "ci_width_ratio": 0.9853224735357504
+      }
+    },
+    "mens_vs_control/conversion": {
+      "test": "two-proportion z",
+      "fixed": {
+        "metric": "conversion",
+        "control": 0.005726086548390125,
+        "treatment": 0.01253109306800582,
+        "diff": 0.006805006519615695,
+        "rel_lift": 1.188421876286328,
+        "ci_low": 0.005000171380452312,
+        "ci_high": 0.008609841658779076,
+        "stat": 7.385114410925771,
+        "p_value": 1.5232235005955427e-13
+      },
+      "bootstrap_ci_diff": [
+        0.005021544057716872,
+        0.008588510834782327
+      ],
+      "bootstrap_ci_rel_lift": [
+        0.769687277063699,
+        1.7232865692068895
+      ],
+      "cuped_history": {
+        "metric": "conversion_cuped_history",
+        "control": 0.005736873631310742,
+        "treatment": 0.01252030649135464,
+        "diff": 0.006783432860043897,
+        "rel_lift": 1.1824267529654544,
+        "ci_low": 0.004979292173115304,
+        "ci_high": 0.00858757354697249,
+        "stat": 7.369554595669298,
+        "p_value": 1.747213575602728e-13,
+        "variance_reduction": 0.0008877945289156308
+      },
+      "cuped_multi": {
+        "metric": "conversion_cuped_multi",
+        "control": 0.0057423486014247125,
+        "treatment": 0.012514831778197073,
+        "diff": 0.006772483176772361,
+        "rel_lift": 1.1793925529167744,
+        "ci_low": 0.0049695948713989945,
+        "ci_high": 0.008575371482145728,
+        "stat": 7.362769858247487,
+        "p_value": 1.8382589634160244e-13,
+        "variance_reduction": 0.002276758223197395,
+        "ci_width_ratio": 0.9989213232013435
+      }
+    },
+    "mens_vs_control/spend": {
+      "test": "Welch t",
+      "fixed": {
+        "metric": "spend",
+        "control": 0.6527893551112361,
+        "treatment": 1.422616511005773,
+        "diff": 0.7698271558945368,
+        "rel_lift": 1.1792887703620063,
+        "ci_low": 0.4851397325684076,
+        "ci_high": 1.0545145792206658,
+        "stat": 5.300140358411669,
+        "p_value": 1.163814968225482e-07
+      },
+      "bootstrap_ci_diff": [
+        0.4903908064472017,
+        1.0515881245346277
+      ],
+      "bootstrap_ci_rel_lift": [
+        0.636450226723117,
+        1.9437553533840968
+      ],
+      "cuped_history": {
+        "metric": "spend_cuped_history",
+        "control": 0.6539837113719245,
+        "treatment": 1.4214222107997265,
+        "diff": 0.7674384994278021,
+        "rel_lift": 1.1734825899835832,
+        "ci_low": 0.48281285379578437,
+        "ci_high": 1.0520641450598198,
+        "stat": 5.284841624064931,
+        "p_value": 1.265314467251961e-07,
+        "variance_reduction": 0.00043775297112880196
+      },
+      "cuped_multi": {
+        "metric": "spend_cuped_multi",
+        "control": 0.6543235299419665,
+        "treatment": 1.4210824081783668,
+        "diff": 0.7667588782364003,
+        "rel_lift": 1.171834487297753,
+        "ci_low": 0.4822566700376212,
+        "ci_high": 1.0512610864351795,
+        "stat": 5.282452445938397,
+        "p_value": 1.2819202085530264e-07,
+        "variance_reduction": 0.0013051434062235634,
+        "ci_width_ratio": 0.9993494088176217
+      }
+    },
+    "womens_vs_control/visit": {
+      "test": "two-proportion z",
+      "fixed": {
+        "metric": "visit",
+        "control": 0.10616727682343002,
+        "treatment": 0.151400383410483,
+        "diff": 0.045233106587052985,
+        "rel_lift": 0.4260550702669102,
+        "ci_low": 0.03889382581264261,
+        "ci_high": 0.05157238736146336,
+        "stat": 13.949180655258505,
+        "p_value": 3.1824031593349214e-44
+      },
+      "bootstrap_ci_diff": [
+        0.03891468368187461,
+        0.05165172356365151
+      ],
+      "bootstrap_ci_rel_lift": [
+        0.35629471510022936,
+        0.5012884419360218
+      ],
+      "cuped_history": {
+        "metric": "visit_cuped_history",
+        "control": 0.1062364900080433,
+        "treatment": 0.15133143236024826,
+        "diff": 0.04509494235220496,
+        "rel_lift": 0.4244769603061129,
+        "ci_low": 0.038768032801251434,
+        "ci_high": 0.05142185190315848,
+        "stat": 13.970015231109409,
+        "p_value": 2.988530657052129e-44,
+        "variance_reduction": 0.004012499801281932
+      },
+      "cuped_multi": {
+        "metric": "visit_cuped_multi",
+        "control": 0.10608116322322925,
+        "treatment": 0.15148617086855928,
+        "diff": 0.04540500764533004,
+        "rel_lift": 0.4280213966902224,
+        "ci_low": 0.039148416991021964,
+        "ci_high": 0.05166159829963811,
+        "stat": 14.224161802871242,
+        "p_value": 8.301811171147614e-46,
+        "variance_reduction": 0.02586319455054642,
+        "ci_width_ratio": 0.9869559145516803
+      }
+    },
+    "womens_vs_control/conversion": {
+      "test": "two-proportion z",
+      "fixed": {
+        "metric": "conversion",
+        "control": 0.005726086548390125,
+        "treatment": 0.008837144059475383,
+        "diff": 0.003111057511085258,
+        "rel_lift": 0.5433130436982172,
+        "ci_low": 0.0014986778214022343,
+        "ci_high": 0.004723437200768281,
+        "stat": 3.77956095835785,
+        "p_value": 0.00015710512910668448
+      },
+      "bootstrap_ci_diff": [
+        0.0014720607165924042,
+        0.00474918328321235
+      ],
+      "bootstrap_ci_rel_lift": [
+        0.23061562961557178,
+        0.9533769245367687
+      ],
+      "cuped_history": {
+        "metric": "conversion_cuped_history",
+        "control": 0.005733309064960449,
+        "treatment": 0.008829948897084803,
+        "diff": 0.003096639832124354,
+        "rel_lift": 0.5401138848504962,
+        "ci_low": 0.0014847187321718326,
+        "ci_high": 0.0047085609320768745,
+        "stat": 3.7653716977780847,
+        "p_value": 0.00016653404122441418,
+        "variance_reduction": 0.000678104328392326
+      },
+      "cuped_multi": {
+        "metric": "conversion_cuped_multi",
+        "control": 0.005725553387613632,
+        "treatment": 0.008837675200986765,
+        "diff": 0.0031121218133731334,
+        "rel_lift": 0.5435495231091091,
+        "ci_low": 0.0015011045747838692,
+        "ci_high": 0.004723139051962397,
+        "stat": 3.786320212257011,
+        "p_value": 0.00015311295520378535,
+        "variance_reduction": 0.0017937292280761907,
+        "ci_width_ratio": 0.9991550060432558
+      }
+    },
+    "womens_vs_control/spend": {
+      "test": "Welch t",
+      "fixed": {
+        "metric": "spend",
+        "control": 0.6527893551112361,
+        "treatment": 1.0772015710478329,
+        "diff": 0.4244122159365967,
+        "rel_lift": 0.6501518638646863,
+        "ci_low": 0.16895678988377877,
+        "ci_high": 0.6798676419894147,
+        "stat": 3.256371576025392,
+        "p_value": 0.0011293971023632495
+      },
+      "bootstrap_ci_diff": [
+        0.1640460411065673,
+        0.6866890358657385
+      ],
+      "bootstrap_ci_rel_lift": [
+        0.21803264345972884,
+        1.278734702157358
+      ],
+      "cuped_history": {
+        "metric": "spend_cuped_history",
+        "control": 0.6536466248905437,
+        "treatment": 1.0763475480470415,
+        "diff": 0.42270092315649777,
+        "rel_lift": 0.6466811072837423,
+        "ci_low": 0.16729379164008573,
+        "ci_high": 0.6781080546729098,
+        "stat": 3.2438546562089323,
+        "p_value": 0.0011802047342596507,
+        "variance_reduction": 0.00038059634284703936
+      },
+      "cuped_multi": {
+        "metric": "spend_cuped_multi",
+        "control": 0.6526951725091065,
+        "treatment": 1.0772953969477241,
+        "diff": 0.42460022443861767,
+        "rel_lift": 0.6505337289478629,
+        "ci_low": 0.16924528755984952,
+        "ci_high": 0.6799551613173858,
+        "stat": 3.259096146217679,
+        "p_value": 0.001118609235457759,
+        "variance_reduction": 0.0007857606496152192,
+        "ci_width_ratio": 0.9996066273650842
+      }
+    }
+  },
+  "holm_adjusted_p": {
+    "mens_vs_control/visit": 3.41109928968139e-111,
+    "womens_vs_control/visit": 1.5912015796674606e-43,
+    "mens_vs_control/conversion": 6.092894002382171e-13,
+    "mens_vs_control/spend": 3.491444904676446e-07,
+    "womens_vs_control/conversion": 0.00031421025821336897,
+    "womens_vs_control/spend": 0.0011293971023632495
+  },
+  "sequential": {
+    "method": "Gaussian mSPRT approximation, mens vs control, binary visit",
+    "tau2": 0.0001,
+    "sigma2": 0.09000000000000001,
+    "parameter_selection": "fixed planning baseline 0.10 and effect-prior SD 0.01",
+    "arrival_order": "seeded independent random permutation of each arm",
+    "stopped_at_n_per_arm": 372,
+    "fraction_of_full_sample": 0.017459870459025625,
+    "final_running_p": 1.2255970194235656e-140
+  },
+  "aa_simulation": {
+    "n_sims": 400,
+    "looks": 20,
+    "fixed_horizon_fpr": 0.045,
+    "naive_peeking_fpr": 0.22,
+    "msprt_peeking_fpr": 0.0125,
+    "rejections": {
+      "fixed_horizon": 18,
+      "naive_peeking": 88,
+      "gaussian_msprt": 5
+    },
+    "rejection_rate_ci95": {
+      "fixed_horizon": [
+        0.026884625615141773,
+        0.07018879549534222
+      ],
+      "naive_peeking": [
+        0.18035595725209105,
+        0.26384331582750836
+      ],
+      "gaussian_msprt": [
+        0.004070835844599721,
+        0.028928343785286817
+      ]
+    }
+  },
+  "runtime_s": 11.8,
+  "environment": {
+    "run_utc": "2026-11-01T01:30:18.314590+00:00",
+    "platform": "Linux-6.18.54.1-microsoft-standard-WSL2-x86_64-with-glibc2.39",
+    "python": "3.12.3",
+    "thread_limits": {
+      "OMP_NUM_THREADS": "2",
+      "OPENBLAS_NUM_THREADS": "2",
+      "MKL_NUM_THREADS": "2"
+    },
+    "packages": {
+      "numpy": "2.5.4",
+      "pandas": "3.1.0",
+      "scipy": "1.18.1",
+      "statsmodels": "0.15.0",
+      "matplotlib": "3.11.2",
+      "pytest": "9.2.0",
+      "nbconvert": "7.17.2"
+    }
+  }
+}
