@@ -1,0 +1,11 @@
+version: 2
+sources:
+  - name: raw
+    description: Instacart Online Grocery Shopping Dataset 2017 (BigQuery target only; DuckDB reads CSVs via raw_source()).
+    tables:
+      - name: orders
+      - name: order_products__prior
+      - name: order_products__train
+      - name: products
+      - name: aisles
+      - name: departments

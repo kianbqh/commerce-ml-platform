@@ -1,0 +1,56 @@
+version: 2
+models:
+  - name: stg_orders
+    description: One row per order (prior, train and test eval sets).
+    columns:
+      - name: order_id
+        data_tests: [unique, not_null]
+      - name: user_id
+        data_tests: [not_null]
+      - name: eval_set
+        data_tests:
+          - accepted_values:
+              arguments: {values: ["prior", "train", "test"]}
+      - name: order_dow
+        data_tests:
+          - is_between: {arguments: {min_value: 0, max_value: 6}}
+      - name: order_hour_of_day
+        data_tests:
+          - is_between: {arguments: {min_value: 0, max_value: 23}}
+      - name: days_since_prior_order
+        data_tests:
+          - is_between: {arguments: {min_value: 0, max_value: 30}}
+  - name: stg_order_products
+    description: One row per (order, product) line, union of the prior and train files.
+    data_tests:
+      - unique_combination: {arguments: {columns: ["order_id", "product_id"]}}
+    columns:
+      - name: order_id
+        data_tests:
+          - not_null
+          - relationships: {arguments: {to: ref('stg_orders'), field: order_id}}
+      - name: product_id
+        data_tests:
+          - not_null
+          - relationships: {arguments: {to: ref('stg_products'), field: product_id}}
+      - name: reordered
+        data_tests:
+          - accepted_values: {arguments: {values: [0, 1], quote: false}}
+  - name: stg_products
+    columns:
+      - name: product_id
+        data_tests: [unique, not_null]
+      - name: aisle_id
+        data_tests:
+          - relationships: {arguments: {to: ref('stg_aisles'), field: aisle_id}}
+      - name: department_id
+        data_tests:
+          - relationships: {arguments: {to: ref('stg_departments'), field: department_id}}
+  - name: stg_aisles
+    columns:
+      - name: aisle_id
+        data_tests: [unique, not_null]
+  - name: stg_departments
+    columns:
+      - name: department_id
+        data_tests: [unique, not_null]

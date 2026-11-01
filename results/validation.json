@@ -1,0 +1,13 @@
+{
+  "three_model_runs": "14/14 each",
+  "two_data_test_runs": "52/52 each",
+  "fixtures": "2 passed, including expected rejection of reordered=1 on the first order",
+  "query_samples_per_query": 5,
+  "query_medians_recomputed": true,
+  "portability": {
+    "models_checked": 9,
+    "transpiled_and_reparsed_ok": 9,
+    "failures": {}
+  },
+  "source_syntax": "passed"
+}

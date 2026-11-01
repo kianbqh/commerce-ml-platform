@@ -1,0 +1,177 @@
+{
+  "row_counts": {
+    "fct_order_lines": 33819106,
+    "fct_orders": 3346083,
+    "dim_products": 49688,
+    "dim_users": 206209,
+    "mart_department_kpis": 21,
+    "mart_hourly_demand": 168,
+    "mart_user_retention": 8,
+    "mart_product_pairs": 81761
+  },
+  "query_ms_median_of_5": {
+    "reorder_rate_by_department (33.8M-line scan)": 33.3,
+    "top_100_products_by_buyers": 360.5,
+    "basket_size_by_dow_hour": 4.3,
+    "user_segment_summary": 1.7,
+    "aisle_share_with_window": 25.4,
+    "user_product_reorder_counts (feature table)": 300.8
+  },
+  "kpis": {
+    "orders": 3346083,
+    "lines": 33819106,
+    "users": 206209,
+    "avg_basket_size": 10.11,
+    "overall_reorder_rate_excl_first_orders": 0.6287,
+    "top_departments": [
+      [
+        "produce",
+        0.2924,
+        0.6505
+      ],
+      [
+        "dairy eggs",
+        0.1665,
+        0.6702
+      ],
+      [
+        "snacks",
+        0.0889,
+        0.5745
+      ],
+      [
+        "beverages",
+        0.0829,
+        0.6537
+      ],
+      [
+        "frozen",
+        0.0691,
+        0.5426
+      ]
+    ],
+    "observed_span_share": [
+      [
+        7,
+        0.9987
+      ],
+      [
+        14,
+        0.9932
+      ],
+      [
+        30,
+        0.9641
+      ],
+      [
+        60,
+        0.8589
+      ],
+      [
+        90,
+        0.7117
+      ],
+      [
+        180,
+        0.4004
+      ],
+      [
+        270,
+        0.2088
+      ],
+      [
+        365,
+        0.0049
+      ]
+    ],
+    "peak_hour": [
+      1,
+      10,
+      54719
+    ],
+    "top_lift_pairs": [
+      [
+        "Yotoddler Organic Pear Spinach Mango Yogurt",
+        "Organic Whole Milk Strawberry Beet Berry Yogurt Pouch",
+        2883,
+        237.01
+      ],
+      [
+        "Vanilla Almond Milk Yogurt",
+        "Almond Milk Strawberry Yogurt",
+        1867,
+        187.58
+      ],
+      [
+        "Blueberry on the Bottom Nonfat Greek Yogurt",
+        "Strawberry on the Bottom Nonfat Greek Yogurt",
+        2863,
+        183.41
+      ],
+      [
+        "Organic Greek Nonfat Yogurt With Mixed Berries",
+        "Organic Nonfat Greek Yogurt With Peaches",
+        2274,
+        170.15
+      ],
+      [
+        "Cherry Pie Fruit & Nut Bar",
+        "Apple Pie Fruit & Nut Food Bar",
+        2080,
+        157.09
+      ]
+    ],
+    "n_rule_pairs": 81761
+  },
+  "query_ms_samples": {
+    "reorder_rate_by_department (33.8M-line scan)": [
+      40.32258900042507,
+      30.93034700032149,
+      31.250213000021176,
+      35.83811699900252,
+      33.3463919996575
+    ],
+    "top_100_products_by_buyers": [
+      457.07914999911736,
+      413.7147569999797,
+      353.2709209994209,
+      345.9973789995274,
+      360.5360519995884
+    ],
+    "basket_size_by_dow_hour": [
+      4.320423000535811,
+      4.303702000470366,
+      4.312551000111853,
+      4.260652000084519,
+      4.180855999948108
+    ],
+    "user_segment_summary": [
+      1.826841998990858,
+      1.829774999350775,
+      1.6653329985274468,
+      1.6739929997129366,
+      1.6020549992390443
+    ],
+    "aisle_share_with_window": [
+      25.39781099949323,
+      25.373150998348137,
+      25.406798000403796,
+      25.229647999367444,
+      25.38231799917412
+    ],
+    "user_product_reorder_counts (feature table)": [
+      300.8402510004089,
+      301.5158580001298,
+      296.9507269990572,
+      291.52561299997615,
+      301.01690199990117
+    ]
+  },
+  "query_protocol": {
+    "threads": 4,
+    "memory_limit": "4GB",
+    "warmup_runs": 1,
+    "measured_runs": 5
+  },
+  "db_file_mb": 702.5
+}

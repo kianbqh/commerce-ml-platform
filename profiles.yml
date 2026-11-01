@@ -1,0 +1,17 @@
+instacart_analytics:
+  target: duckdb
+  outputs:
+    duckdb:
+      type: duckdb
+      path: "{{ env_var('DUCKDB_PATH', 'warehouse.duckdb') }}"
+      threads: 4
+      settings:
+        memory_limit: "4GB"
+        preserve_insertion_order: false
+    # Same models on BigQuery (not run in this repo; needs a GCP project + service account):
+    bigquery:
+      type: bigquery
+      method: oauth
+      project: "{{ env_var('GCP_PROJECT', 'your-project') }}"
+      dataset: instacart
+      threads: 4

@@ -1,0 +1,10 @@
+data/raw/*.csv
+warehouse.duckdb*
+target/
+dbt_packages/
+logs/
+.venv/
+.venv
+.tmp/
+__pycache__/
+.pytest_cache/

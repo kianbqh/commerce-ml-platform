@@ -1,0 +1,27 @@
+{
+  "platform": "Linux-6.18.54.1-microsoft-standard-WSL2-x86_64-with-glibc2.39",
+  "python": "3.12.3",
+  "cpu_model": "12th Gen Intel(R) Core(TM) i7-12700KF",
+  "logical_cpus": 20,
+  "packages": {
+    "dbt-core": "1.12.6",
+    "dbt-duckdb": "1.11.1",
+    "duckdb": "2.0.0",
+    "sqlglot": "30.27.0",
+    "pytest": "9.2.0"
+  },
+  "configured_dbt_threads": 4,
+  "configured_duckdb_memory_limit": "4GB",
+  "csv_storage": "G: NTFS mounted at /mnt/g",
+  "database_storage": "native Linux path on G-backed WSL virtual disk",
+  "query_protocol": {
+    "threads": 4,
+    "memory_limit": "4GB",
+    "warmup_runs": 1,
+    "measured_runs": 5
+  },
+  "measurement_window_utc": {
+    "start": "2026-11-01T03:40:40Z",
+    "complete": "2026-11-01T03:43:23Z"
+  }
+}

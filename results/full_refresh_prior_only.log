@@ -1,0 +1,41 @@
+[0m03:40:53  Running with dbt=1.12.6
+[0m03:40:53  Registered adapter: duckdb=1.11.1
+[0m03:40:53  Unable to do partial parsing because saved manifest not found. Starting full parse.
+[0m03:40:55  Found 14 models, 52 data tests, 6 sources, 515 macros
+[0m03:40:55  
+[0m03:40:55  Concurrency: 4 threads (target='duckdb')
+[0m03:40:55  
+[0m03:40:55  1 of 14 START sql view model staging.stg_aisles ................................ [RUN]
+[0m03:40:55  2 of 14 START sql view model staging.stg_departments ........................... [RUN]
+[0m03:40:55  3 of 14 START sql view model staging.stg_order_products ........................ [RUN]
+[0m03:40:55  4 of 14 START sql view model staging.stg_orders ................................ [RUN]
+[0m03:40:56  1 of 14 OK created sql view model staging.stg_aisles ........................... [[32mOK[0m in 0.35s]
+[0m03:40:56  2 of 14 OK created sql view model staging.stg_departments ...................... [[32mOK[0m in 0.36s]
+[0m03:40:56  5 of 14 START sql view model staging.stg_products .............................. [RUN]
+[0m03:40:56  5 of 14 OK created sql view model staging.stg_products ......................... [[32mOK[0m in 0.44s]
+[0m03:40:56  3 of 14 OK created sql view model staging.stg_order_products ................... [[32mOK[0m in 0.81s]
+[0m03:40:56  4 of 14 OK created sql view model staging.stg_orders ........................... [[32mOK[0m in 0.82s]
+[0m03:40:56  6 of 14 START sql incremental model marts.fct_order_lines ...................... [RUN]
+[0m03:40:56  7 of 14 START sql view model intermediate.int_orders_timeline .................. [RUN]
+[0m03:40:57  7 of 14 OK created sql view model intermediate.int_orders_timeline ............. [[32mOK[0m in 0.63s]
+[0m03:41:05  6 of 14 OK created sql incremental model marts.fct_order_lines ................. [[32mOK[0m in 8.53s]
+[0m03:41:05  8 of 14 START sql table model marts.dim_products ............................... [RUN]
+[0m03:41:05  9 of 14 START sql incremental model marts.fct_orders ........................... [RUN]
+[0m03:41:05  10 of 14 START sql table model marts.mart_department_kpis ...................... [RUN]
+[0m03:41:10  8 of 14 OK created sql table model marts.dim_products .......................... [[32mOK[0m in 5.10s]
+[0m03:41:10  9 of 14 OK created sql incremental model marts.fct_orders ...................... [[32mOK[0m in 5.25s]
+[0m03:41:10  10 of 14 OK created sql table model marts.mart_department_kpis ................. [[32mOK[0m in 5.25s]
+[0m03:41:10  11 of 14 START sql table model marts.dim_users ................................. [RUN]
+[0m03:41:10  12 of 14 START sql table model marts.mart_hourly_demand ........................ [RUN]
+[0m03:41:10  13 of 14 START sql table model marts.mart_product_pairs ........................ [RUN]
+[0m03:41:11  12 of 14 OK created sql table model marts.mart_hourly_demand ................... [[32mOK[0m in 0.56s]
+[0m03:41:11  11 of 14 OK created sql table model marts.dim_users ............................ [[32mOK[0m in 0.99s]
+[0m03:41:11  14 of 14 START sql table model marts.mart_user_retention ....................... [RUN]
+[0m03:41:12  13 of 14 OK created sql table model marts.mart_product_pairs ................... [[32mOK[0m in 1.97s]
+[0m03:41:12  14 of 14 OK created sql table model marts.mart_user_retention .................. [[32mOK[0m in 1.23s]
+[0m03:41:12  
+[0m03:41:12  Finished running 2 incremental models, 6 table models, 6 view models in 0 hours 0 minutes and 17.56 seconds (17.56s).
+[0m03:41:13  
+[0m03:41:13  [32mCompleted successfully[0m
+[0m03:41:13  
+[0m03:41:13  Done. PASS=14 WARN=0 ERROR=0 SKIP=0 NO-OP=0 REUSED=0 TOTAL=14

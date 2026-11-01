@@ -1,0 +1,40 @@
+[0m03:41:48  Running with dbt=1.12.6
+[0m03:41:49  Registered adapter: duckdb=1.11.1
+[0m03:41:50  Found 14 models, 52 data tests, 6 sources, 515 macros
+[0m03:41:50  
+[0m03:41:50  Concurrency: 4 threads (target='duckdb')
+[0m03:41:50  
+[0m03:41:51  1 of 14 START sql view model staging.stg_aisles ................................ [RUN]
+[0m03:41:51  2 of 14 START sql view model staging.stg_departments ........................... [RUN]
+[0m03:41:51  3 of 14 START sql view model staging.stg_order_products ........................ [RUN]
+[0m03:41:51  4 of 14 START sql view model staging.stg_orders ................................ [RUN]
+[0m03:41:51  1 of 14 OK created sql view model staging.stg_aisles ........................... [[32mOK[0m in 0.91s]
+[0m03:41:51  5 of 14 START sql view model staging.stg_products .............................. [RUN]
+[0m03:41:52  2 of 14 OK created sql view model staging.stg_departments ...................... [[32mOK[0m in 1.06s]
+[0m03:41:52  4 of 14 OK created sql view model staging.stg_orders ........................... [[32mOK[0m in 1.36s]
+[0m03:41:52  6 of 14 START sql view model intermediate.int_orders_timeline .................. [RUN]
+[0m03:41:52  3 of 14 OK created sql view model staging.stg_order_products ................... [[32mOK[0m in 1.64s]
+[0m03:41:52  5 of 14 OK created sql view model staging.stg_products ......................... [[32mOK[0m in 0.90s]
+[0m03:41:52  7 of 14 START sql incremental model marts.fct_order_lines ...................... [RUN]
+[0m03:41:53  6 of 14 OK created sql view model intermediate.int_orders_timeline ............. [[32mOK[0m in 1.10s]
+[0m03:42:00  7 of 14 OK created sql incremental model marts.fct_order_lines ................. [[32mOK[0m in 7.84s]
+[0m03:42:00  8 of 14 START sql table model marts.dim_products ............................... [RUN]
+[0m03:42:00  9 of 14 START sql incremental model marts.fct_orders ........................... [RUN]
+[0m03:42:00  10 of 14 START sql table model marts.mart_department_kpis ...................... [RUN]
+[0m03:42:04  8 of 14 OK created sql table model marts.dim_products .......................... [[32mOK[0m in 4.24s]
+[0m03:42:05  10 of 14 OK created sql table model marts.mart_department_kpis ................. [[32mOK[0m in 4.50s]
+[0m03:42:05  9 of 14 OK created sql incremental model marts.fct_orders ...................... [[32mOK[0m in 4.68s]
+[0m03:42:05  11 of 14 START sql table model marts.dim_users ................................. [RUN]
+[0m03:42:05  12 of 14 START sql table model marts.mart_hourly_demand ........................ [RUN]
+[0m03:42:05  13 of 14 START sql table model marts.mart_product_pairs ........................ [RUN]
+[0m03:42:06  12 of 14 OK created sql table model marts.mart_hourly_demand ................... [[32mOK[0m in 0.68s]
+[0m03:42:06  11 of 14 OK created sql table model marts.dim_users ............................ [[32mOK[0m in 1.31s]
+[0m03:42:06  14 of 14 START sql table model marts.mart_user_retention ....................... [RUN]
+[0m03:42:08  13 of 14 OK created sql table model marts.mart_product_pairs ................... [[32mOK[0m in 3.03s]
+[0m03:42:10  14 of 14 OK created sql table model marts.mart_user_retention .................. [[32mOK[0m in 3.26s]
+[0m03:42:10  
+[0m03:42:10  Finished running 2 incremental models, 6 table models, 6 view models in 0 hours 0 minutes and 19.31 seconds (19.31s).
+[0m03:42:10  
+[0m03:42:10  [32mCompleted successfully[0m
+[0m03:42:10  
+[0m03:42:10  Done. PASS=14 WARN=0 ERROR=0 SKIP=0 NO-OP=0 REUSED=0 TOTAL=14

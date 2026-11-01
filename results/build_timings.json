@@ -1,0 +1,97 @@
+{
+  "full_refresh_prior_only": {
+    "seconds": 22.45,
+    "exit": 0,
+    "pass_warn_error": [
+      14,
+      0,
+      0
+    ],
+    "model_seconds": {
+      "stg_aisles": 0.35,
+      "stg_departments": 0.36,
+      "stg_products": 0.44,
+      "stg_order_products": 0.81,
+      "stg_orders": 0.82,
+      "int_orders_timeline": 0.63,
+      "fct_order_lines": 8.53,
+      "dim_products": 5.1,
+      "fct_orders": 5.25,
+      "mart_department_kpis": 5.25,
+      "mart_hourly_demand": 0.56,
+      "dim_users": 0.99,
+      "mart_product_pairs": 1.97,
+      "mart_user_retention": 1.23
+    }
+  },
+  "incremental_add_train": {
+    "seconds": 19.06,
+    "exit": 0,
+    "pass_warn_error": [
+      14,
+      0,
+      0
+    ],
+    "model_seconds": {
+      "stg_departments": 1.06,
+      "stg_orders": 1.16,
+      "stg_aisles": 1.25,
+      "stg_products": 0.47,
+      "int_orders_timeline": 1.06,
+      "stg_order_products": 4.24,
+      "fct_order_lines": 3.22,
+      "fct_orders": 2.17,
+      "mart_department_kpis": 2.54,
+      "mart_hourly_demand": 1.62,
+      "dim_products": 4.01,
+      "dim_users": 2.02,
+      "mart_user_retention": 0.62,
+      "mart_product_pairs": 2.15
+    }
+  },
+  "dbt_test_after_incremental": {
+    "seconds": 14.28,
+    "exit": 0,
+    "pass_warn_error": [
+      52,
+      0,
+      0
+    ],
+    "model_seconds": {}
+  },
+  "full_refresh_all": {
+    "seconds": 23.74,
+    "exit": 0,
+    "pass_warn_error": [
+      14,
+      0,
+      0
+    ],
+    "model_seconds": {
+      "stg_aisles": 0.91,
+      "stg_departments": 1.06,
+      "stg_orders": 1.36,
+      "stg_order_products": 1.64,
+      "stg_products": 0.9,
+      "int_orders_timeline": 1.1,
+      "fct_order_lines": 7.84,
+      "dim_products": 4.24,
+      "mart_department_kpis": 4.5,
+      "fct_orders": 4.68,
+      "mart_hourly_demand": 0.68,
+      "dim_users": 1.31,
+      "mart_product_pairs": 3.03,
+      "mart_user_retention": 3.26
+    }
+  },
+  "dbt_test_after_full_refresh": {
+    "seconds": 43.24,
+    "exit": 0,
+    "pass_warn_error": [
+      52,
+      0,
+      0
+    ],
+    "model_seconds": {}
+  }
+}
