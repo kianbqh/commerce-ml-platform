@@ -1,0 +1,34 @@
+{
+  "results/metrics.json": {
+    "bytes": 2223,
+    "sha256": "a4c5dd907c3a2ad9d76419934ad69f7229e3cb5eb2dd3e4c805ff301cc78711d"
+  },
+  "results/api_bench.json": {
+    "bytes": 610,
+    "sha256": "fd5debb8e318a40a0a735818abe7061f09c4335ffbeb4564739f6937c17a83be"
+  },
+  "results/environment.json": {
+    "bytes": 884,
+    "sha256": "8803dcae9b453d707e263419bc5fe0e907c494fe27bcc688c9d091cea6aede2d"
+  },
+  "artifacts/context.pkl": {
+    "bytes": 10539638,
+    "sha256": "6300b4b2afa1a4eb5e8643068baa832515e2e9eb18b680bca77a36e0065164ca"
+  },
+  "artifacts/item_emb.npy": {
+    "bytes": 948864,
+    "sha256": "3b807f6f02605b99a6de54505735b6ca4209454195a1c5f53e359e72ad97a2b5"
+  },
+  "artifacts/items_hnsw.faiss": {
+    "bytes": 1954842,
+    "sha256": "4ee8b4243222dae6388ede488f025d455d15a1d3d76b69eab1d4ba9c30d6598a"
+  },
+  "artifacts/ranker.txt": {
+    "bytes": 115489,
+    "sha256": "552ca819f9e24f9dfc7c4dc00e785341a20d4b5661564199df3c98f017016e87"
+  },
+  "artifacts/user_emb.npy": {
+    "bytes": 1546368,
+    "sha256": "b90eaa10a4c4021c7b1c908eb703e4310731989209a786f99186960d6521fe3a"
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "started_utc": "2026-11-01T03:04:53.183874+00:00",
+  "finished_utc": "2026-11-01T03:05:13.751337+00:00",
+  "url": "http://127.0.0.1:8088",
+  "requests": 5000,
+  "completed": 5000,
+  "concurrency": 8,
+  "seed": 0,
+  "warmup_requests": 1,
+  "users": 6040,
+  "items": 3706,
+  "successful_responses": 5000,
+  "errors": 0,
+  "failure_counts": {},
+  "status_counts": {
+    "200": 5000
+  },
+  "elapsed_s": 20.463946,
+  "throughput_rps": 244.332,
+  "client_latency_ms": {
+    "p50": 20.98,
+    "p95": 93.327,
+    "p99": 286.805
+  },
+  "server_compute_ms": {
+    "p50": 0.7,
+    "p95": 4.58,
+    "p99": 8.166
+  }
+}

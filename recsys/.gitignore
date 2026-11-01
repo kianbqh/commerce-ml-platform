@@ -1,0 +1,10 @@
+data/
+artifacts/
+__pycache__/
+.venv
+.pytest_cache/
+*.pyc
+.cache/
+.tmp/
+results/*.log
+results/*junit.xml

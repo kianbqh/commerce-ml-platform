@@ -1,0 +1,27 @@
+{
+  "measured_at_utc": "2026-11-01T03:02:09.477450+00:00",
+  "platform": "Linux-6.18.54.1-microsoft-standard-WSL2-x86_64-with-glibc2.39",
+  "python": "3.12.3",
+  "cpu_model": "12th Gen Intel(R) Core(TM) i7-12700KF",
+  "logical_cpus": 20,
+  "storage": "G-backed WSL2 disk; project files on /mnt/g",
+  "training_device": "cpu",
+  "torch_threads": 4,
+  "omp_threads": 4,
+  "mkl_threads": 4,
+  "openblas_threads": 1,
+  "faiss_single_query_threads": 1,
+  "packages": {
+    "torch": "2.15.0",
+    "numpy": "2.5.4",
+    "pandas": "3.1.0",
+    "faiss-cpu": "1.15.1",
+    "lightgbm": "4.7.0",
+    "fastapi": "0.162.0",
+    "uvicorn": "0.54.0",
+    "httpx": "0.28.1",
+    "pytest": "9.2.0"
+  },
+  "dataset_archive_sha256": "a6898adb50b9ca05aa231689da44c217cb524e7ebd39d264c56e2832f2c54e20",
+  "protocol": "Eight epochs, seed 0; temporal leave-last-two-out; 5000 HTTP requests, eight clients"
+}

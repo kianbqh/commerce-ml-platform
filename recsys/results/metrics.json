@@ -1,0 +1,89 @@
+{
+  "dataset": {
+    "name": "MovieLens-1M",
+    "users": 6040,
+    "items": 3706,
+    "train": 988129,
+    "val": 6040,
+    "test": 6040,
+    "split": "per-user temporal leave-last-two-out"
+  },
+  "test_metrics": {
+    "popularity": {
+      "recall@10": 0.03642384105960265,
+      "recall@50": 0.13973509933774833,
+      "recall@100": 0.22582781456953643,
+      "ndcg@10": 0.017865813265634273,
+      "mrr@100": 0.017955220446580655
+    },
+    "two_tower": {
+      "recall@10": 0.06225165562913907,
+      "recall@50": 0.22996688741721855,
+      "recall@100": 0.35894039735099337,
+      "ndcg@10": 0.03162275464624735,
+      "mrr@100": 0.031265928720923215
+    },
+    "two_tower+lambdamart": {
+      "recall@10": 0.12566225165562914,
+      "recall@50": 0.2903973509933775,
+      "recall@100": 0.35894039735099337,
+      "ndcg@10": 0.06647645447994499,
+      "mrr@100": 0.057284478527466966
+    }
+  },
+  "lift_vs_popularity": {
+    "recall@10": 3.45,
+    "ndcg@10": 3.720874806623864
+  },
+  "lift_rerank_vs_two_tower": {
+    "recall@10": 2.018617021276596,
+    "ndcg@10": 2.102171528811887
+  },
+  "faiss": {
+    "hnsw_recall@100_vs_exact": 0.9985182119205297,
+    "latency_single_query_1thread": {
+      "flat": {
+        "p50_ms": 0.03240400110371411,
+        "p99_ms": 0.05216090046815225
+      },
+      "hnsw": {
+        "p50_ms": 0.04197699945507338,
+        "p99_ms": 0.05864634016688796
+      }
+    }
+  },
+  "ranker": {
+    "query_users": 2236,
+    "rows": 223600,
+    "best_iteration": 32,
+    "train_s": 0.4,
+    "batch_score_6040x100_s": 0.36,
+    "feature_gain": {
+      "sim_last5_max": 8829.1,
+      "tt_rank": 3932.9,
+      "sim_last5_mean": 3382.7,
+      "sim_last1": 3199.3,
+      "item_mean_rating": 2394.1,
+      "genre_affinity": 2314.3,
+      "item_pop_log": 2048.7,
+      "user_n_log": 1938.5,
+      "item_recent_pop_log": 1926.8,
+      "tt_score": 1175.0,
+      "year_gap": 1156.8,
+      "user_mean_rating": 1049.9,
+      "item_year": 892.3,
+      "user_occ": 663.6,
+      "user_age": 436.5,
+      "user_gender": 59.9
+    }
+  },
+  "data_load_s": 4.974,
+  "two_tower_train_s": 86.521,
+  "training": {
+    "device": "cpu",
+    "epochs": 8,
+    "torch_threads": 4,
+    "seed": 0
+  },
+  "total_s": 93.991
+}
