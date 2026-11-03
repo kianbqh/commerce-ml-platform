@@ -43,21 +43,31 @@ def train_eval(rt):
         return result
     if rt.config["training_seeds"] != [42, 43, 44] or rt.config["http_seed"] != 42:
         raise ValueError("predeclared seeds or HTTP model selection changed")
+    from .accepted_cache import prepare_training_binding, validate_binding
+    binding_path, binding = prepare_training_binding(rt)
+    model_python = str(rt.config.get("model_python") or sys.executable)
+    wrapper = rt.repo / "orchestration/scripts/run_recsys_cache_only.py"
+    env = os.environ.copy()
+    env.update({"PYTHONPATH": os.pathsep.join((str(rt.repo / "orchestration"), str(rt.repo / "recsys"))),
+                "PYTHONDONTWRITEBYTECODE": "1", "TMPDIR": str(rt.root / "tmp")})
+    run_command([model_python, str(wrapper), "--inspect-only", "--runtime-receipt",
+                 str(rt.root / "model-python-identity.json")], cwd=rt.repo, env=env,
+                destination=rt.root / "model-python-preflight", provenance=rt.provenance)
     results = []
     for seed in rt.config["training_seeds"]:
         directory = rt.root / "models" / f"seed-{seed}"
-        command = [sys.executable, "-m", "recsys.pipeline", "--database", str(rt.root / "terminal/warehouse.duckdb"),
-                   "--cache", str(rt.root / "terminal/features"), "--artifacts", str(directory / "artifacts"),
+        if directory.exists():
+            raise FileExistsError("fresh per-seed output required: " + str(directory))
+        validate_binding(binding, rt.repo)
+        command = [model_python, str(wrapper), "--binding", str(binding_path), "--database", binding["database"],
+                   "--cache", binding["feature_cache"], "--artifacts", str(directory / "artifacts"),
                    "--out", str(directory / "metrics.json"), "--epochs", str(rt.config["training_epochs"]),
                    "--rounds", str(rt.config["ranker_rounds"]), "--seed", str(seed),
                    "--candidates", str(rt.config["candidates"])]
-        env = os.environ.copy()
-        env["PYTHONPATH"] = str(rt.repo / "recsys")
-        env["TMPDIR"] = str(rt.root / "tmp")
         run_command(command, cwd=rt.repo, env=env, destination=directory / "process", provenance=rt.provenance)
         metrics = read_json(directory / "metrics.json")
-        if metrics["dataset"]["split_sha256"] != read_json(rt.root / "terminal/features/manifest.json")["split_sha256"]:
-            raise ValueError("seed run changed held-out split")
+        if any(metrics["dataset"][key] != binding[key] for key in ("split_sha256", "feature_fingerprint")):
+            raise ValueError("seed run changed held-out split/feature identity")
         results.append({"seed": seed, "path": str(directory / "metrics.json"), "metrics": metrics})
     # Store exact individual records. Any public table must copy the produced values.
     summaries = {}
@@ -70,7 +80,10 @@ def train_eval(rt):
                                              "std_definition": "population ddof=0", "values": values}
     result = {"status": "completed", "seeds": [r["seed"] for r in results],
               "per_seed_paths": [r["path"] for r in results], "summary": summaries,
-              "http_seed_predeclared": 42}
+               "http_seed_predeclared": 42, "cache_only": True,
+               "input_binding": str(binding_path), "model_python": model_python,
+               "model_python_identity": str(rt.root / "model-python-identity.json")}
+    validate_binding(binding, rt.repo, verify_files=True)
     rt.evidence("model-run.json", result)
     return result
 
@@ -81,15 +94,20 @@ def benchmark_api(rt):
         result = {"status": "not run", "reason": "new three-seed model path is disabled/not complete"}
         rt.evidence("api-run.json", result)
         return result
+    from .accepted_cache import read, validate_binding
+    binding = read(model["input_binding"])
+    validate_binding(binding, rt.repo)
+    model_python = str(rt.config.get("model_python") or sys.executable)
     port = int(rt.config["http_port"])
     with socket.socket() as probe:
         probe.bind(("127.0.0.1", port))
     directory = rt.root / "api"
     directory.mkdir(parents=True, exist_ok=False)
     env = os.environ.copy()
-    env.update({"PYTHONPATH": str(rt.repo / "recsys"), "COMMERCE_CACHE": str(rt.root / "terminal/features"),
+    env.update({"PYTHONPATH": os.pathsep.join((str(rt.repo / "orchestration"), str(rt.repo / "recsys"))),
+                "COMMERCE_CACHE": binding["feature_cache"], "PYTHONDONTWRITEBYTECODE": "1",
                 "RECSYS_ARTIFACTS": str(rt.root / "models/seed-42/artifacts"), "TMPDIR": str(rt.root / "tmp")})
-    server_command = [sys.executable, "-m", "uvicorn", "recsys.serve:app", "--host", "127.0.0.1",
+    server_command = [model_python, "-m", "uvicorn", "recsys.serve:app", "--host", "127.0.0.1",
                       "--port", str(port), "--workers", "1"]
     owned = None
     started = time.perf_counter()
@@ -109,8 +127,8 @@ def benchmark_api(rt):
                     time.sleep(0.1)
             else:
                 raise RuntimeError("owned API readiness timed out")
-            command = [sys.executable, str(rt.repo / "recsys/scripts/bench_api.py"), "--url", f"http://127.0.0.1:{port}",
-                       "--cache", str(rt.root / "terminal/features"), "-n", str(rt.config["http_requests"]),
+            command = [model_python, str(rt.repo / "recsys/scripts/bench_api.py"), "--url", f"http://127.0.0.1:{port}",
+                       "--cache", binding["feature_cache"], "-n", str(rt.config["http_requests"]),
                        "-c", str(rt.config["http_concurrency"]), "-k", "10", "--out", str(directory / "raw-http.json")]
             run_command(command, cwd=rt.repo, env=env, destination=directory / "benchmark-process", provenance=rt.provenance)
     finally:
@@ -127,6 +145,8 @@ def benchmark_api(rt):
     result = {"status": "completed", "raw_http": str(directory / "raw-http.json"), "predeclared_seed": 42,
               "excluded_warmups": 50, "repetitions": 1, "concurrency": rt.config["http_concurrency"],
               "client_timer": "request start through complete response body; existing validator retained",
-              "handler_timer": "retrieval, features, ranking and response items; unchanged implementation"}
+               "handler_timer": "retrieval, features, ranking and response items; unchanged implementation",
+               "model_python": model_python, "input_binding": model["input_binding"]}
+    validate_binding(binding, rt.repo, verify_files=True)
     rt.evidence("api-run.json", result)
     return result

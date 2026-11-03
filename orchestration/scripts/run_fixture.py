@@ -18,6 +18,8 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--fixture", required=True)
     parser.add_argument("--runtime-root", required=True)
+    parser.add_argument("--enable-training", action="store_true",
+                        help="Opt in to actual three-seed fitting and HTTP in this same fixture commerce_all run")
     args = parser.parse_args()
     fixture, base = Path(args.fixture).resolve(), Path(args.runtime_root).resolve()
     if os.environ.get("GITHUB_ACTIONS"):
@@ -38,6 +40,10 @@ def main():
     config.update({"runtime_root": str(base), "raw_dir": str(fixture)})
     if data_kind == "synthetic_test":
         config["data_kind"] = "synthetic_test"
+    if args.enable_training:
+        if identity.get("data_kind") != "synthetic_test":
+            raise ValueError("training CI option requires the declared synthetic fixture")
+        config["training_enabled"] = True
     base.mkdir(parents=True, exist_ok=True)
     identifier = "fixture-" + uuid.uuid4().hex
     path = write_json_new(base / (identifier + ".config.json"), config)
@@ -56,8 +62,22 @@ def main():
             raise ValueError("synthetic fixture label lost at runtime boundary")
     if [b["key"] for b in manifest["batches"]] != ["000000", "000001", "000002"] or any(b["lines"] == 0 for b in manifest["batches"]):
         raise ValueError("fixture did not exercise three nonempty arrival batches")
-    if read_json(base / identifier / "model-run.json")["status"] != "not run":
-        raise ValueError("light fixture unexpectedly trained a model")
+    model = read_json(base / identifier / "model-run.json")
+    api = read_json(base / identifier / "api-run.json")
+    if args.enable_training:
+        if model["status"] != "completed" or model["seeds"] != [42, 43, 44] or api["status"] != "completed":
+            raise ValueError("opt-in fixture did not complete three-seed model/API assets")
+        raw = read_json(base / identifier / "api/raw-http.json")
+        if raw["requests"] != 20 or raw["successful_responses"] != 20 or raw["errors"] != 0 or raw["warmup_requests"] != 50:
+            raise ValueError("opt-in fixture HTTP contract failed")
+        coordinator = read_json(base / identifier / "coordinator.json")
+        terminal = read_json(base / identifier / "children" / (coordinator["terminal_child_run_id"] + ".json"))
+        materialized = [event.get("asset_key") for event in terminal["events"]
+                        if event["event_type"] == "ASSET_MATERIALIZATION"]
+        if any(materialized.count([key]) != 1 for key in ("recsys_train_eval", "api_benchmark")):
+            raise ValueError("actual downstream Dagster materializations are missing/duplicated")
+    elif model["status"] != "not run" or api["status"] != "not run":
+        raise ValueError("light fixture unexpectedly trained a model/API")
     print(base / identifier)
 
 

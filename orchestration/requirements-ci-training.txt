@@ -1,0 +1,5 @@
+# Opt-in synthetic integration: preserve the existing orchestration/Spark pins
+# and the existing recommendation pins. Install Torch separately from its
+# official CPU index, then record the actual selected version and wheel report.
+-r requirements-ci.txt
+-r ../recsys/requirements.txt

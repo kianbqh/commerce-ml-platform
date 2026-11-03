@@ -151,7 +151,46 @@ class Reader:
                 "scope": scope, "source": relative}
 
 
-def build_snapshot(root, *, generated_at=None):
+def linked_downstream(parent_reader, child_root, parent_manual):
+    """Read two bounded evidence folders; never overwrite parent artifacts."""
+    child = Reader(child_root)
+    binding = child.json("input-binding.json")
+    run = child.json("downstream-run.json")
+    verification = child.json("input-verification.json")
+    events = child.json("downstream-events.json")
+    if not all(isinstance(value, dict) for value in (binding, run, verification, events)):
+        raise ValueError("downstream completion receipts missing or invalid")
+    parent = binding.get("parent")
+    if not isinstance(parent, dict) or parent.get("run_root") != str(parent_reader.root):
+        raise ValueError("downstream belongs to a different data run")
+    if parent.get("manual_run_id") != at(parent_manual, "run_id") or run.get("parent") != parent or verification.get("parent") != parent:
+        raise ValueError("downstream parent run identity mismatch")
+    for name, digest in parent.get("receipt_sha256", {}).items():
+        payload, relative = parent_reader.text(name)
+        if payload is None or parent_reader.sources[relative].get("sha256") != digest:
+            raise ValueError("downstream parent receipt no longer matches: " + name)
+    if not parent.get("receipt_sha256") or run.get("success") is not True or verification.get("unchanged") is not True:
+        raise ValueError("downstream did not complete with unchanged accepted inputs")
+    if verification.get("binding_sha256") != child.sources["input-binding.json"].get("sha256"):
+        raise ValueError("downstream binding verification mismatch")
+    keys = [event.get("asset_key") for event in events.get("events", [])
+            if isinstance(event, dict) and event.get("event_type") == "ASSET_MATERIALIZATION"]
+    if sorted(keys) != [["api_benchmark"], ["recsys_train_eval"]]:
+        raise ValueError("downstream actual materializations do not match selected assets")
+    model, api = child.json("model-run.json"), child.json("api-run.json")
+    if at(model, "status") != "completed" or at(model, "seeds") != [42, 43, 44] or at(api, "status") != "completed":
+        raise ValueError("downstream model/API are not completed")
+    raw = child.json(at(api, "raw_http")) if isinstance(at(api, "raw_http"), str) else None
+    if raw is None or child.issues:
+        raise ValueError("downstream HTTP/source evidence unavailable")
+    lineage = {"parent_run_id": parent["manual_run_id"], "child_run_id": run.get("run_id"),
+               "parent_source_git_sha": parent.get("source_git_sha"),
+               "child_run_root": str(child.root), "scope": "data replay from parent; model/API from independent append-only child"}
+    return model, api, raw, lineage, [{**source, "run_root": str(child.root), "scope": "downstream_child"}
+                                     for source in child.sources.values()]
+
+
+def build_snapshot(root, *, generated_at=None, downstream_root=None):
     rd = Reader(root)
     manual = rd.json("manual-run.json")
     summary = rd.json("summary.json")
@@ -232,6 +271,12 @@ def build_snapshot(root, *, generated_at=None):
     raw_path = at(api, "raw_http")
     if at(api, "status") == "completed" and isinstance(raw_path, str):
         api_raw = rd.json(raw_path)
+    downstream_lineage, downstream_sources = None, []
+    if downstream_root is not None:
+        try:
+            model, api, api_raw, downstream_lineage, downstream_sources = linked_downstream(rd, downstream_root, manual)
+        except (OSError, ValueError, TypeError, KeyError) as exc:
+            rd.issue("downstream", str(exc))
     spark_tables = at(spark, "tables") if spark is not None else at(summary, "spark_tables")
     spark_rows = []
     if isinstance(spark_tables, dict):
@@ -292,7 +337,8 @@ def build_snapshot(root, *, generated_at=None):
                 "errors": rd.number(at(api_raw, "errors"), "api/raw-http.json#/errors", integer=True),
                 "client_p50_ms": rd.number(at(api_raw, "client_latency_ms", "p50"), "api/raw-http.json#/client_latency_ms/p50"),
                 "client_p99_ms": rd.number(at(api_raw, "client_latency_ms", "p99"), "api/raw-http.json#/client_latency_ms/p99")},
-        "sources": list(rd.sources.values()), "issues": rd.issues,
+        "sources": list(rd.sources.values()) + downstream_sources, "issues": rd.issues,
+        "downstream_lineage": downstream_lineage,
         "refresh": "manual regeneration only; no polling, daemon, schedule or external requests",
         "provenance": provenance,
     }
@@ -351,16 +397,19 @@ def render_html(snapshot):
     selected = '未运行' if not isinstance(backfill["selected"], list) else ', '.join(text(p) for p in backfill["selected"])
     issues = '' if not snapshot["issues"] else '<div class="notice">部分结果无法读取，详情见快照 JSON 的来源记录。</div>'
     kind = snapshot["data_kind"]
-    fixture = '<div class="notice">Synthetic test fixture · 以下数值仅用于测试，不是实际运行结果。</div>' if kind == "synthetic_test" else '<div class="notice">测试子集 · 仅用于正确性检查，不是全量性能结果。</div>' if kind == "test_subset" else ''
+    fixture = '<div class="notice">Synthetic test fixture · 合成测试数据，用于流程验证。</div>' if kind == "synthetic_test" else '<div class="notice">测试子集 · 仅用于正确性检查，不是全量性能结果。</div>' if kind == "test_subset" else ''
+    lineage = snapshot.get("downstream_lineage")
+    if lineage:
+        fixture += '<div class="notice">数据回放：' + text(lineage["parent_run_id"]) + '；推荐与HTTP来自独立下游运行：' + text(lineage["child_run_id"]) + '。</div>'
     progress = "未运行" if replay["received_batches"] is None or replay["declared_batches"] is None else display(replay["received_batches"]) + ' / ' + display(replay["declared_batches"])
     return '''<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>订单数据看板</title><style>
 *{box-sizing:border-box}body{margin:0;background:#f5f6f3;color:#20332d;font:15px/1.55 system-ui,-apple-system,"Segoe UI",sans-serif}main{max-width:1180px;margin:auto;padding:40px 24px}header,.topline,.section-title{display:flex;align-items:center;justify-content:space-between;gap:16px}h1{font-size:30px;letter-spacing:-.04em;margin:0}h2{font-size:18px;margin:0}p{margin:8px 0}.muted,.note{color:#66766e}.note{font-size:12px}.topline{font-size:12px;margin-bottom:10px}.actions{display:flex;gap:10px;align-items:center;flex-wrap:wrap}button,a.button{border:1px solid #ccd5ce;border-radius:8px;background:white;color:#294a3a;padding:9px 13px;text-decoration:none;font:inherit;cursor:pointer}.grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:20px}.cards{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:26px}.card,section{background:white;border:1px solid #dce2dc;border-radius:12px;padding:20px}.card strong{display:block;font-size:25px;letter-spacing:-.04em;margin:12px 0 3px;overflow-wrap:anywhere}.card label{color:#66766e;font-size:13px}.span{grid-column:1/-1}.pill{display:inline-block;white-space:nowrap;border-radius:20px;padding:3px 10px;font-size:12px;background:#edf0ed;color:#65716a}.passed,.completed{background:#e1f0e6;color:#23613a}.failed{background:#f9e5df;color:#953d29}.partial,.unavailable{background:#fff0d4;color:#875b15}table{width:100%;border-collapse:collapse;font-size:13px;margin-top:16px}th,td{text-align:left;padding:10px 5px;border-bottom:1px solid #edf0ec;vertical-align:top;overflow-wrap:anywhere}th{font-size:12px;color:#66766e;font-weight:500}.empty{color:#7a877f;padding:22px 0}.measure{display:flex;justify-content:space-between;border-bottom:1px solid #edf0ec;padding:12px 0;gap:15px}.measure b{font-weight:500;text-align:right;overflow-wrap:anywhere}.checks{list-style:none;padding:0;margin:12px 0 0}.checks li{display:flex;align-items:center;justify-content:space-between;padding:9px 0;border-bottom:1px solid #edf0ec}.notice{margin-top:18px;padding:12px 16px;border-radius:8px;background:#fff0d4;color:#6c4b17;font-size:13px}footer{color:#718078;font-size:12px;margin-top:24px}.scroll{overflow:auto}.section-title{margin-bottom:6px}a{color:#2a6948} @media(max-width:800px){.cards{grid-template-columns:repeat(2,1fr)}.grid{grid-template-columns:1fr}header{align-items:flex-start;flex-direction:column}}@media(max-width:460px){main{padding:24px 14px}.card,section{padding:16px}.card strong{font-size:21px}.topline{align-items:flex-start;flex-direction:column}}
 </style></head><body><main><div class="topline"><span>GROCERY DATA</span><span>手动快照 · ''' + text(snapshot["generated_at_utc"]) + '''</span></div><header><div><h1>订单数据看板</h1><p class="muted">查看每次回放的构建、检查与推荐结果。</p></div><div class="actions">''' + pill(snapshot["run"]["status"]) + '''<a class="button" href="snapshot.json">查看快照 JSON</a><button type="button" onclick="location.reload()">刷新页面</button></div></header>''' + fixture + issues + '''<div class="cards"><div class="card"><label>订单行</label><strong>''' + display(replay["line_rows"]) + '''</strong><span class="note">来自本次增量结果</span></div><div class="card"><label>已接收批次</label><strong>''' + progress + '''</strong><span class="note">模拟到达</span></div><div class="card"><label>增量与全量</label><strong>''' + pill(replay["status"]) + '''</strong><span class="note">逐行与哈希对比</span></div><div class="card"><label>处理时效</label><strong>''' + pill(fresh["status"]) + '''</strong><span class="note">检查执行时的状态</span></div></div><div class="grid"><section><div class="section-title"><h2>构建记录</h2>''' + pill(replay["status"]) + '''</div><div class="measure"><span>全量构建与测试</span><b>''' + display(replay["full_seconds"], "s") + '''</b></div><div class="measure"><span>累计增量构建与测试</span><b>''' + display(replay["incremental_seconds"], "s") + '''</b></div><div class="scroll">''' + batches + '''</div><p class="note">时长包含构建与测试；准备、额外审计和导出另计。</p></section><section><div class="section-title"><h2>Spark 与 Parquet</h2>''' + pill(spark["status"]) + '''</div><div class="measure"><span>处理时长</span><b>''' + display(spark["seconds"], "s") + '''</b></div><div class="scroll">''' + spark_table + '''</div><p class="note">整数统计精确对比；物理文件哈希另计。</p></section><section><div class="section-title"><h2>质量与时效</h2>''' + pill(quality["status"]) + '''</div>''' + checks + '''<div class="measure"><span>检查时的物化年龄</span><b>''' + display(fresh["age_seconds"], "s") + '''</b></div><div class="measure"><span>允许的处理年龄</span><b>''' + display(fresh["maximum_age_seconds"], "s") + '''</b></div><p class="note">处理时效与模拟回放进度，按检查时的记录展示。</p></section><section><div class="section-title"><h2>回填与恢复</h2>''' + pill(backfill["status"]) + '''</div><div class="measure"><span>所选批次</span><b>''' + selected + '''</b></div><div class="measure"><span>坏批次拦截演示</span>''' + pill(backfill["blocking_demo"]) + '''</div><div class="measure"><span>干净输入恢复</span>''' + pill(backfill["recovery"]) + '''</div><p class="note">受控更正与坏批次拦截演示。</p></section><section class="span"><div class="section-title"><h2>推荐结果</h2>''' + pill(model["status"]) + '''</div><div class="scroll">''' + model_table + '''</div><div class="measure"><span>HTTP 测量</span>''' + pill(api["status"]) + '''</div><div class="measure"><span>客户端 p50 / p99</span><b>''' + display(api["client_p50_ms"], "ms") + ' / ' + display(api["client_p99_ms"], "ms") + '''</b></div></section><section class="span"><h2>本地告警</h2><div class="scroll">''' + alerts + '''</div><p class="note">主回放与测试拦截记录分别标明。</p></section></div><footer>缺失结果显示“未运行”。手动生成新快照后刷新页面。</footer></main></body></html>'''
 
 
-def write_dashboard(root, destination, *, generated_at=None):
+def write_dashboard(root, destination, *, generated_at=None, downstream_root=None):
     destination = Path(destination).resolve()
-    snapshot = build_snapshot(root, generated_at=generated_at)
+    snapshot = build_snapshot(root, generated_at=generated_at, downstream_root=downstream_root)
     # Create-only: a manual refresh writes a new version, never edits old evidence.
     destination.mkdir(parents=True, exist_ok=False)
     with (destination / "snapshot.json").open("x", encoding="utf-8", newline="\n") as stream:
