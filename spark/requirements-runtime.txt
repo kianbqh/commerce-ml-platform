@@ -1,0 +1,3 @@
+# Candidate isolated Spark environment; Java >=17 is a separately verified gate.
+pyspark==4.2.0
+duckdb==2.0.0

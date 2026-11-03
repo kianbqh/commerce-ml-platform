@@ -1,0 +1,8 @@
+# Candidate pins only: isolated resolution + pip check are a deferred acceptance gate.
+# Do not install into either shared read-only environment or the old F4 environment.
+dagster==1.13.28
+dagster-dbt==0.29.28
+dbt-core==1.12.6
+dbt-duckdb==1.11.1
+duckdb==2.0.0
+numpy==2.5.4

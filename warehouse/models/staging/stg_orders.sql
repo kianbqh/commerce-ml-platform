@@ -7,3 +7,4 @@ select
     cast(order_hour_of_day as integer)            as order_hour_of_day,
     cast(days_since_prior_order as double)        as days_since_prior_order
 from {{ raw_source('orders') }}
+where {{ m4_visible('order_number') }}
