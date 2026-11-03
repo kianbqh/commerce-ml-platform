@@ -1,0 +1,3111 @@
+{
+  "schema": "m4-row-free-public-evidence-v1",
+  "created_utc": "2026-11-03T12:33:07.553528+00:00",
+  "data_scope": "full",
+  "source_checkpoint": "829250d93e5e436e98e4a5df41296b0d121a52a8",
+  "config_sha256": "ebcb8f3d544778e2f9da6c253a98441f02b0ed2792955564f197cc42b54f515e",
+  "environment": {
+    "runtime": "WSL2",
+    "python": "3.12.3",
+    "cpu": "12th Gen Intel(R) Core(TM) i7-12700KF",
+    "logical_cpus": 20,
+    "packages": {
+      "dagster": "1.13.28",
+      "dagster-dbt": "0.29.28",
+      "dbt-core": "1.12.6",
+      "dbt-duckdb": "1.11.1",
+      "duckdb": "2.0.0",
+      "pyspark": "4.2.0",
+      "torch": "not installed",
+      "numpy": "2.5.4",
+      "faiss-cpu": "not installed",
+      "lightgbm": "not installed",
+      "fastapi": "not installed"
+    },
+    "device_scope": "CPU data pipeline; GPU not used"
+  },
+  "protocol": {
+    "orders_per_batch": 10,
+    "simulated_receipts": true,
+    "processing_freshness_maximum_age_seconds": 86400,
+    "dbt_threads": 4,
+    "dbt_memory_limit": "4GB",
+    "spark_master_requested": "local[8]",
+    "spark_driver_memory_requested": "4g",
+    "repetitions": 1,
+    "training_enabled": false,
+    "terminal_feature_export_threads": 4,
+    "terminal_feature_export_memory_limit": "4GB"
+  },
+  "sources": {
+    "orders": {
+      "bytes": 108968645,
+      "sha256": "92a60ced67ac33bd82271f66ff9675374f69482d17a0e1442ba42caa8b3bff89"
+    },
+    "order_products__prior": {
+      "bytes": 577550706,
+      "sha256": "27b59dc9cf0d485f55e64e0bc9c5d6fb077ae167f8dfeab9246a03b5b0186359"
+    },
+    "order_products__train": {
+      "bytes": 24680147,
+      "sha256": "d27c4034883051c85e37c2cb0379fecbbeccad932970e171461aa99f18f75aea"
+    },
+    "products": {
+      "bytes": 2166953,
+      "sha256": "abc61fdd748003d280ae49cc5d71b65380805ab1ca55dba96fd9a49295ea78b9"
+    },
+    "aisles": {
+      "bytes": 2603,
+      "sha256": "2c5f4677761907d3a3ca01edd2d2abe67c147cc60e4905e68736d5f9f3046067"
+    },
+    "departments": {
+      "bytes": 270,
+      "sha256": "e6829cea3da95ec22eeb4e0294094a68b929f3bcfda48fdd7d1e33403110fc43"
+    }
+  },
+  "arrivals": {
+    "batches": 10,
+    "labeled_lines": 33819106,
+    "per_batch": [
+      {
+        "batch": "000000",
+        "lines": 16474179,
+        "raw_metadata_orders_including_unlabeled": 1680424
+      },
+      {
+        "batch": "000001",
+        "lines": 7398009,
+        "raw_metadata_orders_including_unlabeled": 745873
+      },
+      {
+        "batch": "000002",
+        "lines": 4002535,
+        "raw_metadata_orders_including_unlabeled": 397357
+      },
+      {
+        "batch": "000003",
+        "lines": 2406832,
+        "raw_metadata_orders_including_unlabeled": 235636
+      },
+      {
+        "batch": "000004",
+        "lines": 1473736,
+        "raw_metadata_orders_including_unlabeled": 144923
+      },
+      {
+        "batch": "000005",
+        "lines": 858737,
+        "raw_metadata_orders_including_unlabeled": 87093
+      },
+      {
+        "batch": "000006",
+        "lines": 515437,
+        "raw_metadata_orders_including_unlabeled": 54051
+      },
+      {
+        "batch": "000007",
+        "lines": 331918,
+        "raw_metadata_orders_including_unlabeled": 35611
+      },
+      {
+        "batch": "000008",
+        "lines": 216171,
+        "raw_metadata_orders_including_unlabeled": 23829
+      },
+      {
+        "batch": "000009",
+        "lines": 141552,
+        "raw_metadata_orders_including_unlabeled": 16286
+      }
+    ],
+    "raw_metadata_orders_including_unlabeled": 3421083
+  },
+  "private_evidence_identities": {
+    "acceptance_sha256": "25bcd2a251fcf807e763c6aad5e07c612a829598f72267b711fb97c5752dae9a",
+    "manual_run_sha256": "21bdd4d54f7bcc9c935bcc0517ae3d5d4fdc7b295f3911ed0f32c780dab5355d",
+    "coordinator_sha256": "777c124b8ea5a5355eb94231949a2121b7c7cb735471af90d17329d1b96f9a6f"
+  },
+  "checks": {
+    "staged_tests": [
+      {
+        "input_tests": 22,
+        "post_mart_tests": 44,
+        "passed": true
+      },
+      {
+        "input_tests": 22,
+        "post_mart_tests": 44,
+        "passed": true
+      },
+      {
+        "input_tests": 22,
+        "post_mart_tests": 44,
+        "passed": true
+      },
+      {
+        "input_tests": 22,
+        "post_mart_tests": 44,
+        "passed": true
+      },
+      {
+        "input_tests": 22,
+        "post_mart_tests": 44,
+        "passed": true
+      },
+      {
+        "input_tests": 22,
+        "post_mart_tests": 44,
+        "passed": true
+      },
+      {
+        "input_tests": 22,
+        "post_mart_tests": 44,
+        "passed": true
+      },
+      {
+        "input_tests": 22,
+        "post_mart_tests": 44,
+        "passed": true
+      },
+      {
+        "input_tests": 22,
+        "post_mart_tests": 44,
+        "passed": true
+      },
+      {
+        "input_tests": 22,
+        "post_mart_tests": 44,
+        "passed": true
+      }
+    ],
+    "terminal_only": {
+      "passed": true,
+      "nonterminal_prefixes_verified": 9,
+      "no_recommendation_relations": true,
+      "feature_export_absent_at_live_boundaries": true,
+      "terminal_feature_manifest_sha256": "97e9d671c57f1c89c14e15d07f6292379c42f5843d3c47af62cf164360b8508d"
+    },
+    "intended_failure": {
+      "passed": true,
+      "asset_check": "dbt_staging/input_quality",
+      "actual_product_fk_failures": 1,
+      "downstream_blocked": true,
+      "promoted_pointer_unchanged": true
+    },
+    "correction_visibility": {
+      "passed": true,
+      "attempts": [
+        {
+          "active_batch_count": 1,
+          "active_overlay_row_count": 1,
+          "point_checks_verified": 2,
+          "changed_partition_count": 1
+        },
+        {
+          "active_batch_count": 2,
+          "active_overlay_row_count": 2,
+          "point_checks_verified": 2,
+          "changed_partition_count": 2
+        }
+      ]
+    },
+    "named_six_table_scope": {
+      "passed": true,
+      "tables": [
+        "marts.fct_order_lines",
+        "marts.fct_orders",
+        "marts.mart_department_kpis",
+        "orchestration.batch_department_integer_stats",
+        "orchestration.batch_hourly_integer_stats",
+        "orchestration.batch_product_integer_stats"
+      ],
+      "other_operational_relations": "dbt built/tested; outside exact database comparison"
+    },
+    "spark_immutable_backfill": {
+      "passed": true,
+      "original_files_rehashed": 599,
+      "original_actual_master": "local[8]",
+      "original_actual_parallelism": 8,
+      "driver_memory_effective": "4g"
+    },
+    "processing_freshness_demo": {
+      "clock_injected": true,
+      "fresh_passed": true,
+      "stale_passed": false,
+      "event_freshness_claim": false
+    },
+    "local_alerts": {
+      "record_count": 1,
+      "sensor_run_requests": 0,
+      "external_send_performed": false
+    }
+  },
+  "counts": {
+    "raw_metadata_orders_including_unlabeled": 3421083,
+    "labeled_order_lines": 33819106,
+    "orders_with_labeled_lines": 3346083
+  },
+  "parity": {
+    "original": {
+      "passed": true,
+      "tables": {
+        "marts.fct_order_lines": {
+          "passed": true,
+          "left_except_all": 0,
+          "right_except_all": 0,
+          "left_only_keys": 0,
+          "right_only_keys": 0,
+          "incremental": {
+            "rows": 33819106,
+            "sha256": "2bc562bce57d1ea456babe5d0a833d960a1242b5fea02ad261149897bf6e8326",
+            "columns": [
+              [
+                "order_id",
+                "BIGINT"
+              ],
+              [
+                "product_id",
+                "BIGINT"
+              ],
+              [
+                "user_id",
+                "BIGINT"
+              ],
+              [
+                "order_number",
+                "INTEGER"
+              ],
+              [
+                "order_dow",
+                "INTEGER"
+              ],
+              [
+                "order_hour_of_day",
+                "INTEGER"
+              ],
+              [
+                "aisle_id",
+                "BIGINT"
+              ],
+              [
+                "department_id",
+                "BIGINT"
+              ],
+              [
+                "add_to_cart_order",
+                "INTEGER"
+              ],
+              [
+                "reordered",
+                "INTEGER"
+              ],
+              [
+                "eval_set",
+                "VARCHAR"
+              ]
+            ],
+            "key": [
+              "order_id",
+              "product_id"
+            ],
+            "encoding": "m4-typed-framed-v1"
+          },
+          "full": {
+            "rows": 33819106,
+            "sha256": "2bc562bce57d1ea456babe5d0a833d960a1242b5fea02ad261149897bf6e8326",
+            "columns": [
+              [
+                "order_id",
+                "BIGINT"
+              ],
+              [
+                "product_id",
+                "BIGINT"
+              ],
+              [
+                "user_id",
+                "BIGINT"
+              ],
+              [
+                "order_number",
+                "INTEGER"
+              ],
+              [
+                "order_dow",
+                "INTEGER"
+              ],
+              [
+                "order_hour_of_day",
+                "INTEGER"
+              ],
+              [
+                "aisle_id",
+                "BIGINT"
+              ],
+              [
+                "department_id",
+                "BIGINT"
+              ],
+              [
+                "add_to_cart_order",
+                "INTEGER"
+              ],
+              [
+                "reordered",
+                "INTEGER"
+              ],
+              [
+                "eval_set",
+                "VARCHAR"
+              ]
+            ],
+            "key": [
+              "order_id",
+              "product_id"
+            ],
+            "encoding": "m4-typed-framed-v1"
+          }
+        },
+        "marts.fct_orders": {
+          "passed": true,
+          "left_except_all": 0,
+          "right_except_all": 0,
+          "left_only_keys": 0,
+          "right_only_keys": 0,
+          "incremental": {
+            "rows": 3346083,
+            "sha256": "495cd1cc96363fac849d4a3a49f9a5247c36f66d2de34efb2c8eae12cc38a260",
+            "columns": [
+              [
+                "order_id",
+                "BIGINT"
+              ],
+              [
+                "user_id",
+                "BIGINT"
+              ],
+              [
+                "eval_set",
+                "VARCHAR"
+              ],
+              [
+                "order_number",
+                "INTEGER"
+              ],
+              [
+                "order_dow",
+                "INTEGER"
+              ],
+              [
+                "order_hour_of_day",
+                "INTEGER"
+              ],
+              [
+                "days_since_prior_order",
+                "DOUBLE"
+              ],
+              [
+                "days_since_first_order",
+                "DOUBLE"
+              ],
+              [
+                "basket_size",
+                "BIGINT"
+              ],
+              [
+                "n_reordered",
+                "HUGEINT"
+              ],
+              [
+                "n_departments",
+                "BIGINT"
+              ],
+              [
+                "reorder_share",
+                "DOUBLE"
+              ]
+            ],
+            "key": [
+              "order_id"
+            ],
+            "encoding": "m4-typed-framed-v1"
+          },
+          "full": {
+            "rows": 3346083,
+            "sha256": "495cd1cc96363fac849d4a3a49f9a5247c36f66d2de34efb2c8eae12cc38a260",
+            "columns": [
+              [
+                "order_id",
+                "BIGINT"
+              ],
+              [
+                "user_id",
+                "BIGINT"
+              ],
+              [
+                "eval_set",
+                "VARCHAR"
+              ],
+              [
+                "order_number",
+                "INTEGER"
+              ],
+              [
+                "order_dow",
+                "INTEGER"
+              ],
+              [
+                "order_hour_of_day",
+                "INTEGER"
+              ],
+              [
+                "days_since_prior_order",
+                "DOUBLE"
+              ],
+              [
+                "days_since_first_order",
+                "DOUBLE"
+              ],
+              [
+                "basket_size",
+                "BIGINT"
+              ],
+              [
+                "n_reordered",
+                "HUGEINT"
+              ],
+              [
+                "n_departments",
+                "BIGINT"
+              ],
+              [
+                "reorder_share",
+                "DOUBLE"
+              ]
+            ],
+            "key": [
+              "order_id"
+            ],
+            "encoding": "m4-typed-framed-v1"
+          }
+        },
+        "marts.mart_department_kpis": {
+          "passed": true,
+          "left_except_all": 0,
+          "right_except_all": 0,
+          "left_only_keys": 0,
+          "right_only_keys": 0,
+          "incremental": {
+            "rows": 21,
+            "sha256": "8a6a71b444d3c31bde9bd9df08b9b7d6c7ad1d439fb103e11740541f19da8c4c",
+            "columns": [
+              [
+                "department_id",
+                "BIGINT"
+              ],
+              [
+                "department_name",
+                "VARCHAR"
+              ],
+              [
+                "n_lines",
+                "BIGINT"
+              ],
+              [
+                "n_orders",
+                "BIGINT"
+              ],
+              [
+                "n_users",
+                "BIGINT"
+              ],
+              [
+                "reorder_rate",
+                "DOUBLE"
+              ],
+              [
+                "avg_cart_position",
+                "DOUBLE"
+              ],
+              [
+                "share_of_lines",
+                "DOUBLE"
+              ]
+            ],
+            "key": [
+              "department_id"
+            ],
+            "encoding": "m4-typed-framed-v1"
+          },
+          "full": {
+            "rows": 21,
+            "sha256": "8a6a71b444d3c31bde9bd9df08b9b7d6c7ad1d439fb103e11740541f19da8c4c",
+            "columns": [
+              [
+                "department_id",
+                "BIGINT"
+              ],
+              [
+                "department_name",
+                "VARCHAR"
+              ],
+              [
+                "n_lines",
+                "BIGINT"
+              ],
+              [
+                "n_orders",
+                "BIGINT"
+              ],
+              [
+                "n_users",
+                "BIGINT"
+              ],
+              [
+                "reorder_rate",
+                "DOUBLE"
+              ],
+              [
+                "avg_cart_position",
+                "DOUBLE"
+              ],
+              [
+                "share_of_lines",
+                "DOUBLE"
+              ]
+            ],
+            "key": [
+              "department_id"
+            ],
+            "encoding": "m4-typed-framed-v1"
+          }
+        },
+        "orchestration.batch_department_integer_stats": {
+          "passed": true,
+          "left_except_all": 0,
+          "right_except_all": 0,
+          "left_only_keys": 0,
+          "right_only_keys": 0,
+          "incremental": {
+            "rows": 210,
+            "sha256": "6244b1c83dfe092a6806f7df5fe83d0ac9108f9c4ba63936dc574210015dc680",
+            "columns": [
+              [
+                "batch",
+                "VARCHAR"
+              ],
+              [
+                "department_id",
+                "BIGINT"
+              ],
+              [
+                "n_lines",
+                "BIGINT"
+              ],
+              [
+                "n_orders",
+                "BIGINT"
+              ],
+              [
+                "n_users",
+                "BIGINT"
+              ],
+              [
+                "n_reordered",
+                "BIGINT"
+              ],
+              [
+                "sum_cart_position",
+                "BIGINT"
+              ]
+            ],
+            "key": [
+              "batch",
+              "department_id"
+            ],
+            "encoding": "m4-typed-framed-v1"
+          },
+          "full": {
+            "rows": 210,
+            "sha256": "6244b1c83dfe092a6806f7df5fe83d0ac9108f9c4ba63936dc574210015dc680",
+            "columns": [
+              [
+                "batch",
+                "VARCHAR"
+              ],
+              [
+                "department_id",
+                "BIGINT"
+              ],
+              [
+                "n_lines",
+                "BIGINT"
+              ],
+              [
+                "n_orders",
+                "BIGINT"
+              ],
+              [
+                "n_users",
+                "BIGINT"
+              ],
+              [
+                "n_reordered",
+                "BIGINT"
+              ],
+              [
+                "sum_cart_position",
+                "BIGINT"
+              ]
+            ],
+            "key": [
+              "batch",
+              "department_id"
+            ],
+            "encoding": "m4-typed-framed-v1"
+          }
+        },
+        "orchestration.batch_hourly_integer_stats": {
+          "passed": true,
+          "left_except_all": 0,
+          "right_except_all": 0,
+          "left_only_keys": 0,
+          "right_only_keys": 0,
+          "incremental": {
+            "rows": 1678,
+            "sha256": "51e59fd2e678d9d8c0c1da4c4a1fc60279249b69d80aa2ab2b784263adeb124f",
+            "columns": [
+              [
+                "batch",
+                "VARCHAR"
+              ],
+              [
+                "order_dow",
+                "BIGINT"
+              ],
+              [
+                "order_hour_of_day",
+                "BIGINT"
+              ],
+              [
+                "n_orders",
+                "BIGINT"
+              ],
+              [
+                "n_lines",
+                "BIGINT"
+              ],
+              [
+                "n_reordered",
+                "BIGINT"
+              ]
+            ],
+            "key": [
+              "batch",
+              "order_dow",
+              "order_hour_of_day"
+            ],
+            "encoding": "m4-typed-framed-v1"
+          },
+          "full": {
+            "rows": 1678,
+            "sha256": "51e59fd2e678d9d8c0c1da4c4a1fc60279249b69d80aa2ab2b784263adeb124f",
+            "columns": [
+              [
+                "batch",
+                "VARCHAR"
+              ],
+              [
+                "order_dow",
+                "BIGINT"
+              ],
+              [
+                "order_hour_of_day",
+                "BIGINT"
+              ],
+              [
+                "n_orders",
+                "BIGINT"
+              ],
+              [
+                "n_lines",
+                "BIGINT"
+              ],
+              [
+                "n_reordered",
+                "BIGINT"
+              ]
+            ],
+            "key": [
+              "batch",
+              "order_dow",
+              "order_hour_of_day"
+            ],
+            "encoding": "m4-typed-framed-v1"
+          }
+        },
+        "orchestration.batch_product_integer_stats": {
+          "passed": true,
+          "left_except_all": 0,
+          "right_except_all": 0,
+          "left_only_keys": 0,
+          "right_only_keys": 0,
+          "incremental": {
+            "rows": 310819,
+            "sha256": "bf1f60b2f67e25a28009f260fc998360ad7eb067825fb7d95128011e60b59784",
+            "columns": [
+              [
+                "batch",
+                "VARCHAR"
+              ],
+              [
+                "product_id",
+                "BIGINT"
+              ],
+              [
+                "n_lines",
+                "BIGINT"
+              ],
+              [
+                "n_buyers",
+                "BIGINT"
+              ],
+              [
+                "n_reordered",
+                "BIGINT"
+              ]
+            ],
+            "key": [
+              "batch",
+              "product_id"
+            ],
+            "encoding": "m4-typed-framed-v1"
+          },
+          "full": {
+            "rows": 310819,
+            "sha256": "bf1f60b2f67e25a28009f260fc998360ad7eb067825fb7d95128011e60b59784",
+            "columns": [
+              [
+                "batch",
+                "VARCHAR"
+              ],
+              [
+                "product_id",
+                "BIGINT"
+              ],
+              [
+                "n_lines",
+                "BIGINT"
+              ],
+              [
+                "n_buyers",
+                "BIGINT"
+              ],
+              [
+                "n_reordered",
+                "BIGINT"
+              ]
+            ],
+            "key": [
+              "batch",
+              "product_id"
+            ],
+            "encoding": "m4-typed-framed-v1"
+          }
+        }
+      },
+      "audit_wall_seconds": 610.3392899079772
+    },
+    "corrected": {
+      "passed": true,
+      "tables": {
+        "marts.fct_order_lines": {
+          "passed": true,
+          "left_except_all": 0,
+          "right_except_all": 0,
+          "left_only_keys": 0,
+          "right_only_keys": 0,
+          "incremental": {
+            "rows": 33819106,
+            "sha256": "878173e4924bcd155f7b860864e762b4115cb1e7a262ec94d95b8bf51be8a95a",
+            "columns": [
+              [
+                "order_id",
+                "BIGINT"
+              ],
+              [
+                "product_id",
+                "BIGINT"
+              ],
+              [
+                "user_id",
+                "BIGINT"
+              ],
+              [
+                "order_number",
+                "INTEGER"
+              ],
+              [
+                "order_dow",
+                "INTEGER"
+              ],
+              [
+                "order_hour_of_day",
+                "INTEGER"
+              ],
+              [
+                "aisle_id",
+                "BIGINT"
+              ],
+              [
+                "department_id",
+                "BIGINT"
+              ],
+              [
+                "add_to_cart_order",
+                "INTEGER"
+              ],
+              [
+                "reordered",
+                "INTEGER"
+              ],
+              [
+                "eval_set",
+                "VARCHAR"
+              ]
+            ],
+            "key": [
+              "order_id",
+              "product_id"
+            ],
+            "encoding": "m4-typed-framed-v1"
+          },
+          "full": {
+            "rows": 33819106,
+            "sha256": "878173e4924bcd155f7b860864e762b4115cb1e7a262ec94d95b8bf51be8a95a",
+            "columns": [
+              [
+                "order_id",
+                "BIGINT"
+              ],
+              [
+                "product_id",
+                "BIGINT"
+              ],
+              [
+                "user_id",
+                "BIGINT"
+              ],
+              [
+                "order_number",
+                "INTEGER"
+              ],
+              [
+                "order_dow",
+                "INTEGER"
+              ],
+              [
+                "order_hour_of_day",
+                "INTEGER"
+              ],
+              [
+                "aisle_id",
+                "BIGINT"
+              ],
+              [
+                "department_id",
+                "BIGINT"
+              ],
+              [
+                "add_to_cart_order",
+                "INTEGER"
+              ],
+              [
+                "reordered",
+                "INTEGER"
+              ],
+              [
+                "eval_set",
+                "VARCHAR"
+              ]
+            ],
+            "key": [
+              "order_id",
+              "product_id"
+            ],
+            "encoding": "m4-typed-framed-v1"
+          }
+        },
+        "marts.fct_orders": {
+          "passed": true,
+          "left_except_all": 0,
+          "right_except_all": 0,
+          "left_only_keys": 0,
+          "right_only_keys": 0,
+          "incremental": {
+            "rows": 3346083,
+            "sha256": "80f94de9219b8083e84f381cece03030bd8e5d0be4e1a7f277dffa401de93719",
+            "columns": [
+              [
+                "order_id",
+                "BIGINT"
+              ],
+              [
+                "user_id",
+                "BIGINT"
+              ],
+              [
+                "eval_set",
+                "VARCHAR"
+              ],
+              [
+                "order_number",
+                "INTEGER"
+              ],
+              [
+                "order_dow",
+                "INTEGER"
+              ],
+              [
+                "order_hour_of_day",
+                "INTEGER"
+              ],
+              [
+                "days_since_prior_order",
+                "DOUBLE"
+              ],
+              [
+                "days_since_first_order",
+                "DOUBLE"
+              ],
+              [
+                "basket_size",
+                "BIGINT"
+              ],
+              [
+                "n_reordered",
+                "HUGEINT"
+              ],
+              [
+                "n_departments",
+                "BIGINT"
+              ],
+              [
+                "reorder_share",
+                "DOUBLE"
+              ]
+            ],
+            "key": [
+              "order_id"
+            ],
+            "encoding": "m4-typed-framed-v1"
+          },
+          "full": {
+            "rows": 3346083,
+            "sha256": "80f94de9219b8083e84f381cece03030bd8e5d0be4e1a7f277dffa401de93719",
+            "columns": [
+              [
+                "order_id",
+                "BIGINT"
+              ],
+              [
+                "user_id",
+                "BIGINT"
+              ],
+              [
+                "eval_set",
+                "VARCHAR"
+              ],
+              [
+                "order_number",
+                "INTEGER"
+              ],
+              [
+                "order_dow",
+                "INTEGER"
+              ],
+              [
+                "order_hour_of_day",
+                "INTEGER"
+              ],
+              [
+                "days_since_prior_order",
+                "DOUBLE"
+              ],
+              [
+                "days_since_first_order",
+                "DOUBLE"
+              ],
+              [
+                "basket_size",
+                "BIGINT"
+              ],
+              [
+                "n_reordered",
+                "HUGEINT"
+              ],
+              [
+                "n_departments",
+                "BIGINT"
+              ],
+              [
+                "reorder_share",
+                "DOUBLE"
+              ]
+            ],
+            "key": [
+              "order_id"
+            ],
+            "encoding": "m4-typed-framed-v1"
+          }
+        },
+        "marts.mart_department_kpis": {
+          "passed": true,
+          "left_except_all": 0,
+          "right_except_all": 0,
+          "left_only_keys": 0,
+          "right_only_keys": 0,
+          "incremental": {
+            "rows": 21,
+            "sha256": "ac13eac725548437832887adc0deb32bf1b0ba650aa487218debecc9f76094a6",
+            "columns": [
+              [
+                "department_id",
+                "BIGINT"
+              ],
+              [
+                "department_name",
+                "VARCHAR"
+              ],
+              [
+                "n_lines",
+                "BIGINT"
+              ],
+              [
+                "n_orders",
+                "BIGINT"
+              ],
+              [
+                "n_users",
+                "BIGINT"
+              ],
+              [
+                "reorder_rate",
+                "DOUBLE"
+              ],
+              [
+                "avg_cart_position",
+                "DOUBLE"
+              ],
+              [
+                "share_of_lines",
+                "DOUBLE"
+              ]
+            ],
+            "key": [
+              "department_id"
+            ],
+            "encoding": "m4-typed-framed-v1"
+          },
+          "full": {
+            "rows": 21,
+            "sha256": "ac13eac725548437832887adc0deb32bf1b0ba650aa487218debecc9f76094a6",
+            "columns": [
+              [
+                "department_id",
+                "BIGINT"
+              ],
+              [
+                "department_name",
+                "VARCHAR"
+              ],
+              [
+                "n_lines",
+                "BIGINT"
+              ],
+              [
+                "n_orders",
+                "BIGINT"
+              ],
+              [
+                "n_users",
+                "BIGINT"
+              ],
+              [
+                "reorder_rate",
+                "DOUBLE"
+              ],
+              [
+                "avg_cart_position",
+                "DOUBLE"
+              ],
+              [
+                "share_of_lines",
+                "DOUBLE"
+              ]
+            ],
+            "key": [
+              "department_id"
+            ],
+            "encoding": "m4-typed-framed-v1"
+          }
+        },
+        "orchestration.batch_department_integer_stats": {
+          "passed": true,
+          "left_except_all": 0,
+          "right_except_all": 0,
+          "left_only_keys": 0,
+          "right_only_keys": 0,
+          "incremental": {
+            "rows": 210,
+            "sha256": "893f94b7b958d4c5ee1a459486879d59c16c0f6ea5ee462bb9fee22d29058e1a",
+            "columns": [
+              [
+                "batch",
+                "VARCHAR"
+              ],
+              [
+                "department_id",
+                "BIGINT"
+              ],
+              [
+                "n_lines",
+                "BIGINT"
+              ],
+              [
+                "n_orders",
+                "BIGINT"
+              ],
+              [
+                "n_users",
+                "BIGINT"
+              ],
+              [
+                "n_reordered",
+                "BIGINT"
+              ],
+              [
+                "sum_cart_position",
+                "BIGINT"
+              ]
+            ],
+            "key": [
+              "batch",
+              "department_id"
+            ],
+            "encoding": "m4-typed-framed-v1"
+          },
+          "full": {
+            "rows": 210,
+            "sha256": "893f94b7b958d4c5ee1a459486879d59c16c0f6ea5ee462bb9fee22d29058e1a",
+            "columns": [
+              [
+                "batch",
+                "VARCHAR"
+              ],
+              [
+                "department_id",
+                "BIGINT"
+              ],
+              [
+                "n_lines",
+                "BIGINT"
+              ],
+              [
+                "n_orders",
+                "BIGINT"
+              ],
+              [
+                "n_users",
+                "BIGINT"
+              ],
+              [
+                "n_reordered",
+                "BIGINT"
+              ],
+              [
+                "sum_cart_position",
+                "BIGINT"
+              ]
+            ],
+            "key": [
+              "batch",
+              "department_id"
+            ],
+            "encoding": "m4-typed-framed-v1"
+          }
+        },
+        "orchestration.batch_hourly_integer_stats": {
+          "passed": true,
+          "left_except_all": 0,
+          "right_except_all": 0,
+          "left_only_keys": 0,
+          "right_only_keys": 0,
+          "incremental": {
+            "rows": 1678,
+            "sha256": "7635c1c5d3ad5d8fc70b804b454d44be7140e733507c0efe2fd03ae66e8e3d25",
+            "columns": [
+              [
+                "batch",
+                "VARCHAR"
+              ],
+              [
+                "order_dow",
+                "BIGINT"
+              ],
+              [
+                "order_hour_of_day",
+                "BIGINT"
+              ],
+              [
+                "n_orders",
+                "BIGINT"
+              ],
+              [
+                "n_lines",
+                "BIGINT"
+              ],
+              [
+                "n_reordered",
+                "BIGINT"
+              ]
+            ],
+            "key": [
+              "batch",
+              "order_dow",
+              "order_hour_of_day"
+            ],
+            "encoding": "m4-typed-framed-v1"
+          },
+          "full": {
+            "rows": 1678,
+            "sha256": "7635c1c5d3ad5d8fc70b804b454d44be7140e733507c0efe2fd03ae66e8e3d25",
+            "columns": [
+              [
+                "batch",
+                "VARCHAR"
+              ],
+              [
+                "order_dow",
+                "BIGINT"
+              ],
+              [
+                "order_hour_of_day",
+                "BIGINT"
+              ],
+              [
+                "n_orders",
+                "BIGINT"
+              ],
+              [
+                "n_lines",
+                "BIGINT"
+              ],
+              [
+                "n_reordered",
+                "BIGINT"
+              ]
+            ],
+            "key": [
+              "batch",
+              "order_dow",
+              "order_hour_of_day"
+            ],
+            "encoding": "m4-typed-framed-v1"
+          }
+        },
+        "orchestration.batch_product_integer_stats": {
+          "passed": true,
+          "left_except_all": 0,
+          "right_except_all": 0,
+          "left_only_keys": 0,
+          "right_only_keys": 0,
+          "incremental": {
+            "rows": 310819,
+            "sha256": "7352faf006d10bc2feaff897515f8e8533597de6207093f3444f7fe092d25cba",
+            "columns": [
+              [
+                "batch",
+                "VARCHAR"
+              ],
+              [
+                "product_id",
+                "BIGINT"
+              ],
+              [
+                "n_lines",
+                "BIGINT"
+              ],
+              [
+                "n_buyers",
+                "BIGINT"
+              ],
+              [
+                "n_reordered",
+                "BIGINT"
+              ]
+            ],
+            "key": [
+              "batch",
+              "product_id"
+            ],
+            "encoding": "m4-typed-framed-v1"
+          },
+          "full": {
+            "rows": 310819,
+            "sha256": "7352faf006d10bc2feaff897515f8e8533597de6207093f3444f7fe092d25cba",
+            "columns": [
+              [
+                "batch",
+                "VARCHAR"
+              ],
+              [
+                "product_id",
+                "BIGINT"
+              ],
+              [
+                "n_lines",
+                "BIGINT"
+              ],
+              [
+                "n_buyers",
+                "BIGINT"
+              ],
+              [
+                "n_reordered",
+                "BIGINT"
+              ]
+            ],
+            "key": [
+              "batch",
+              "product_id"
+            ],
+            "encoding": "m4-typed-framed-v1"
+          }
+        }
+      },
+      "audit_wall_seconds": 680.910780834005
+    },
+    "recovery": {
+      "passed": true,
+      "tables": {
+        "marts.fct_order_lines": {
+          "passed": true,
+          "left_except_all": 0,
+          "right_except_all": 0,
+          "left_only_keys": 0,
+          "right_only_keys": 0,
+          "incremental": {
+            "rows": 33819106,
+            "sha256": "2bc562bce57d1ea456babe5d0a833d960a1242b5fea02ad261149897bf6e8326",
+            "columns": [
+              [
+                "order_id",
+                "BIGINT"
+              ],
+              [
+                "product_id",
+                "BIGINT"
+              ],
+              [
+                "user_id",
+                "BIGINT"
+              ],
+              [
+                "order_number",
+                "INTEGER"
+              ],
+              [
+                "order_dow",
+                "INTEGER"
+              ],
+              [
+                "order_hour_of_day",
+                "INTEGER"
+              ],
+              [
+                "aisle_id",
+                "BIGINT"
+              ],
+              [
+                "department_id",
+                "BIGINT"
+              ],
+              [
+                "add_to_cart_order",
+                "INTEGER"
+              ],
+              [
+                "reordered",
+                "INTEGER"
+              ],
+              [
+                "eval_set",
+                "VARCHAR"
+              ]
+            ],
+            "key": [
+              "order_id",
+              "product_id"
+            ],
+            "encoding": "m4-typed-framed-v1"
+          },
+          "full": {
+            "rows": 33819106,
+            "sha256": "2bc562bce57d1ea456babe5d0a833d960a1242b5fea02ad261149897bf6e8326",
+            "columns": [
+              [
+                "order_id",
+                "BIGINT"
+              ],
+              [
+                "product_id",
+                "BIGINT"
+              ],
+              [
+                "user_id",
+                "BIGINT"
+              ],
+              [
+                "order_number",
+                "INTEGER"
+              ],
+              [
+                "order_dow",
+                "INTEGER"
+              ],
+              [
+                "order_hour_of_day",
+                "INTEGER"
+              ],
+              [
+                "aisle_id",
+                "BIGINT"
+              ],
+              [
+                "department_id",
+                "BIGINT"
+              ],
+              [
+                "add_to_cart_order",
+                "INTEGER"
+              ],
+              [
+                "reordered",
+                "INTEGER"
+              ],
+              [
+                "eval_set",
+                "VARCHAR"
+              ]
+            ],
+            "key": [
+              "order_id",
+              "product_id"
+            ],
+            "encoding": "m4-typed-framed-v1"
+          }
+        },
+        "marts.fct_orders": {
+          "passed": true,
+          "left_except_all": 0,
+          "right_except_all": 0,
+          "left_only_keys": 0,
+          "right_only_keys": 0,
+          "incremental": {
+            "rows": 3346083,
+            "sha256": "495cd1cc96363fac849d4a3a49f9a5247c36f66d2de34efb2c8eae12cc38a260",
+            "columns": [
+              [
+                "order_id",
+                "BIGINT"
+              ],
+              [
+                "user_id",
+                "BIGINT"
+              ],
+              [
+                "eval_set",
+                "VARCHAR"
+              ],
+              [
+                "order_number",
+                "INTEGER"
+              ],
+              [
+                "order_dow",
+                "INTEGER"
+              ],
+              [
+                "order_hour_of_day",
+                "INTEGER"
+              ],
+              [
+                "days_since_prior_order",
+                "DOUBLE"
+              ],
+              [
+                "days_since_first_order",
+                "DOUBLE"
+              ],
+              [
+                "basket_size",
+                "BIGINT"
+              ],
+              [
+                "n_reordered",
+                "HUGEINT"
+              ],
+              [
+                "n_departments",
+                "BIGINT"
+              ],
+              [
+                "reorder_share",
+                "DOUBLE"
+              ]
+            ],
+            "key": [
+              "order_id"
+            ],
+            "encoding": "m4-typed-framed-v1"
+          },
+          "full": {
+            "rows": 3346083,
+            "sha256": "495cd1cc96363fac849d4a3a49f9a5247c36f66d2de34efb2c8eae12cc38a260",
+            "columns": [
+              [
+                "order_id",
+                "BIGINT"
+              ],
+              [
+                "user_id",
+                "BIGINT"
+              ],
+              [
+                "eval_set",
+                "VARCHAR"
+              ],
+              [
+                "order_number",
+                "INTEGER"
+              ],
+              [
+                "order_dow",
+                "INTEGER"
+              ],
+              [
+                "order_hour_of_day",
+                "INTEGER"
+              ],
+              [
+                "days_since_prior_order",
+                "DOUBLE"
+              ],
+              [
+                "days_since_first_order",
+                "DOUBLE"
+              ],
+              [
+                "basket_size",
+                "BIGINT"
+              ],
+              [
+                "n_reordered",
+                "HUGEINT"
+              ],
+              [
+                "n_departments",
+                "BIGINT"
+              ],
+              [
+                "reorder_share",
+                "DOUBLE"
+              ]
+            ],
+            "key": [
+              "order_id"
+            ],
+            "encoding": "m4-typed-framed-v1"
+          }
+        },
+        "marts.mart_department_kpis": {
+          "passed": true,
+          "left_except_all": 0,
+          "right_except_all": 0,
+          "left_only_keys": 0,
+          "right_only_keys": 0,
+          "incremental": {
+            "rows": 21,
+            "sha256": "8a6a71b444d3c31bde9bd9df08b9b7d6c7ad1d439fb103e11740541f19da8c4c",
+            "columns": [
+              [
+                "department_id",
+                "BIGINT"
+              ],
+              [
+                "department_name",
+                "VARCHAR"
+              ],
+              [
+                "n_lines",
+                "BIGINT"
+              ],
+              [
+                "n_orders",
+                "BIGINT"
+              ],
+              [
+                "n_users",
+                "BIGINT"
+              ],
+              [
+                "reorder_rate",
+                "DOUBLE"
+              ],
+              [
+                "avg_cart_position",
+                "DOUBLE"
+              ],
+              [
+                "share_of_lines",
+                "DOUBLE"
+              ]
+            ],
+            "key": [
+              "department_id"
+            ],
+            "encoding": "m4-typed-framed-v1"
+          },
+          "full": {
+            "rows": 21,
+            "sha256": "8a6a71b444d3c31bde9bd9df08b9b7d6c7ad1d439fb103e11740541f19da8c4c",
+            "columns": [
+              [
+                "department_id",
+                "BIGINT"
+              ],
+              [
+                "department_name",
+                "VARCHAR"
+              ],
+              [
+                "n_lines",
+                "BIGINT"
+              ],
+              [
+                "n_orders",
+                "BIGINT"
+              ],
+              [
+                "n_users",
+                "BIGINT"
+              ],
+              [
+                "reorder_rate",
+                "DOUBLE"
+              ],
+              [
+                "avg_cart_position",
+                "DOUBLE"
+              ],
+              [
+                "share_of_lines",
+                "DOUBLE"
+              ]
+            ],
+            "key": [
+              "department_id"
+            ],
+            "encoding": "m4-typed-framed-v1"
+          }
+        },
+        "orchestration.batch_department_integer_stats": {
+          "passed": true,
+          "left_except_all": 0,
+          "right_except_all": 0,
+          "left_only_keys": 0,
+          "right_only_keys": 0,
+          "incremental": {
+            "rows": 210,
+            "sha256": "6244b1c83dfe092a6806f7df5fe83d0ac9108f9c4ba63936dc574210015dc680",
+            "columns": [
+              [
+                "batch",
+                "VARCHAR"
+              ],
+              [
+                "department_id",
+                "BIGINT"
+              ],
+              [
+                "n_lines",
+                "BIGINT"
+              ],
+              [
+                "n_orders",
+                "BIGINT"
+              ],
+              [
+                "n_users",
+                "BIGINT"
+              ],
+              [
+                "n_reordered",
+                "BIGINT"
+              ],
+              [
+                "sum_cart_position",
+                "BIGINT"
+              ]
+            ],
+            "key": [
+              "batch",
+              "department_id"
+            ],
+            "encoding": "m4-typed-framed-v1"
+          },
+          "full": {
+            "rows": 210,
+            "sha256": "6244b1c83dfe092a6806f7df5fe83d0ac9108f9c4ba63936dc574210015dc680",
+            "columns": [
+              [
+                "batch",
+                "VARCHAR"
+              ],
+              [
+                "department_id",
+                "BIGINT"
+              ],
+              [
+                "n_lines",
+                "BIGINT"
+              ],
+              [
+                "n_orders",
+                "BIGINT"
+              ],
+              [
+                "n_users",
+                "BIGINT"
+              ],
+              [
+                "n_reordered",
+                "BIGINT"
+              ],
+              [
+                "sum_cart_position",
+                "BIGINT"
+              ]
+            ],
+            "key": [
+              "batch",
+              "department_id"
+            ],
+            "encoding": "m4-typed-framed-v1"
+          }
+        },
+        "orchestration.batch_hourly_integer_stats": {
+          "passed": true,
+          "left_except_all": 0,
+          "right_except_all": 0,
+          "left_only_keys": 0,
+          "right_only_keys": 0,
+          "incremental": {
+            "rows": 1678,
+            "sha256": "51e59fd2e678d9d8c0c1da4c4a1fc60279249b69d80aa2ab2b784263adeb124f",
+            "columns": [
+              [
+                "batch",
+                "VARCHAR"
+              ],
+              [
+                "order_dow",
+                "BIGINT"
+              ],
+              [
+                "order_hour_of_day",
+                "BIGINT"
+              ],
+              [
+                "n_orders",
+                "BIGINT"
+              ],
+              [
+                "n_lines",
+                "BIGINT"
+              ],
+              [
+                "n_reordered",
+                "BIGINT"
+              ]
+            ],
+            "key": [
+              "batch",
+              "order_dow",
+              "order_hour_of_day"
+            ],
+            "encoding": "m4-typed-framed-v1"
+          },
+          "full": {
+            "rows": 1678,
+            "sha256": "51e59fd2e678d9d8c0c1da4c4a1fc60279249b69d80aa2ab2b784263adeb124f",
+            "columns": [
+              [
+                "batch",
+                "VARCHAR"
+              ],
+              [
+                "order_dow",
+                "BIGINT"
+              ],
+              [
+                "order_hour_of_day",
+                "BIGINT"
+              ],
+              [
+                "n_orders",
+                "BIGINT"
+              ],
+              [
+                "n_lines",
+                "BIGINT"
+              ],
+              [
+                "n_reordered",
+                "BIGINT"
+              ]
+            ],
+            "key": [
+              "batch",
+              "order_dow",
+              "order_hour_of_day"
+            ],
+            "encoding": "m4-typed-framed-v1"
+          }
+        },
+        "orchestration.batch_product_integer_stats": {
+          "passed": true,
+          "left_except_all": 0,
+          "right_except_all": 0,
+          "left_only_keys": 0,
+          "right_only_keys": 0,
+          "incremental": {
+            "rows": 310819,
+            "sha256": "bf1f60b2f67e25a28009f260fc998360ad7eb067825fb7d95128011e60b59784",
+            "columns": [
+              [
+                "batch",
+                "VARCHAR"
+              ],
+              [
+                "product_id",
+                "BIGINT"
+              ],
+              [
+                "n_lines",
+                "BIGINT"
+              ],
+              [
+                "n_buyers",
+                "BIGINT"
+              ],
+              [
+                "n_reordered",
+                "BIGINT"
+              ]
+            ],
+            "key": [
+              "batch",
+              "product_id"
+            ],
+            "encoding": "m4-typed-framed-v1"
+          },
+          "full": {
+            "rows": 310819,
+            "sha256": "bf1f60b2f67e25a28009f260fc998360ad7eb067825fb7d95128011e60b59784",
+            "columns": [
+              [
+                "batch",
+                "VARCHAR"
+              ],
+              [
+                "product_id",
+                "BIGINT"
+              ],
+              [
+                "n_lines",
+                "BIGINT"
+              ],
+              [
+                "n_buyers",
+                "BIGINT"
+              ],
+              [
+                "n_reordered",
+                "BIGINT"
+              ]
+            ],
+            "key": [
+              "batch",
+              "product_id"
+            ],
+            "encoding": "m4-typed-framed-v1"
+          }
+        }
+      },
+      "audit_wall_seconds": 674.1878215819888
+    },
+    "spark_original": {
+      "passed": true,
+      "tables": {
+        "fct_order_lines": {
+          "passed": true,
+          "spark_except_all": 0,
+          "dbt_except_all": 0,
+          "invalid_partition_keys": 0,
+          "spark": {
+            "rows": 33819106,
+            "sha256": "2bc562bce57d1ea456babe5d0a833d960a1242b5fea02ad261149897bf6e8326",
+            "columns": [
+              [
+                "order_id",
+                "BIGINT"
+              ],
+              [
+                "product_id",
+                "BIGINT"
+              ],
+              [
+                "user_id",
+                "BIGINT"
+              ],
+              [
+                "order_number",
+                "INTEGER"
+              ],
+              [
+                "order_dow",
+                "INTEGER"
+              ],
+              [
+                "order_hour_of_day",
+                "INTEGER"
+              ],
+              [
+                "aisle_id",
+                "BIGINT"
+              ],
+              [
+                "department_id",
+                "BIGINT"
+              ],
+              [
+                "add_to_cart_order",
+                "INTEGER"
+              ],
+              [
+                "reordered",
+                "INTEGER"
+              ],
+              [
+                "eval_set",
+                "VARCHAR"
+              ]
+            ],
+            "key": [
+              "order_id",
+              "product_id"
+            ],
+            "encoding": "m4-typed-framed-v1"
+          },
+          "dbt": {
+            "rows": 33819106,
+            "sha256": "2bc562bce57d1ea456babe5d0a833d960a1242b5fea02ad261149897bf6e8326",
+            "columns": [
+              [
+                "order_id",
+                "BIGINT"
+              ],
+              [
+                "product_id",
+                "BIGINT"
+              ],
+              [
+                "user_id",
+                "BIGINT"
+              ],
+              [
+                "order_number",
+                "INTEGER"
+              ],
+              [
+                "order_dow",
+                "INTEGER"
+              ],
+              [
+                "order_hour_of_day",
+                "INTEGER"
+              ],
+              [
+                "aisle_id",
+                "BIGINT"
+              ],
+              [
+                "department_id",
+                "BIGINT"
+              ],
+              [
+                "add_to_cart_order",
+                "INTEGER"
+              ],
+              [
+                "reordered",
+                "INTEGER"
+              ],
+              [
+                "eval_set",
+                "VARCHAR"
+              ]
+            ],
+            "key": [
+              "order_id",
+              "product_id"
+            ],
+            "encoding": "m4-typed-framed-v1"
+          }
+        },
+        "batch_department_integer_stats": {
+          "passed": true,
+          "spark_except_all": 0,
+          "dbt_except_all": 0,
+          "invalid_partition_keys": 0,
+          "spark": {
+            "rows": 210,
+            "sha256": "6244b1c83dfe092a6806f7df5fe83d0ac9108f9c4ba63936dc574210015dc680",
+            "columns": [
+              [
+                "batch",
+                "VARCHAR"
+              ],
+              [
+                "department_id",
+                "BIGINT"
+              ],
+              [
+                "n_lines",
+                "BIGINT"
+              ],
+              [
+                "n_orders",
+                "BIGINT"
+              ],
+              [
+                "n_users",
+                "BIGINT"
+              ],
+              [
+                "n_reordered",
+                "BIGINT"
+              ],
+              [
+                "sum_cart_position",
+                "BIGINT"
+              ]
+            ],
+            "key": [
+              "batch",
+              "department_id"
+            ],
+            "encoding": "m4-typed-framed-v1"
+          },
+          "dbt": {
+            "rows": 210,
+            "sha256": "6244b1c83dfe092a6806f7df5fe83d0ac9108f9c4ba63936dc574210015dc680",
+            "columns": [
+              [
+                "batch",
+                "VARCHAR"
+              ],
+              [
+                "department_id",
+                "BIGINT"
+              ],
+              [
+                "n_lines",
+                "BIGINT"
+              ],
+              [
+                "n_orders",
+                "BIGINT"
+              ],
+              [
+                "n_users",
+                "BIGINT"
+              ],
+              [
+                "n_reordered",
+                "BIGINT"
+              ],
+              [
+                "sum_cart_position",
+                "BIGINT"
+              ]
+            ],
+            "key": [
+              "batch",
+              "department_id"
+            ],
+            "encoding": "m4-typed-framed-v1"
+          }
+        },
+        "batch_hourly_integer_stats": {
+          "passed": true,
+          "spark_except_all": 0,
+          "dbt_except_all": 0,
+          "invalid_partition_keys": 0,
+          "spark": {
+            "rows": 1678,
+            "sha256": "51e59fd2e678d9d8c0c1da4c4a1fc60279249b69d80aa2ab2b784263adeb124f",
+            "columns": [
+              [
+                "batch",
+                "VARCHAR"
+              ],
+              [
+                "order_dow",
+                "BIGINT"
+              ],
+              [
+                "order_hour_of_day",
+                "BIGINT"
+              ],
+              [
+                "n_orders",
+                "BIGINT"
+              ],
+              [
+                "n_lines",
+                "BIGINT"
+              ],
+              [
+                "n_reordered",
+                "BIGINT"
+              ]
+            ],
+            "key": [
+              "batch",
+              "order_dow",
+              "order_hour_of_day"
+            ],
+            "encoding": "m4-typed-framed-v1"
+          },
+          "dbt": {
+            "rows": 1678,
+            "sha256": "51e59fd2e678d9d8c0c1da4c4a1fc60279249b69d80aa2ab2b784263adeb124f",
+            "columns": [
+              [
+                "batch",
+                "VARCHAR"
+              ],
+              [
+                "order_dow",
+                "BIGINT"
+              ],
+              [
+                "order_hour_of_day",
+                "BIGINT"
+              ],
+              [
+                "n_orders",
+                "BIGINT"
+              ],
+              [
+                "n_lines",
+                "BIGINT"
+              ],
+              [
+                "n_reordered",
+                "BIGINT"
+              ]
+            ],
+            "key": [
+              "batch",
+              "order_dow",
+              "order_hour_of_day"
+            ],
+            "encoding": "m4-typed-framed-v1"
+          }
+        },
+        "batch_product_integer_stats": {
+          "passed": true,
+          "spark_except_all": 0,
+          "dbt_except_all": 0,
+          "invalid_partition_keys": 0,
+          "spark": {
+            "rows": 310819,
+            "sha256": "bf1f60b2f67e25a28009f260fc998360ad7eb067825fb7d95128011e60b59784",
+            "columns": [
+              [
+                "batch",
+                "VARCHAR"
+              ],
+              [
+                "product_id",
+                "BIGINT"
+              ],
+              [
+                "n_lines",
+                "BIGINT"
+              ],
+              [
+                "n_buyers",
+                "BIGINT"
+              ],
+              [
+                "n_reordered",
+                "BIGINT"
+              ]
+            ],
+            "key": [
+              "batch",
+              "product_id"
+            ],
+            "encoding": "m4-typed-framed-v1"
+          },
+          "dbt": {
+            "rows": 310819,
+            "sha256": "bf1f60b2f67e25a28009f260fc998360ad7eb067825fb7d95128011e60b59784",
+            "columns": [
+              [
+                "batch",
+                "VARCHAR"
+              ],
+              [
+                "product_id",
+                "BIGINT"
+              ],
+              [
+                "n_lines",
+                "BIGINT"
+              ],
+              [
+                "n_buyers",
+                "BIGINT"
+              ],
+              [
+                "n_reordered",
+                "BIGINT"
+              ]
+            ],
+            "key": [
+              "batch",
+              "product_id"
+            ],
+            "encoding": "m4-typed-framed-v1"
+          }
+        }
+      },
+      "audit_wall_seconds": 1225.006003907998
+    },
+    "spark_corrected": {
+      "passed": true,
+      "tables": {
+        "fct_order_lines": {
+          "passed": true,
+          "spark_except_all": 0,
+          "dbt_except_all": 0,
+          "invalid_partition_keys": 0,
+          "spark": {
+            "rows": 33819106,
+            "sha256": "878173e4924bcd155f7b860864e762b4115cb1e7a262ec94d95b8bf51be8a95a",
+            "columns": [
+              [
+                "order_id",
+                "BIGINT"
+              ],
+              [
+                "product_id",
+                "BIGINT"
+              ],
+              [
+                "user_id",
+                "BIGINT"
+              ],
+              [
+                "order_number",
+                "INTEGER"
+              ],
+              [
+                "order_dow",
+                "INTEGER"
+              ],
+              [
+                "order_hour_of_day",
+                "INTEGER"
+              ],
+              [
+                "aisle_id",
+                "BIGINT"
+              ],
+              [
+                "department_id",
+                "BIGINT"
+              ],
+              [
+                "add_to_cart_order",
+                "INTEGER"
+              ],
+              [
+                "reordered",
+                "INTEGER"
+              ],
+              [
+                "eval_set",
+                "VARCHAR"
+              ]
+            ],
+            "key": [
+              "order_id",
+              "product_id"
+            ],
+            "encoding": "m4-typed-framed-v1"
+          },
+          "dbt": {
+            "rows": 33819106,
+            "sha256": "878173e4924bcd155f7b860864e762b4115cb1e7a262ec94d95b8bf51be8a95a",
+            "columns": [
+              [
+                "order_id",
+                "BIGINT"
+              ],
+              [
+                "product_id",
+                "BIGINT"
+              ],
+              [
+                "user_id",
+                "BIGINT"
+              ],
+              [
+                "order_number",
+                "INTEGER"
+              ],
+              [
+                "order_dow",
+                "INTEGER"
+              ],
+              [
+                "order_hour_of_day",
+                "INTEGER"
+              ],
+              [
+                "aisle_id",
+                "BIGINT"
+              ],
+              [
+                "department_id",
+                "BIGINT"
+              ],
+              [
+                "add_to_cart_order",
+                "INTEGER"
+              ],
+              [
+                "reordered",
+                "INTEGER"
+              ],
+              [
+                "eval_set",
+                "VARCHAR"
+              ]
+            ],
+            "key": [
+              "order_id",
+              "product_id"
+            ],
+            "encoding": "m4-typed-framed-v1"
+          }
+        },
+        "batch_department_integer_stats": {
+          "passed": true,
+          "spark_except_all": 0,
+          "dbt_except_all": 0,
+          "invalid_partition_keys": 0,
+          "spark": {
+            "rows": 210,
+            "sha256": "893f94b7b958d4c5ee1a459486879d59c16c0f6ea5ee462bb9fee22d29058e1a",
+            "columns": [
+              [
+                "batch",
+                "VARCHAR"
+              ],
+              [
+                "department_id",
+                "BIGINT"
+              ],
+              [
+                "n_lines",
+                "BIGINT"
+              ],
+              [
+                "n_orders",
+                "BIGINT"
+              ],
+              [
+                "n_users",
+                "BIGINT"
+              ],
+              [
+                "n_reordered",
+                "BIGINT"
+              ],
+              [
+                "sum_cart_position",
+                "BIGINT"
+              ]
+            ],
+            "key": [
+              "batch",
+              "department_id"
+            ],
+            "encoding": "m4-typed-framed-v1"
+          },
+          "dbt": {
+            "rows": 210,
+            "sha256": "893f94b7b958d4c5ee1a459486879d59c16c0f6ea5ee462bb9fee22d29058e1a",
+            "columns": [
+              [
+                "batch",
+                "VARCHAR"
+              ],
+              [
+                "department_id",
+                "BIGINT"
+              ],
+              [
+                "n_lines",
+                "BIGINT"
+              ],
+              [
+                "n_orders",
+                "BIGINT"
+              ],
+              [
+                "n_users",
+                "BIGINT"
+              ],
+              [
+                "n_reordered",
+                "BIGINT"
+              ],
+              [
+                "sum_cart_position",
+                "BIGINT"
+              ]
+            ],
+            "key": [
+              "batch",
+              "department_id"
+            ],
+            "encoding": "m4-typed-framed-v1"
+          }
+        },
+        "batch_hourly_integer_stats": {
+          "passed": true,
+          "spark_except_all": 0,
+          "dbt_except_all": 0,
+          "invalid_partition_keys": 0,
+          "spark": {
+            "rows": 1678,
+            "sha256": "7635c1c5d3ad5d8fc70b804b454d44be7140e733507c0efe2fd03ae66e8e3d25",
+            "columns": [
+              [
+                "batch",
+                "VARCHAR"
+              ],
+              [
+                "order_dow",
+                "BIGINT"
+              ],
+              [
+                "order_hour_of_day",
+                "BIGINT"
+              ],
+              [
+                "n_orders",
+                "BIGINT"
+              ],
+              [
+                "n_lines",
+                "BIGINT"
+              ],
+              [
+                "n_reordered",
+                "BIGINT"
+              ]
+            ],
+            "key": [
+              "batch",
+              "order_dow",
+              "order_hour_of_day"
+            ],
+            "encoding": "m4-typed-framed-v1"
+          },
+          "dbt": {
+            "rows": 1678,
+            "sha256": "7635c1c5d3ad5d8fc70b804b454d44be7140e733507c0efe2fd03ae66e8e3d25",
+            "columns": [
+              [
+                "batch",
+                "VARCHAR"
+              ],
+              [
+                "order_dow",
+                "BIGINT"
+              ],
+              [
+                "order_hour_of_day",
+                "BIGINT"
+              ],
+              [
+                "n_orders",
+                "BIGINT"
+              ],
+              [
+                "n_lines",
+                "BIGINT"
+              ],
+              [
+                "n_reordered",
+                "BIGINT"
+              ]
+            ],
+            "key": [
+              "batch",
+              "order_dow",
+              "order_hour_of_day"
+            ],
+            "encoding": "m4-typed-framed-v1"
+          }
+        },
+        "batch_product_integer_stats": {
+          "passed": true,
+          "spark_except_all": 0,
+          "dbt_except_all": 0,
+          "invalid_partition_keys": 0,
+          "spark": {
+            "rows": 310819,
+            "sha256": "7352faf006d10bc2feaff897515f8e8533597de6207093f3444f7fe092d25cba",
+            "columns": [
+              [
+                "batch",
+                "VARCHAR"
+              ],
+              [
+                "product_id",
+                "BIGINT"
+              ],
+              [
+                "n_lines",
+                "BIGINT"
+              ],
+              [
+                "n_buyers",
+                "BIGINT"
+              ],
+              [
+                "n_reordered",
+                "BIGINT"
+              ]
+            ],
+            "key": [
+              "batch",
+              "product_id"
+            ],
+            "encoding": "m4-typed-framed-v1"
+          },
+          "dbt": {
+            "rows": 310819,
+            "sha256": "7352faf006d10bc2feaff897515f8e8533597de6207093f3444f7fe092d25cba",
+            "columns": [
+              [
+                "batch",
+                "VARCHAR"
+              ],
+              [
+                "product_id",
+                "BIGINT"
+              ],
+              [
+                "n_lines",
+                "BIGINT"
+              ],
+              [
+                "n_buyers",
+                "BIGINT"
+              ],
+              [
+                "n_reordered",
+                "BIGINT"
+              ]
+            ],
+            "key": [
+              "batch",
+              "product_id"
+            ],
+            "encoding": "m4-typed-framed-v1"
+          }
+        }
+      },
+      "audit_wall_seconds": 1188.500497511006
+    }
+  },
+  "timings": {
+    "arrival_batches": [
+      {
+        "batch": "000000",
+        "child_wall_seconds": 459.14796844898956,
+        "candidate_copy_setup_seconds": 5.563799641095102e-05,
+        "dbt_stage": {
+          "wall_seconds": 5.528572917013662,
+          "returncode": 0,
+          "started_utc": "2026-11-03T06:55:04.679953+00:00",
+          "finished_utc": "2026-11-03T06:55:10.208522+00:00",
+          "timer_includes": "process startup, command execution, stdout/stderr file writes"
+        },
+        "dbt_input_tests": {
+          "wall_seconds": 15.928259984008037,
+          "returncode": 0,
+          "started_utc": "2026-11-03T06:55:11.957093+00:00",
+          "finished_utc": "2026-11-03T06:55:27.883647+00:00",
+          "timer_includes": "process startup, command execution, stdout/stderr file writes"
+        },
+        "dbt_marts_and_tests": {
+          "wall_seconds": 22.54412519800826,
+          "returncode": 0,
+          "started_utc": "2026-11-03T06:55:30.001167+00:00",
+          "finished_utc": "2026-11-03T06:55:52.545291+00:00",
+          "timer_includes": "process startup, command execution, stdout/stderr file writes"
+        },
+        "exact_quality_audit": {
+          "wall_seconds": 269.2861424169969,
+          "timer_scope": "source/fact exact value hashes, EXCEPT ALL, grains, FK, counts and processing freshness; separate from dbt ETL"
+        },
+        "partition_digests": {
+          "wall_seconds": 119.63427690498065,
+          "timer_scope": "separate audit; not ETL"
+        }
+      },
+      {
+        "batch": "000001",
+        "child_wall_seconds": 738.0757166620169,
+        "candidate_copy_setup_seconds": 0.04149387901998125,
+        "dbt_stage": {
+          "wall_seconds": 8.792129816982197,
+          "returncode": 0,
+          "started_utc": "2026-11-03T07:02:47.537272+00:00",
+          "finished_utc": "2026-11-03T07:02:56.327933+00:00",
+          "timer_includes": "process startup, command execution, stdout/stderr file writes"
+        },
+        "dbt_input_tests": {
+          "wall_seconds": 7.447849753982155,
+          "returncode": 0,
+          "started_utc": "2026-11-03T07:02:58.009524+00:00",
+          "finished_utc": "2026-11-03T07:03:05.457368+00:00",
+          "timer_includes": "process startup, command execution, stdout/stderr file writes"
+        },
+        "dbt_marts_and_tests": {
+          "wall_seconds": 15.047930247994373,
+          "returncode": 0,
+          "started_utc": "2026-11-03T07:03:07.224735+00:00",
+          "finished_utc": "2026-11-03T07:03:22.272662+00:00",
+          "timer_includes": "process startup, command execution, stdout/stderr file writes"
+        },
+        "exact_quality_audit": {
+          "wall_seconds": 504.5989027110045,
+          "timer_scope": "source/fact exact value hashes, EXCEPT ALL, grains, FK, counts and processing freshness; separate from dbt ETL"
+        },
+        "partition_digests": {
+          "wall_seconds": 172.0922726719873,
+          "timer_scope": "separate audit; not ETL"
+        }
+      },
+      {
+        "batch": "000002",
+        "child_wall_seconds": 736.125801342976,
+        "candidate_copy_setup_seconds": 0.23062895899056457,
+        "dbt_stage": {
+          "wall_seconds": 10.859531544003403,
+          "returncode": 0,
+          "started_utc": "2026-11-03T07:15:00.565741+00:00",
+          "finished_utc": "2026-11-03T07:15:11.425270+00:00",
+          "timer_includes": "process startup, command execution, stdout/stderr file writes"
+        },
+        "dbt_input_tests": {
+          "wall_seconds": 8.563233988010325,
+          "returncode": 0,
+          "started_utc": "2026-11-03T07:15:13.200544+00:00",
+          "finished_utc": "2026-11-03T07:15:21.763771+00:00",
+          "timer_includes": "process startup, command execution, stdout/stderr file writes"
+        },
+        "dbt_marts_and_tests": {
+          "wall_seconds": 13.996650868008146,
+          "returncode": 0,
+          "started_utc": "2026-11-03T07:15:25.254509+00:00",
+          "finished_utc": "2026-11-03T07:15:39.251153+00:00",
+          "timer_includes": "process startup, command execution, stdout/stderr file writes"
+        },
+        "exact_quality_audit": {
+          "wall_seconds": 474.4324831170088,
+          "timer_scope": "source/fact exact value hashes, EXCEPT ALL, grains, FK, counts and processing freshness; separate from dbt ETL"
+        },
+        "partition_digests": {
+          "wall_seconds": 201.9381387429894,
+          "timer_scope": "separate audit; not ETL"
+        }
+      },
+      {
+        "batch": "000003",
+        "child_wall_seconds": 802.8204328349966,
+        "candidate_copy_setup_seconds": 0.09107436801423319,
+        "dbt_stage": {
+          "wall_seconds": 12.267885070992634,
+          "returncode": 0,
+          "started_utc": "2026-11-03T07:27:16.598805+00:00",
+          "finished_utc": "2026-11-03T07:27:28.865475+00:00",
+          "timer_includes": "process startup, command execution, stdout/stderr file writes"
+        },
+        "dbt_input_tests": {
+          "wall_seconds": 8.695169017009903,
+          "returncode": 0,
+          "started_utc": "2026-11-03T07:27:30.741485+00:00",
+          "finished_utc": "2026-11-03T07:27:39.436646+00:00",
+          "timer_includes": "process startup, command execution, stdout/stderr file writes"
+        },
+        "dbt_marts_and_tests": {
+          "wall_seconds": 14.300327912991634,
+          "returncode": 0,
+          "started_utc": "2026-11-03T07:27:41.447666+00:00",
+          "finished_utc": "2026-11-03T07:27:55.746851+00:00",
+          "timer_includes": "process startup, command execution, stdout/stderr file writes"
+        },
+        "exact_quality_audit": {
+          "wall_seconds": 523.6017391050118,
+          "timer_scope": "source/fact exact value hashes, EXCEPT ALL, grains, FK, counts and processing freshness; separate from dbt ETL"
+        },
+        "partition_digests": {
+          "wall_seconds": 219.16555961300037,
+          "timer_scope": "separate audit; not ETL"
+        }
+      },
+      {
+        "batch": "000004",
+        "child_wall_seconds": 858.750954638992,
+        "candidate_copy_setup_seconds": 0.1758421789854765,
+        "dbt_stage": {
+          "wall_seconds": 10.29148821500712,
+          "returncode": 0,
+          "started_utc": "2026-11-03T07:40:39.676491+00:00",
+          "finished_utc": "2026-11-03T07:40:49.967976+00:00",
+          "timer_includes": "process startup, command execution, stdout/stderr file writes"
+        },
+        "dbt_input_tests": {
+          "wall_seconds": 8.419461976998718,
+          "returncode": 0,
+          "started_utc": "2026-11-03T07:40:51.776556+00:00",
+          "finished_utc": "2026-11-03T07:41:00.194361+00:00",
+          "timer_includes": "process startup, command execution, stdout/stderr file writes"
+        },
+        "dbt_marts_and_tests": {
+          "wall_seconds": 13.735081270016963,
+          "returncode": 0,
+          "started_utc": "2026-11-03T07:41:02.000507+00:00",
+          "finished_utc": "2026-11-03T07:41:15.735584+00:00",
+          "timer_includes": "process startup, command execution, stdout/stderr file writes"
+        },
+        "exact_quality_audit": {
+          "wall_seconds": 569.806773829012,
+          "timer_scope": "source/fact exact value hashes, EXCEPT ALL, grains, FK, counts and processing freshness; separate from dbt ETL"
+        },
+        "partition_digests": {
+          "wall_seconds": 230.94480343398754,
+          "timer_scope": "separate audit; not ETL"
+        }
+      },
+      {
+        "batch": "000005",
+        "child_wall_seconds": 987.7280780119763,
+        "candidate_copy_setup_seconds": 0.14747587000601925,
+        "dbt_stage": {
+          "wall_seconds": 12.197473217005609,
+          "returncode": 0,
+          "started_utc": "2026-11-03T07:54:58.974125+00:00",
+          "finished_utc": "2026-11-03T07:55:11.171595+00:00",
+          "timer_includes": "process startup, command execution, stdout/stderr file writes"
+        },
+        "dbt_input_tests": {
+          "wall_seconds": 8.089493840001523,
+          "returncode": 0,
+          "started_utc": "2026-11-03T07:55:12.777420+00:00",
+          "finished_utc": "2026-11-03T07:55:20.866907+00:00",
+          "timer_includes": "process startup, command execution, stdout/stderr file writes"
+        },
+        "dbt_marts_and_tests": {
+          "wall_seconds": 13.124867637990974,
+          "returncode": 0,
+          "started_utc": "2026-11-03T07:55:22.777798+00:00",
+          "finished_utc": "2026-11-03T07:55:35.901609+00:00",
+          "timer_includes": "process startup, command execution, stdout/stderr file writes"
+        },
+        "exact_quality_audit": {
+          "wall_seconds": 693.4180741239979,
+          "timer_scope": "source/fact exact value hashes, EXCEPT ALL, grains, FK, counts and processing freshness; separate from dbt ETL"
+        },
+        "partition_digests": {
+          "wall_seconds": 235.26937020901823,
+          "timer_scope": "separate audit; not ETL"
+        }
+      },
+      {
+        "batch": "000006",
+        "child_wall_seconds": 956.6882594139897,
+        "candidate_copy_setup_seconds": 0.5813838909962215,
+        "dbt_stage": {
+          "wall_seconds": 11.883567548007704,
+          "returncode": 0,
+          "started_utc": "2026-11-03T08:11:26.480755+00:00",
+          "finished_utc": "2026-11-03T08:11:38.364321+00:00",
+          "timer_includes": "process startup, command execution, stdout/stderr file writes"
+        },
+        "dbt_input_tests": {
+          "wall_seconds": 7.746009029011475,
+          "returncode": 0,
+          "started_utc": "2026-11-03T08:11:39.860535+00:00",
+          "finished_utc": "2026-11-03T08:11:47.606539+00:00",
+          "timer_includes": "process startup, command execution, stdout/stderr file writes"
+        },
+        "dbt_marts_and_tests": {
+          "wall_seconds": 12.933096483990084,
+          "returncode": 0,
+          "started_utc": "2026-11-03T08:11:50.214926+00:00",
+          "finished_utc": "2026-11-03T08:12:03.146136+00:00",
+          "timer_includes": "process startup, command execution, stdout/stderr file writes"
+        },
+        "exact_quality_audit": {
+          "wall_seconds": 654.4492279920087,
+          "timer_scope": "source/fact exact value hashes, EXCEPT ALL, grains, FK, counts and processing freshness; separate from dbt ETL"
+        },
+        "partition_digests": {
+          "wall_seconds": 242.890389031003,
+          "timer_scope": "separate audit; not ETL"
+        }
+      },
+      {
+        "batch": "000007",
+        "child_wall_seconds": 958.8170907100139,
+        "candidate_copy_setup_seconds": 0.6165060859930236,
+        "dbt_stage": {
+          "wall_seconds": 11.847065454989206,
+          "returncode": 0,
+          "started_utc": "2026-11-03T08:27:23.144920+00:00",
+          "finished_utc": "2026-11-03T08:27:34.990487+00:00",
+          "timer_includes": "process startup, command execution, stdout/stderr file writes"
+        },
+        "dbt_input_tests": {
+          "wall_seconds": 8.379571116995066,
+          "returncode": 0,
+          "started_utc": "2026-11-03T08:27:36.780632+00:00",
+          "finished_utc": "2026-11-03T08:27:45.160193+00:00",
+          "timer_includes": "process startup, command execution, stdout/stderr file writes"
+        },
+        "dbt_marts_and_tests": {
+          "wall_seconds": 12.864417230011895,
+          "returncode": 0,
+          "started_utc": "2026-11-03T08:27:47.063163+00:00",
+          "finished_utc": "2026-11-03T08:27:59.926256+00:00",
+          "timer_includes": "process startup, command execution, stdout/stderr file writes"
+        },
+        "exact_quality_audit": {
+          "wall_seconds": 657.0769358440011,
+          "timer_scope": "source/fact exact value hashes, EXCEPT ALL, grains, FK, counts and processing freshness; separate from dbt ETL"
+        },
+        "partition_digests": {
+          "wall_seconds": 242.02087609301088,
+          "timer_scope": "separate audit; not ETL"
+        }
+      },
+      {
+        "batch": "000008",
+        "child_wall_seconds": 1010.7190460840065,
+        "candidate_copy_setup_seconds": 0.6108576539845672,
+        "dbt_stage": {
+          "wall_seconds": 12.251309838000452,
+          "returncode": 0,
+          "started_utc": "2026-11-03T08:43:21.590544+00:00",
+          "finished_utc": "2026-11-03T08:43:33.840496+00:00",
+          "timer_includes": "process startup, command execution, stdout/stderr file writes"
+        },
+        "dbt_input_tests": {
+          "wall_seconds": 8.0911895330064,
+          "returncode": 0,
+          "started_utc": "2026-11-03T08:43:35.436528+00:00",
+          "finished_utc": "2026-11-03T08:43:43.527713+00:00",
+          "timer_includes": "process startup, command execution, stdout/stderr file writes"
+        },
+        "dbt_marts_and_tests": {
+          "wall_seconds": 13.477505019982345,
+          "returncode": 0,
+          "started_utc": "2026-11-03T08:43:45.434659+00:00",
+          "finished_utc": "2026-11-03T08:43:58.909749+00:00",
+          "timer_includes": "process startup, command execution, stdout/stderr file writes"
+        },
+        "exact_quality_audit": {
+          "wall_seconds": 702.0463775989774,
+          "timer_scope": "source/fact exact value hashes, EXCEPT ALL, grains, FK, counts and processing freshness; separate from dbt ETL"
+        },
+        "partition_digests": {
+          "wall_seconds": 249.0257907639898,
+          "timer_scope": "separate audit; not ETL"
+        }
+      },
+      {
+        "batch": "000009",
+        "child_wall_seconds": 1007.9730023900047,
+        "candidate_copy_setup_seconds": 0.5835325589869171,
+        "dbt_stage": {
+          "wall_seconds": 11.818877787998645,
+          "returncode": 0,
+          "started_utc": "2026-11-03T09:00:18.188686+00:00",
+          "finished_utc": "2026-11-03T09:00:30.006087+00:00",
+          "timer_includes": "process startup, command execution, stdout/stderr file writes"
+        },
+        "dbt_input_tests": {
+          "wall_seconds": 8.16168040901539,
+          "returncode": 0,
+          "started_utc": "2026-11-03T09:00:31.988190+00:00",
+          "finished_utc": "2026-11-03T09:00:40.149866+00:00",
+          "timer_includes": "process startup, command execution, stdout/stderr file writes"
+        },
+        "dbt_marts_and_tests": {
+          "wall_seconds": 12.810165873001097,
+          "returncode": 0,
+          "started_utc": "2026-11-03T09:00:42.038354+00:00",
+          "finished_utc": "2026-11-03T09:00:54.847196+00:00",
+          "timer_includes": "process startup, command execution, stdout/stderr file writes"
+        },
+        "exact_quality_audit": {
+          "wall_seconds": 699.6943662350241,
+          "timer_scope": "source/fact exact value hashes, EXCEPT ALL, grains, FK, counts and processing freshness; separate from dbt ETL"
+        },
+        "partition_digests": {
+          "wall_seconds": 243.26213446399197,
+          "timer_scope": "separate audit; not ETL"
+        }
+      }
+    ],
+    "full_reference": {
+      "wall_seconds": 31.87071651799488,
+      "returncode": 0,
+      "started_utc": "2026-11-03T09:42:05.989628+00:00",
+      "finished_utc": "2026-11-03T09:42:37.858851+00:00",
+      "timer_includes": "process startup, command execution, stdout/stderr file writes"
+    },
+    "initialization": {
+      "source_hash_seconds": 0.4097109639842529,
+      "metadata_and_hash_seconds": 3.0526636589784175
+    }
+  },
+  "terminal_feature_export": {
+    "wall_seconds": 11.029078616993502,
+    "split_sha256": "b3d8bbef2396dd302465ed4511bf36fce55dd151dd7914f99aa69acd6ea9994b",
+    "feature_fingerprint": "936de0e402c75b6438fc68ea906f1c66235ddf15b490cbe6527bca3271530011",
+    "feature_manifest_sha256": "97e9d671c57f1c89c14e15d07f6292379c42f5843d3c47af62cf164360b8508d"
+  },
+  "spark": {
+    "original": {
+      "spark_version": "4.2.0",
+      "master_actual": "local[8]",
+      "default_parallelism_actual": 8,
+      "driver_memory_effective": "4g",
+      "wall_seconds": 150.3186531990068,
+      "source_hash_wall_seconds_excluded": 1.8666230000089854,
+      "physical_hash_wall_seconds": 0.20494976098416373,
+      "etl_wall_seconds_excluding_physical_hashes": 150.11370449900278,
+      "timer_scope": "JVM/session startup, CSV parsing, strict checks, joins, disk persistence, aggregates, Parquet writes and physical-file hashing",
+      "tables": {
+        "fct_order_lines": {
+          "rows": 33819106,
+          "nonempty_partition_count": 10,
+          "new_parquet_files": 160,
+          "new_parquet_bytes": 252345948,
+          "metadata_bytes": 1973060
+        },
+        "batch_department_integer_stats": {
+          "rows": 210,
+          "nonempty_partition_count": 10,
+          "new_parquet_files": 119,
+          "new_parquet_bytes": 222563,
+          "metadata_bytes": 2864
+        },
+        "batch_hourly_integer_stats": {
+          "rows": 1678,
+          "nonempty_partition_count": 10,
+          "new_parquet_files": 160,
+          "new_parquet_bytes": 298259,
+          "metadata_bytes": 3852
+        },
+        "batch_product_integer_stats": {
+          "rows": 310819,
+          "nonempty_partition_count": 10,
+          "new_parquet_files": 160,
+          "new_parquet_bytes": 2959850,
+          "metadata_bytes": 24748
+        }
+      }
+    },
+    "corrected": {
+      "spark_version": "4.2.0",
+      "master_actual": "local[8]",
+      "default_parallelism_actual": 8,
+      "driver_memory_effective": "4g",
+      "wall_seconds": 109.51904843800003,
+      "source_hash_wall_seconds_excluded": 1.1645281390228774,
+      "physical_hash_wall_seconds": 0.1117038470110856,
+      "etl_wall_seconds_excluding_physical_hashes": 109.40734554300434,
+      "timer_scope": "JVM/session startup, CSV parsing, strict checks, joins, disk persistence, aggregates, Parquet writes and physical-file hashing",
+      "tables": {
+        "fct_order_lines": {
+          "rows": 33819106,
+          "nonempty_partition_count": 10,
+          "new_parquet_files": 32,
+          "new_parquet_bytes": 169067940,
+          "metadata_bytes": 1321160
+        },
+        "batch_department_integer_stats": {
+          "rows": 210,
+          "nonempty_partition_count": 10,
+          "new_parquet_files": 23,
+          "new_parquet_bytes": 43100,
+          "metadata_bytes": 560
+        },
+        "batch_hourly_integer_stats": {
+          "rows": 1678,
+          "nonempty_partition_count": 10,
+          "new_parquet_files": 32,
+          "new_parquet_bytes": 59959,
+          "metadata_bytes": 776
+        },
+        "batch_product_integer_stats": {
+          "rows": 310819,
+          "nonempty_partition_count": 10,
+          "new_parquet_files": 32,
+          "new_parquet_bytes": 985863,
+          "metadata_bytes": 8016
+        }
+      }
+    }
+  },
+  "model_status": "not run",
+  "http_status": "not run"
+}

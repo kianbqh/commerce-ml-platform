@@ -1,89 +1,326 @@
-# Manual arrival replay
+# Replaying grocery orders with Dagster and dbt
 
-I use this layer to replay the static Instacart order files through keyed dbt facts, inspect failed data checks and compare the resulting marts with a separate full refresh. Dagster represents the arrivals, dbt models, checks and terminal feature export as assets. The complete job is invoked manually.
+I use historical Instacart orders to study how a checked incremental warehouse
+behaves as batches arrive, are corrected, fail validation and recover. Dagster
+connects the dbt assets, blocking checks, local Spark export and terminal feature
+export in one manually invoked pipeline.
+
+Instacart supplies order numbers and elapsed-day offsets, not calendar event
+timestamps. The baskets are real historical records. Daily receipt dates,
+delayed receipts and correction metadata in this experiment are simulated.
 
 ```mermaid
 flowchart LR
-    R[Real static Instacart CSVs] --> I[Ordered simulated daily receipts]
-    I --> S[dbt staging candidate]
-    S --> Q[Blocking input checks]
-    Q --> M[Keyed facts and marts]
-    M --> C[Blocking reconciliation and processing freshness]
-    C --> P[Promoted arrival checkpoint]
-    P --> F[Independent full refresh and exact parity]
-    F --> SP[Spark Parquet and exact integer marts]
-    SP --> T[Complete original-snapshot gate]
-    T --> D[dagster-dbt model and test assets]
-    D --> X[Terminal recommendation feature export]
-    X --> ML[Explicitly enabled three-seed fit and API benchmark]
-    C --> A[Local structured alert only]
+  CSV[Historical Instacart CSVs] --> R[Ordered simulated receipts]
+  R --> S[Candidate staging]
+  S --> Q[Blocking input checks]
+  Q --> M[Keyed facts and operational marts]
+  M --> O[Reconciliation and processing-freshness checks]
+  O --> P[Promoted checkpoint]
+  P --> F[Independent full refresh and six-table parity]
+  F --> SP[Local Spark Parquet and read-back parity]
+  SP --> T[Complete original-snapshot gate]
+  T --> D[Terminal dbt recommendation assets]
+  D --> X[Terminal feature export]
+  X --> ML[Three fixed-seed fits and evaluation]
+  ML --> API[Seed-42 HTTP asset]
+  X -. accepted inputs reused by selected child .-> ML
+  Q --> A[Local structured alert]
+  O --> A
 ```
 
-## Status
+## Current measurement record
 
-This directory is a candidate implementation. Engine execution and measured results are **not run**. Pure control tests cover partition selection, correction selection, idempotent keyed replay, exact serialization, blocking gates, atomic promotion and local alerts. Their results are not an ETL, Dagster, Spark or recommendation measurement.
+The data-only parent completed and passed independent review at source
+`829250d93e5e436e98e4a5df41296b0d121a52a8`, run `913dbb54-c51d-49bf-a225-3741fe84d2d1`. Its model/API receipts remain `not run`; a separate
+selected child supplies the later model/HTTP measurements.
 
-| Required evidence | Status |
+The accepted data-only parent processed **33,819,106 labeled
+lines** from 3,346,083 labeled orders, across
+206,209 users and ten ordered batches. There are
+3,421,083 metadata orders including
+unlabeled baskets. The catalog contains **49,688 products**; **49,685** actually
+appear in the labeled lines.
+
+| Check or scope | Accepted parent result |
 |---|---|
-| Dagster definitions and dbt checks import | not run; pinned environment not resolved |
-| Three-batch real-subset fixture | not run; fixture capture deferred |
-| Full-data full refresh and ordered incremental replay | not run |
-| Existing-key correction backfill and failed-batch recovery | not run |
-| Exact Spark/dbt Parquet read-back parity | not run |
-| New model fitting and HTTP benchmark | not run; disabled by default |
-| GCP | not run; optional project/account not supplied |
+| Original, corrected and recovered DBs | Exact equality across the six tables below |
+| First ordered replay / full refresh ETL + tests | 342.093988 s summed / 31.870717 s |
+| Separate source/fact quality / partition digests | 5,748.411023 s / 2,156.243612 s summed |
+| Repeated batch | `000009` unchanged; five partition-scoped tables over all ten batches |
+| Corrected batches / unchanged batches | `000000`, `000001` / eight remaining batches |
+| Bad-batch block / recovery | Intended product FK failed; promotion unchanged; fresh recovery passed |
+| Terminal-only features | All nine nonterminal prefixes clear; final split/fingerprint matched baseline |
+| Spark original / corrected | Four exact outputs each; actual `local[8]` and parallelism 8 |
+| Selected child and combined browser | Three CPU seeds and 5,000 valid HTTP responses; private/public desktop+narrow checks passed |
 
-## Setup and commands
+[Summary](../results/orchestration/full-20261103/summary.json) · [aggregate counts](../results/orchestration/full-20261103/aggregate-counts.json) · [parent supplement](../results/orchestration/full-20261103/parent-supplement.json) · [per-batch CSV](../results/orchestration/full-20261103/build-timings.csv) · [delivery report](../results/M4_DELIVERY_REPORT.md).
 
-Use a new WSL environment under `/opt/codex-resume/all-modules-v2/m4/` on the existing G-backed disk. The existing F4 data, DB, features and environment stay read-only. Runtime dependencies are candidate pins in `requirements-runtime.txt`; Spark has a separate [requirements file](../spark/requirements-runtime.txt). Java must be verified as 17 or later. Resolve and run `pip check` in isolation before execution. The old shared environment is never an installation target.
+The first ten ETL/test processes are 10.734 times the single full refresh;
+this run did not show an incremental ETL speedup. The exact audits dominate its
+elapsed work. One repetition is recorded; replay totals exclude idempotence and
+correction attempts. The [CSV](../results/orchestration/full-20261103/build-timings.csv) separates every batch's
+ETL, quality and digest timers.
 
-From the repository root, after the environment and resource window are approved:
+## Accepted selected child
+
+Run `5b083057-a84b-4c0a-b471-bec98aa04f12` at source
+`f6572128dedbf03daebdb1fb398aa79f1dd5e8ce` reused the accepted parent terminal
+DB/cache. All twelve small parent receipt hashes and the input DB/cache identity
+were unchanged after execution. Exactly the two selected assets materialized.
+
+| Method | NDCG@10 | Recall@10 | Candidate Recall@100 |
+|---|---:|---:|---:|
+| Training popularity | 0.097616 ± 0.000000 | 0.069942 ± 0.000000 | 0.217538 ± 0.000000 |
+| Two-tower + HNSW | 0.099415 ± 0.000640 | 0.085524 ± 0.000573 | 0.316579 ± 0.000528 |
+| Two-tower + LambdaMART | 0.302808 ± 0.000473 | 0.222243 ± 0.000454 | 0.316579 ± 0.000528 |
+
+These are population mean/std over seeds 42/43/44. Each CPU fit used four threads
+and three epochs of all 29,524,435 training positives. Ranker fitting used
+185,588 user groups with 20,621 disjoint early-stop groups; selected trees were
+117/97/120 from the same 120-round cap.
+
+Seed-42 HTTP served 5,000 valid requests, zero errors, after 50 warmups at
+concurrency 8. Client p50/p95/p99 were
+52.759895/202.528091/375.415107 ms.
+[Child summary](../results/orchestration/full-20261103/downstream/summary.json) · [all user-ID-free HTTP timing samples](../results/orchestration/full-20261103/downstream/http-timings.json) · [extraction/source identities](../results/orchestration/full-20261103/downstream/extraction-manifest.json). Actual model/HTTP elapsed times and per-seed values are
+in that summary and the [delivery report](../results/M4_DELIVERY_REPORT.md).
+
+[Dashboard](../results/orchestration/full-20261103/dashboard/index.html) · [snapshot](../results/orchestration/full-20261103/dashboard/snapshot.json) · [browser checks](../results/orchestration/full-20261103/dashboard/browser-validation.json) · [desktop](../results/orchestration/full-20261103/dashboard/desktop.png) · [narrow](../results/orchestration/full-20261103/dashboard/narrow.png).
+The private and public views both passed actual Windows headless checks at
+1440×1000 and 390×844, with exact displayed values, visible parent/child IDs,
+refresh/JSON-link export, zero page/console errors, no external request attempt
+and no whole-page horizontal overflow. Their owned browser/server resources
+closed. The public view keeps values and control IDs while replacing native
+paths and free-form alert text with safe metadata/labels.
+
+## Setup and one-command materialization
+
+Use Linux or WSL2, Python 3.12 and a Linux JDK 17 or later. Install the combined
+orchestration, Spark and recommendation requirements in one isolated environment.
+Torch comes from the official CPU index; retain the actual resolved version,
+freeze and package check with each run.
 
 ```bash
-export PYTHONPATH="$PWD/orchestration"
+export WORK=/mnt/g/m4-work/my-run
+mkdir -p "$WORK"
+python3.12 -m venv "$WORK/venv"
+source "$WORK/venv/bin/activate"
+python -m pip install torch --index-url https://download.pytorch.org/whl/cpu
+python -m pip install -r orchestration/requirements-ci-training.txt
+python -m pip check
+python -m pip freeze > "$WORK/environment-freeze.txt"
+export JAVA_HOME=/path/to/linux-jdk
+export PATH="$JAVA_HOME/bin:$PATH"
 export PYTHONDONTWRITEBYTECODE=1
-export TMPDIR=/opt/codex-resume/all-modules-v2/m4/tmp
-# RUN is a NEW, non-existing directory beneath the configured runtime root.
-python orchestration/scripts/run_manual.py --config orchestration/config/full.json --run-root "$RUN"
-python orchestration/scripts/summarize_run.py --run-root "$RUN"
+export PYTHONPATH="$PWD/orchestration"
 ```
 
-The runner first hashes the six resident CSVs, constructs the immutable arrival manifest and runs `dbt parse` into a new directory. Loading definitions then reads that manifest without executing commands or opening a DB. `commerce_all` runs real partition jobs in order, a repeated-batch check, a separate full refresh, terminal dbt/check assets, Spark parity, feature export and isolated demonstrations. Parent/child Dagster run IDs are retained. A schedule and alert sensor are defined with default status **STOPPED**. The schedule additionally skips execution. No daemon or recurring task is required or started.
+Copy [`config/full-models.json`](config/full-models.json) to
+`"$WORK/full-models.json"`. Set `runtime_root` to your runtime directory and
+`raw_dir` to the existing directory containing `orders.csv`,
+`order_products__prior.csv`, `order_products__train.csv`, `products.csv`,
+`aisles.csv` and `departments.csv`. Keep CSVs, DBs, Parquet, environments and
+scratch outside Git. The measured local execution uses the G-backed WSL disk.
 
-For pure control checks:
+From the repository root, one manual command invokes the complete finite job:
 
 ```bash
-PYTHONPATH=orchestration python -B -m unittest discover -s orchestration/tests -p test_pure.py -v
+export RUN="$WORK/runs/full-models-unique-id"
+python orchestration/scripts/run_manual.py --config "$WORK/full-models.json" --run-root "$RUN"
 ```
 
-For the real-subset CI fixture, capture a small attributed subset once from the resident raw files using `scripts/build_real_subset.py`, review its attribution/hashes, then commit only that small subset. `scripts/run_fixture.py` uses exactly three nonempty width-two batches and keeps model fitting off. Existing warehouse, recommendation and Hillstrom jobs remain unchanged. CI does not download the full dataset.
+`RUN` must not exist and must be below the configured `runtime_root`.
+`--raw-dir` overrides the configured raw path. The runner hashes six source
+files, scans order metadata, creates an arrival manifest and parses dbt before
+loading definitions. `--definitions-only` stops before materialization but still
+reads source data and runs `dbt parse`.
 
-## Replay and exactness protocol
+The full-model protocol fixes seeds 42/43/44, three epochs over all training
+positives, 120 ranker rounds and 100 candidates. Mean/std use the three fixed
+model seeds with population standard deviation (`ddof=0`). HTTP serves the
+predeclared seed-42 model for 5,000 measured requests after 50 excluded warmups
+at concurrency 8. The accepted child above used exactly these settings.
 
-Instacart has order numbers and elapsed-day offsets, not calendar event timestamps. A batch is `(order_number-1)//orders_per_batch`. Full data uses width 10; the fixture uses width 2. The finite partition list and expected counts come from metadata at runtime. Daily receipt dates, a delayed receipt and correction flags are explicitly simulated. Receipts still expose ordered prefixes; there is no general out-of-order CDC claim.
+### Reuse a closed data-only parent
 
-Each partition starts from a copy of the last passing DB. dbt staging exposes only the received prefix. `fct_order_lines` uses `(order_id,product_id)` and `fct_orders` uses `order_id` for keyed `delete+insert`; corrected basket totals therefore update too. The existing department mart recomputes cumulative aggregates and replaces department keys. This scans cumulative data and need not be faster than a full refresh. Other operational marts rebuild consistently. Raw files remain unchanged.
+For a data-only run, use [`config/full.json`](config/full.json) with the same path
+setup. Once it has completed and passed its original-snapshot, six-table and
+Spark gates, select only the two downstream assets:
 
-The controlled correction flips an existing line's `reordered` flag in each of a declared contiguous range of at least two nonempty batches. First-order lines are excluded. Corrections become visible as each selected partition is manually reprocessed; future correction values do not enter staging early. Before/after hashes must change exactly the selected batch set in both facts and the batch marts. The corrected final state is compared to a separate full refresh of the same corrected latest received input. Row deletions and primary-key changes are outside this contract.
+```bash
+export PARENT=/path/to/accepted-data-only-run
+export CHILD="$WORK/runs/downstream-unique-id"
+python - "$PARENT/config.json" "$WORK/full-models-for-parent.json" <<'PY'
+import json, sys
+with open(sys.argv[1]) as source:
+    config = json.load(source)
+config["training_enabled"] = True
+with open(sys.argv[2], "x") as target:
+    json.dump(config, target, indent=2)
+    target.write("\n")
+PY
+python orchestration/scripts/run_downstream.py \
+  --parent-run-root "$PARENT" \
+  --config "$WORK/full-models-for-parent.json" \
+  --run-root "$CHILD"
+```
 
-Every prefix checks source/fact schema, unique grains, every business value, key null rates, catalog/arrived-order foreign keys, per-batch counts and order/line correction closure. Both directions of `EXCEPT ALL` catch missing or duplicated rows. SHA-256 digests serialize a typed stream sorted by complete keys using the versioned `m4-typed-framed-v1` encoding. Nulls are distinct from strings; Unicode uses UTF-8 with length framing; integers use exact decimal strings; binary64 values use exact IEEE bits without tolerance. The three Spark target marts use BIGINT counts/sums only. Rates are derived from sufficient statistics rather than compared as floating reductions.
+The requested config must equal the parent's config except for
+`training_enabled=true`. The fresh child must be below that configured runtime
+root and outside the parent. It validates the closed data-only parent and uses
+the original terminal database, feature cache and parsed dbt manifest. It does
+not replay arrivals, export features or rebuild dbt/Spark. A changed accepted
+input fails; there is no re-export fallback. Optional `--model-python PATH` uses
+a separate existing fit/API interpreter while Dagster stays in the invoking
+environment.
 
-The bad-batch branch replaces a product reference with an unknown key, runs the actual dbt checks and must fail a blocking Dagster check. Invalid candidates/logs are retained and the promoted pointer must remain unchanged. Downstream marts/promotion are selected in the failed run and must not materialize. The ML terminal gate is separately rejected for that branch. A manual sensor evaluation writes an idempotent local JSON/JSONL alert, never an external message or a new run. A clean recovery uses a new attempt and is compared to the original snapshot.
+The selected job contains exactly `recsys_train_eval` and `api_benchmark`.
+It retains its own model/API metrics, real events, accepted-input binding and
+before/after verification. The parent's data-only receipts stay unchanged.
 
-Processing freshness means a configured maximum age of a successful mart materialization plus the expected replay watermark. It is not freshness of real Instacart orders. Controlled clocks demonstrate fresh/stale states without sleeping or a scheduler.
+### Summaries and dashboard
 
-## Recommendation boundary
+For one complete `commerce_all` run:
 
-Partial prefixes never materialize `rec_order_split` or recommendation features. The terminal export requires all declared arrivals, quality and exact parity, and the original uncorrupted data branch. Existing recommendation definitions remain unchanged. Full-run split and feature fingerprints must equal the frozen baseline. Training priors and normalizers remain training-only; test history can include that user's completed validation basket as before. Correction/bad-batch DBs cannot become the training dataset. Hillstrom is a separate randomized experiment and is not part of this job.
+```bash
+python orchestration/scripts/summarize_run.py --run-root "$RUN"
+python orchestration/scripts/build_dashboard.py --run-root "$RUN" --out "$WORK/dashboard-unique-id"
+```
 
-Training/eval and API assets are present but disabled in the supplied configs. If explicitly enabled in a new run, fitting uses seeds 42/43/44, fixed held-out baskets and population standard deviation. HTTP always serves the predeclared seed-42 model. New per-seed artifacts, API logs and every raw HTTP sample go to new paths. The old metrics and old MovieLens archive remain frozen.
+For a data-only parent and completed selected child:
 
-## Evidence and limitations
+```bash
+python orchestration/scripts/summarize_run.py --run-root "$PARENT"
+python orchestration/scripts/build_dashboard.py \
+  --run-root "$PARENT" --downstream-root "$CHILD" \
+  --out "$WORK/dashboard-with-child-unique-id"
+```
 
-`summary.json` and `build-timings.csv` are generated only from an actual completed run. Per-batch and full-refresh process logs retain exact commands, UTC and monotonic wall times. Setup, tests, digest/export work and physical-file hashing have explicit timer scopes. One repetition is declared. No old paused execution time is reused and no speedup is asserted before measurement.
+`--downstream-root` verifies lineage and actual completion before combining the
+view. Readers do not materialize assets. Outputs are create-only; refreshing
+needs a new directory. The dashboard writes `index.html` and `snapshot.json`.
+The schedule and alert sensor are defined stopped. No daemon or recurring task
+is needed.
 
-Only small new evidence files are copied later to `results/orchestration/<source-checkpoint-sha>/<run-id>/`; DBs, raw CSVs, caches and Parquet data stay outside Git. Root must verify the final commit/CI and old results byte identities before publication.
+## Arrival, correction and promotion
 
-**Limitations:** static grocery data and simulated arrival/correction metadata; ordered-prefix receipt contract; single-machine DuckDB and local Spark; cumulative scans; no production CDC, live orders, distributed-cluster scaling, online recommendation experiment or cloud deployment. Optional GCP is skipped unless a project is supplied. It is not a required user action for the local module.
+A batch is `(order_number - 1) // orders_per_batch`. Full configuration uses
+width 10; the fixture uses width 2. The actual partition list and row counts come
+from the source metadata, not a hard-coded count. Each arrival exposes an ordered
+prefix and starts from a copy of the last passing database.
 
-Sources: [Instacart dataset mirror](https://huggingface.co/datasets/attik/Instacart-Market-Basket-Analysis), [Dagster dbt integration](https://dagster.io/docs/integrations/libraries/dbt/reference), [blocking checks](https://dagster.io/docs/api/dagster/asset-checks), [DuckDB incremental strategies](https://docs.getdbt.com/reference/resource-configs/duckdb-configs), [Spark Python/Java requirements](https://spark.apache.org/docs/4.2.0/api/python/getting_started/install.html).
+`fct_order_lines` replaces existing `(order_id, product_id)` keys and `fct_orders`
+replaces `order_id` keys through dbt `delete+insert`. A correction flips an existing
+non-first-order line's `reordered` value in each selected batch. Basket totals and
+integer marts update from those facts. The correction becomes visible only when
+its partition is reprocessed; later corrections must not appear early. Deletes
+and changes to primary keys are outside this contract.
+
+The declared backfill range is `000000` through `000001`. Evidence must show the
+selected partition digests changed, other partition digests stayed equal, both
+facts changed where intended, and the corrected final state equals its own full
+refresh. Department-wide cumulative aggregates can change as the correction
+propagates. These cumulative scans are part of the measured work.
+
+Only a candidate that passes its input/output checks becomes the promoted
+checkpoint. The injected bad batch uses an unknown product key. Its retained
+events and dbt results must identify the failed input-quality gate and show that
+selected marts and promotion did not materialize. The prior promoted pointer
+must stay unchanged. A fresh clean attempt demonstrates recovery; the rejected
+candidate and logs remain available.
+
+## Exact comparison scope
+
+Full-refresh/incremental and clean-recovery comparison covers these six tables:
+
+| Relation | Complete key |
+|---|---|
+| `marts.fct_order_lines` | `order_id, product_id` |
+| `marts.fct_orders` | `order_id` |
+| `marts.mart_department_kpis` | `department_id` |
+| `orchestration.batch_department_integer_stats` | `batch, department_id` |
+| `orchestration.batch_hourly_integer_stats` | `batch, order_dow, order_hour_of_day` |
+| `orchestration.batch_product_integer_stats` | `batch, product_id` |
+
+Every column participates in schema/type, count, key, bidirectional `EXCEPT ALL`
+and sorted typed-stream SHA256 checks. The versioned `m4-typed-framed-v1` encoding
+distinguishes nulls, UTF-8 strings, exact integers and binary64 bits. The three
+batch marts store integer sufficient statistics; rates can be derived afterward.
+Other operational relations can be built and tested by dbt, but are not included
+in this six-table equality claim. Spark's separate four-output read-back contract
+is described in the [Spark guide](../spark/README.md).
+
+## Quality, freshness and terminal features
+
+Checks cover unique grains, zero key-null rate, catalog/arrived-order foreign
+keys, per-batch reconciliation, arrival completeness and source-to-fact values.
+Processing freshness combines the age of a successful materialization with the
+expected replay watermark. Injected clocks demonstrate fresh/stale outcomes;
+this is not the age of real Instacart events.
+
+The stopped sensor can be evaluated manually to write an idempotent local JSON
+alert and JSONL log. It sends no message and requests no new run. Actual events,
+the unchanged promoted pointer and the local alert record form separate evidence.
+
+Partial prefixes must not create `rec_order_split` or feature-export artifacts.
+Terminal recommendation assets require all arrivals, passing quality/parity and
+the original uncorrupted branch. Split and feature fingerprints are checked
+against the frozen baseline. Corrected and bad branches do not become training
+inputs. Training-only priors and the existing held-out split remain unchanged.
+`full.json` keeps fitting/HTTP off; `full-models.json` enables the same assets.
+A selected child checks accepted parent inputs before and after execution and
+retains actual model/API outcomes separately. Corrected and bad branches still
+cannot supply training data.
+
+## Synthetic CI and local historical-data checks
+
+CI generates a three-batch toy dataset with
+[`build_synthetic_fixture.py`](scripts/build_synthetic_fixture.py), then invokes
+the same `run_fixture.py` pipeline. It uses eight invented users and six labeled
+baskets per user, with no source-data download or historical row transformation.
+The [fixture guide](fixtures/synthetic-grocery/README.md) explains generation and
+identity fields. Runtime provenance, the arrival manifest and the dashboard carry
+`data_kind=synthetic_test`; the dashboard displays a visible synthetic-test banner.
+
+The local real-data subset retains its original capture attribution and separate
+consumer source identity. It stays local, as do the full historical inputs used
+under the [Dataset Terms](https://gist.github.com/jeremystan/582eba13d6ee27ed465c43dc78934700). Neither the generated CI run nor its timing
+is substituted for the local historical-data result.
+
+The default fixture is data-only. CI opts into `run_fixture.py --enable-training`:
+actual seeds 42/43/44, one epoch, five ranker rounds, 12 candidates, then
+seed-42 serving with 20 measured HTTP responses after 50 warmups at concurrency 2.
+It checks changed/distinct recorded weight hashes, terminal split/cache binding,
+two actual downstream materializations, every response status and service shutdown.
+
+[Run 41601768167](https://github.com/kianbqh/commerce-ml-platform/actions/runs/41601768167) passed all five jobs at API head
+`f6572128dedbf03daebdb1fb398aa79f1dd5e8ce`: warehouse, recommendation,
+experiments, orchestration-controls and orchestration-synthetic-fixture.
+The synthetic job checked definitions and the exact two-node production builder
+without side effects, then completed `commerce_all`. Its 181 lines form batches
+of 60/62/59. The offline artifact audit passed 41/41 checks.
+
+Actual producer/runner merge checkout
+`702004298bf0599b1e178d0a0efb1fcc54c3240b` remains separate from API head.
+Torch imported as `2.15.0+cpu`, CUDA was not compiled/available, and `pip check`
+passed. This is the separate synthetic correctness record.
+
+## Resources and interpretation
+
+Full config requests dbt/audits at 4 threads and 4 GB, Spark `local[8]` with a
+4 GB driver and 16 shuffle partitions. Fixture config requests dbt/audits at
+2 threads and 1 GB, Spark `local[2]` with a 1 GB driver and two shuffle partitions.
+The terminal feature exporter used its own 4-thread/4-GB DuckDB connection.
+The accepted parent records dbt/audits at 4 threads/4 GB and actual Spark
+`local[8]`, parallelism 8, driver memory `4g`.
+
+The protocol declares one repetition. ETL/test time, candidate setup/copy,
+source hashing, quality/digest comparison, feature export and Spark physical-file
+hashing have separate scopes. A small fixture establishes behavior at that scale;
+the full-data evidence supplies the corresponding counts and elapsed times.
+
+This is ordered replay of a static dataset on one machine, with simulated
+arrivals and corrections. It does not measure live-order ingestion,
+out-of-order production CDC, distributed-cluster scaling or an online
+recommendation experiment. GCP is outside the current execution plan.

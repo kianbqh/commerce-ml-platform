@@ -1,0 +1,24 @@
+{
+  "schema": "m4-row-free-final-aggregate-counts-v1",
+  "timestamp_utc": "2026-11-03T12:32:47.564420+00:00",
+  "source_git_sha": "829250d93e5e436e98e4a5df41296b0d121a52a8",
+  "counts": {
+    "raw_metadata_orders_including_unlabeled": 3421083,
+    "orders_with_labeled_lines": 3346083,
+    "labeled_order_lines": 33819106,
+    "users_with_labeled_lines": 206209,
+    "catalog_products": 49688,
+    "products_with_labeled_lines": 49685
+  },
+  "queries": {
+    "raw_metadata_orders_including_unlabeled": "select count(*) from staging.stg_orders",
+    "orders_with_labeled_lines": "select count(*) from marts.fct_orders",
+    "labeled_order_lines": "select count(*) from marts.fct_order_lines",
+    "users_with_labeled_lines": "select count(distinct user_id) from marts.fct_order_lines",
+    "catalog_products": "select count(*) from staging.stg_products",
+    "products_with_labeled_lines": "select count(distinct product_id) from marts.fct_order_lines"
+  },
+  "wall_seconds": 16.508397828001762,
+  "promoted_receipt_sha256": "d2ed1e2722b9ecf1f1d17069c4e9332ac38dde155c3867a12a01e7049a319642",
+  "scope": "actual readonly final aggregate counts; no original identifiers or row values exported"
+}

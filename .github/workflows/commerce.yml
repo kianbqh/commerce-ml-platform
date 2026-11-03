@@ -59,6 +59,7 @@ jobs:
           python -B -m unittest discover -s orchestration/tests -p test_pure.py -v
           python -B -m unittest discover -s orchestration/tests -p test_resources.py -v
           python -B -m unittest discover -s orchestration/tests -p test_dashboard.py -v
+          python -B -m unittest discover -s orchestration/tests -p test_export_downstream_evidence.py -v
   orchestration-synthetic-fixture:
     runs-on: ubuntu-latest
     timeout-minutes: 30

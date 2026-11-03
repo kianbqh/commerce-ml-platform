@@ -1,0 +1,171 @@
+{
+  "schema": "m4-downstream-extraction-manifest-v1",
+  "created_utc": "2026-11-03T13:01:30.667178+00:00",
+  "extractor_sha256": "6bc96cfe46db177efea79941cc05fea6a6b0b8400eaf9be679a4016abf708804",
+  "original_json": {
+    "child/downstream-run.json": {
+      "bytes": 2187,
+      "sha256": "8ceda87c8986bdd10260c6f2654d4208534c43f44511d3c95ecd076a93250c2f"
+    },
+    "child/downstream-events.json": {
+      "bytes": 2739,
+      "sha256": "505c662942c5605a4cc6c0fbb9df07825ec6245e26f0c7364e45e01254467337"
+    },
+    "child/input-binding.json": {
+      "bytes": 6188,
+      "sha256": "75f45f3cc1e8409d024c413c4bf9e705b06885490b454a9c0215a340fd26ce2c"
+    },
+    "child/inputs-before.json": {
+      "bytes": 5630,
+      "sha256": "f712045b545111a2a563010bb34fa688ed0457380988648b569f539858f23a3b"
+    },
+    "child/input-verification.json": {
+      "bytes": 5857,
+      "sha256": "23a91f5896fa3c58672b09e2c8eb54e1fe6b1d2a04ae5df5d1b619104fb29843"
+    },
+    "child/provenance.json": {
+      "bytes": 3584,
+      "sha256": "acfb3bea503a6c21d21999f8ee51ac6d22b8c99bb3212baa7233dbb40b14d2b4"
+    },
+    "child/config.json": {
+      "bytes": 1078,
+      "sha256": "1139890b67c8a9d75e5f92963323f9ddcc56df8ea611e074644185cbff1d7652"
+    },
+    "parent/config.json": {
+      "bytes": 985,
+      "sha256": "9f182d93fc33f4679554485adaed46eb9aa68c33fe331f37ef36a5a500e56c0d"
+    },
+    "parent/initialization.json": {
+      "bytes": 2392,
+      "sha256": "7500cbc044a1e8a9a833fa3f373aae978fe0c43f11be67ddde6ba1ce613a9ce6"
+    },
+    "parent/arrival_manifest.json": {
+      "bytes": 4183,
+      "sha256": "d67e1c12b198ef57fff1ab6276a69eea5442a4df60288673fc43885b2299f4e1"
+    },
+    "parent/promoted.json": {
+      "bytes": 3404,
+      "sha256": "d2ed1e2722b9ecf1f1d17069c4e9332ac38dde155c3867a12a01e7049a319642"
+    },
+    "parent/provenance.json": {
+      "bytes": 1752,
+      "sha256": "f579b0e05841d69fdafb0ae2bf9864632e29c0f891768f4530c8c589605e9b2d"
+    },
+    "parent/full-incremental-parity.json": {
+      "bytes": 13659,
+      "sha256": "bef693aa8277b2c31d4a11460769f7e76a09b29b1cef83ccc34f88da9773546e"
+    },
+    "parent/terminal/gate.json": {
+      "bytes": 2550,
+      "sha256": "82f7f03dd18b88ad90bc294e89359c9d129c45ef7d26679dbbe18d9787ba9d8d"
+    },
+    "parent/terminal/feature-export.json": {
+      "bytes": 2507,
+      "sha256": "d75565a6f06eeb6416dbb6cd8f505b0eadf8cb5db51a98e7e76c1553485cf410"
+    },
+    "parent/spark-original/spark-dbt-parity.json": {
+      "bytes": 89856,
+      "sha256": "ff4ca82783904402cc8c7349d67dfa04b577faadceef66ac0e18ddbf059d877f"
+    },
+    "parent/manual-run.json": {
+      "bytes": 2003,
+      "sha256": "21bdd4d54f7bcc9c935bcc0517ae3d5d4fdc7b295f3911ed0f32c780dab5355d"
+    },
+    "parent/model-run.json": {
+      "bytes": 1997,
+      "sha256": "2689dd98dab0956af02adbd892b4dfbbd026f3c96d219e40a1d7d935e254e9a4"
+    },
+    "parent/api-run.json": {
+      "bytes": 1963,
+      "sha256": "de3378340200bf0a25a89cb013728e9d79164016e89d69edff6ea3db6a4c1617"
+    },
+    "child/model-run.json": {
+      "bytes": 10840,
+      "sha256": "9a6e4da54be399700ec8c7e9097f20d381bbe02d5f8adf7bbddff3bc6e3dacc2"
+    },
+    "child/api-run.json": {
+      "bytes": 4388,
+      "sha256": "9e628b4213250a1c94761455f248d9b7e576bfbd6b3e3dd878201b76c8bd4605"
+    },
+    "child/model-python-identity.json": {
+      "bytes": 2370,
+      "sha256": "bc957feb64a361603a5f06986da2ca0293a06bc5af5ea00b9f555f981d0ef562"
+    },
+    "child/model-python-preflight/process.json": {
+      "bytes": 4637,
+      "sha256": "0b1d16ec449d4f2bd555ad6585cedb4064245df87d286fcfde7f188e37d205c5"
+    },
+    "child/models/seed-42/metrics.json": {
+      "bytes": 28833,
+      "sha256": "320d1704a0435a3babee0cfa21127908f17b1ddfc2967f936ab246920b224228"
+    },
+    "child/models/seed-42/artifacts/ranker.json": {
+      "bytes": 2698,
+      "sha256": "55ddcea2277c71858021788be113ab05f4ccfc7116618fbee561a1c7951283e9"
+    },
+    "child/models/seed-42/artifacts/serving.json": {
+      "bytes": 464,
+      "sha256": "e179c6d348e7c49c2b82eb8b44d4714ed8054fed9da453f7590bdae3406c5483"
+    },
+    "child/models/seed-42/process/process.json": {
+      "bytes": 5228,
+      "sha256": "911a2d380fa816f1e3bbcf6c64e5626993e3ffe4617052e9b5ee36f775b40c2a"
+    },
+    "child/models/seed-43/metrics.json": {
+      "bytes": 28839,
+      "sha256": "fc21e4994d7871e2f1299ee13c85eedabf412f6a09e924b1d8fda469285dc403"
+    },
+    "child/models/seed-43/artifacts/ranker.json": {
+      "bytes": 2697,
+      "sha256": "026b4a7748f26843b1e64685418c63436029fbddcbd86470588d215c46dada7f"
+    },
+    "child/models/seed-43/artifacts/serving.json": {
+      "bytes": 464,
+      "sha256": "d77f6681b06fa25fe99435de95689fd9ae6c4827ce82328b38bd4c50ee1a8eae"
+    },
+    "child/models/seed-43/process/process.json": {
+      "bytes": 5228,
+      "sha256": "de233c59ad19b476ac100fba4540c53c232854df4b4cf79c3c2433cbfee70723"
+    },
+    "child/models/seed-44/metrics.json": {
+      "bytes": 28841,
+      "sha256": "8456ee30e55c1055f2ed006144c22b79186979e9b1721d60740b69d8fd68aacb"
+    },
+    "child/models/seed-44/artifacts/ranker.json": {
+      "bytes": 2698,
+      "sha256": "caac0a79f7e0eb634608c6826160b48f2d7ea6166e86bc4d5fd8b6be4303b76e"
+    },
+    "child/models/seed-44/artifacts/serving.json": {
+      "bytes": 464,
+      "sha256": "85c345b69224edb0561f3930c429fc1accc5cfc72eb494aeee9ce1f03651bce0"
+    },
+    "child/models/seed-44/process/process.json": {
+      "bytes": 5227,
+      "sha256": "efd413151ab4856815edd08da058370edcb261343cbff9bb7d6d2fb5634ef128"
+    },
+    "child/api/raw-http.json": {
+      "bytes": 792431,
+      "sha256": "646482968cc04180d308ee5c5fa832bf8e1760df3d23000399277ed3ea2d7c85"
+    },
+    "child/api-lifecycle.json": {
+      "bytes": 4066,
+      "sha256": "711b9983b5033637283b80564acc2c1a20f7f235a80863a0b9e98bb2f8023f9d"
+    },
+    "child/api/benchmark-process/process.json": {
+      "bytes": 4795,
+      "sha256": "c76f68cb3fd98ea94b07ac3308dd14f15be7522c68803d0c2eb5510e006e6f2a"
+    }
+  },
+  "public_artifacts": {
+    "summary.json": {
+      "bytes": 35134,
+      "sha256": "d36fd0d4953218c5edceeb197e80c00f750e144a66b09e970b3a1cf4a7ec00c3"
+    },
+    "http-timings.json": {
+      "bytes": 669677,
+      "sha256": "81917a86cdaefadbdcf3353172053b9ff3667a6e2c1a877adb0975d0c653b34a"
+    }
+  },
+  "private_originals_unchanged": true,
+  "scope": "whitelist extraction only; no database/array/model/service execution or copies"
+}
