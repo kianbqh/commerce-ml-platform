@@ -6,7 +6,7 @@ instacart_analytics:
       path: "{{ env_var('DUCKDB_PATH', 'warehouse.duckdb') }}"
       threads: 4
       settings:
-        memory_limit: "4GB"
+        memory_limit: "{{ env_var('DBT_MEMORY_LIMIT', '4GB') }}"
         preserve_insertion_order: false
     # Same models on BigQuery (not run in this repo; needs a GCP project + service account):
     bigquery:

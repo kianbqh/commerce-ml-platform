@@ -1,0 +1,928 @@
+{
+  "schema": "m4-downstream-public-evidence-v1",
+  "data_scope": "accepted full original terminal; independent downstream child",
+  "lineage": {
+    "parent_run_id": "913dbb54-c51d-49bf-a225-3741fe84d2d1",
+    "child_run_id": "5b083057-a84b-4c0a-b471-bec98aa04f12",
+    "parent_source_git_sha": "829250d93e5e436e98e4a5df41296b0d121a52a8",
+    "child_source_git_sha": "f6572128dedbf03daebdb1fb398aa79f1dd5e8ce",
+    "effective_config_sha256": "60104ff24c4b391d09b6a64b234faac226efacb744dc2c0c2a3550b6b698da32",
+    "requested_config_file_sha256_recorded": "c734705348b679626d2c6493acd3b933f623217ae08668fafe8a66a8c0fbea34",
+    "parent_receipt_sha256": {
+      "config.json": "9f182d93fc33f4679554485adaed46eb9aa68c33fe331f37ef36a5a500e56c0d",
+      "initialization.json": "7500cbc044a1e8a9a833fa3f373aae978fe0c43f11be67ddde6ba1ce613a9ce6",
+      "arrival_manifest.json": "d67e1c12b198ef57fff1ab6276a69eea5442a4df60288673fc43885b2299f4e1",
+      "promoted.json": "d2ed1e2722b9ecf1f1d17069c4e9332ac38dde155c3867a12a01e7049a319642",
+      "provenance.json": "f579b0e05841d69fdafb0ae2bf9864632e29c0f891768f4530c8c589605e9b2d",
+      "full-incremental-parity.json": "bef693aa8277b2c31d4a11460769f7e76a09b29b1cef83ccc34f88da9773546e",
+      "terminal/gate.json": "82f7f03dd18b88ad90bc294e89359c9d129c45ef7d26679dbbe18d9787ba9d8d",
+      "terminal/feature-export.json": "d75565a6f06eeb6416dbb6cd8f505b0eadf8cb5db51a98e7e76c1553485cf410",
+      "spark-original/spark-dbt-parity.json": "ff4ca82783904402cc8c7349d67dfa04b577faadceef66ac0e18ddbf059d877f",
+      "manual-run.json": "21bdd4d54f7bcc9c935bcc0517ae3d5d4fdc7b295f3911ed0f32c780dab5355d",
+      "model-run.json": "2689dd98dab0956af02adbd892b4dfbbd026f3c96d219e40a1d7d935e254e9a4",
+      "api-run.json": "de3378340200bf0a25a89cb013728e9d79164016e89d69edff6ea3db6a4c1617"
+    },
+    "input_binding_sha256": "75f45f3cc1e8409d024c413c4bf9e705b06885490b454a9c0215a340fd26ce2c"
+  },
+  "accepted_inputs": {
+    "feature_manifest_sha256": "97e9d671c57f1c89c14e15d07f6292379c42f5843d3c47af62cf164360b8508d",
+    "split_sha256": "b3d8bbef2396dd302465ed4511bf36fce55dd151dd7914f99aa69acd6ea9994b",
+    "feature_fingerprint": "936de0e402c75b6438fc68ea906f1c66235ddf15b490cbe6527bca3271530011",
+    "database_bytes": 910962688,
+    "feature_definition_sha256": "80bde3c0807ce4a2b0ab0a8a5d680ef3f37da0ef72709c470b615fb92411680f",
+    "database_stamp_sha256": "27b9385136b39dabb96a4a1cb501815372d34964904078f91eee27738140c16d",
+    "cache_snapshot_sha256": "291278f580ca78cec4168d74f9d0a2221d6b1944c62c360b936992ccc3a4eb13",
+    "unchanged": true
+  },
+  "protocol": {
+    "training_seeds": [
+      42,
+      43,
+      44
+    ],
+    "training_epochs": 3,
+    "ranker_rounds": 120,
+    "candidates": 100,
+    "http_seed": 42,
+    "http_requests": 5000,
+    "http_concurrency": 8
+  },
+  "environment": {
+    "orchestrator": {
+      "environment": "WSL2",
+      "python": "3.12.3 (main, Jul 15 2026, 23:46:41) [GCC 13.3.0]",
+      "platform": "Linux-6.18.54.1-microsoft-standard-WSL2-x86_64-with-glibc2.39",
+      "cpu": "12th Gen Intel(R) Core(TM) i7-12700KF",
+      "device_scope": "CPU data pipeline; GPU not used",
+      "clock": "perf_counter monotonic for elapsed; aware UTC for timestamps",
+      "logical_cpus": 20,
+      "packages": {
+        "dagster": "1.13.28",
+        "dagster-dbt": "0.29.28",
+        "dbt-core": "1.12.6",
+        "dbt-duckdb": "1.11.1",
+        "duckdb": "2.0.0",
+        "pyspark": "4.2.0",
+        "torch": "not installed",
+        "numpy": "2.5.4",
+        "faiss-cpu": "not installed",
+        "lightgbm": "not installed",
+        "fastapi": "not installed"
+      }
+    },
+    "model_python": {
+      "python": "3.12.3 (main, Jul 15 2026, 23:46:41) [GCC 13.3.0]",
+      "platform": "Linux-6.18.54.1-microsoft-standard-WSL2-x86_64-with-glibc2.39",
+      "scope": "actual import identity only; no training/API/data export",
+      "packages": {
+        "numpy": {
+          "metadata_version": "2.5.4",
+          "imported_version": "2.5.4"
+        },
+        "torch": {
+          "metadata_version": "2.15.0",
+          "imported_version": "2.15.0+cu132"
+        },
+        "faiss-cpu": {
+          "metadata_version": "1.15.1",
+          "imported_version": "1.15.1"
+        },
+        "lightgbm": {
+          "metadata_version": "4.7.0",
+          "imported_version": "4.7.0"
+        },
+        "duckdb": {
+          "metadata_version": "2.0.0",
+          "imported_version": "2.0.0"
+        },
+        "fastapi": {
+          "metadata_version": "0.162.0",
+          "imported_version": "0.162.0"
+        },
+        "uvicorn": {
+          "metadata_version": "0.54.0",
+          "imported_version": "0.54.0"
+        },
+        "httpx": {
+          "metadata_version": "0.28.1",
+          "imported_version": "0.28.1"
+        },
+        "scipy": {
+          "metadata_version": "1.18.1",
+          "imported_version": "1.18.1"
+        },
+        "pandas": {
+          "metadata_version": "3.1.0",
+          "imported_version": "3.1.0"
+        }
+      }
+    },
+    "model_preflight": {
+      "started_utc": "2026-11-03T12:35:12.923524+00:00",
+      "finished_utc": "2026-11-03T12:36:11.345687+00:00",
+      "wall_seconds": 58.42532300198218,
+      "timer_includes": "process startup, command execution, stdout/stderr file writes"
+    }
+  },
+  "child_timing": {
+    "started_utc": "2026-11-03T12:33:14.779267+00:00",
+    "finished_utc": "2026-11-03T12:59:05.797805+00:00",
+    "wall_seconds": 1551.0945595219964,
+    "timer_scope": "complete() entry through post-run input verification; excludes CLI startup and final receipt write"
+  },
+  "dataset": {
+    "users": 206209,
+    "products": 49688,
+    "raw_orders": 3421083,
+    "excluded_users_fewer_than_three_labeled_baskets": 0,
+    "unlabeled_orders": 75000,
+    "excluded_labeled_orders": 0,
+    "line_counts": {
+      "train": 29524435,
+      "validation": 2129254,
+      "test": 2165417
+    },
+    "order_counts": {
+      "train": 2933665,
+      "validation": 206209,
+      "test": 206209
+    },
+    "split_sha256": "b3d8bbef2396dd302465ed4511bf36fce55dd151dd7914f99aa69acd6ea9994b",
+    "feature_fingerprint": "936de0e402c75b6438fc68ea906f1c66235ddf15b490cbe6527bca3271530011",
+    "split_rule": "last labeled basket test; penultimate validation; all earlier labeled baskets train",
+    "test_history": "training history plus the same user completed validation basket",
+    "global_priors": "training lines only; fixed for validation and test"
+  },
+  "per_seed": [
+    {
+      "seed": 42,
+      "model_run_id": "c9f3f9052ae6a10793dc0ed2887a1f37e517079b7ee49aeca60e3f2ecfac6106",
+      "test": {
+        "two_tower_hnsw": {
+          "users": 206209,
+          "heldout_positive_products": 2165417,
+          "recall@10": 0.08611295917633474,
+          "ndcg@10": 0.10023267183459729,
+          "micro_recall@10": 0.0729009701133777,
+          "recall@100": 0.3172997363593899,
+          "ndcg@100": 0.1758011650142107,
+          "micro_recall@100": 0.2896647620296691,
+          "definition": "macro mean over users; Recall divides by full distinct held-out basket; NDCG ideal length min(k,basket size)"
+        },
+        "two_tower_lambdamart": {
+          "users": 206209,
+          "heldout_positive_products": 2165417,
+          "recall@10": 0.22276532019901452,
+          "ndcg@10": 0.3033622371408849,
+          "micro_recall@10": 0.18686839532524221,
+          "recall@100": 0.3172997363593899,
+          "ndcg@100": 0.3036202569356819,
+          "micro_recall@100": 0.2896647620296691,
+          "definition": "macro mean over users; Recall divides by full distinct held-out basket; NDCG ideal length min(k,basket size)"
+        },
+        "training_popularity": {
+          "users": 206209,
+          "heldout_positive_products": 2165417,
+          "recall@10": 0.06994193249055376,
+          "ndcg@10": 0.0976164022909881,
+          "micro_recall@10": 0.06867083799563779,
+          "recall@100": 0.2175380782881585,
+          "ndcg@100": 0.14122916657486423,
+          "micro_recall@100": 0.22433092563695584,
+          "definition": "macro mean over users; Recall divides by full distinct held-out basket; NDCG ideal length min(k,basket size)"
+        }
+      },
+      "two_tower": {
+        "seed": 42,
+        "epochs": [
+          {
+            "epoch": 1,
+            "examples": 29524435,
+            "loss": 0.3860942070552499,
+            "seconds": 94.92421928100521
+          },
+          {
+            "epoch": 2,
+            "examples": 29524435,
+            "loss": 0.3227559847154666,
+            "seconds": 92.3277209100197
+          },
+          {
+            "epoch": 3,
+            "examples": 29524435,
+            "loss": 0.30842921753837615,
+            "seconds": 92.8840911849984
+          }
+        ],
+        "seconds": 282.17334310899605,
+        "positive_rows_per_epoch": 29524435,
+        "initial_weights_sha256": "7f54019fdf8ae6fbb8ceef5739e1b0123e8e9437ea3abd8c334a0f37a5c0453a",
+        "final_weights_sha256": "7e9939c9bbf90ffe439770c93dab802e60e4ded7ce3c3e14728d63765890e373",
+        "batch_size": 4096,
+        "dimension": 32,
+        "negatives_per_positive": 4,
+        "threads": 4,
+        "negative_rule": "uniform product IDs, exact target collisions replaced; other observed products remain eligible implicit negatives",
+        "objective": "balanced positive and sampled-negative logistic loss on normalized dot products / 0.1",
+        "device": "cpu"
+      },
+      "ranker": {
+        "identity": {
+          "split_sha256": "b3d8bbef2396dd302465ed4511bf36fce55dd151dd7914f99aa69acd6ea9994b",
+          "feature_fingerprint": "936de0e402c75b6438fc68ea906f1c66235ddf15b490cbe6527bca3271530011",
+          "model_definition_sha256": "bdee7590adb2e87da11002c5f69026f78b6c73466fed850bc7dd8218dfac8ec8",
+          "epochs": 3,
+          "seed": 42,
+          "dimension": 32,
+          "candidates": 100,
+          "rounds": 120,
+          "fit_user_sha256": "f3b2deac9b61a533ed1a9b51520703cc5d9043db9fa9923c20c2bf62ab007091",
+          "early_stop_user_sha256": "e8ebfcbf64b8a08b7b9b5bc1d492e59e8cc71ad166cfc8b24ca9b00192fd70d9",
+          "ranking_definition_sha256": "7afc24671fd3d1794bc90fb320b870a29a801910c15aeee194b49bd743e1a2d6"
+        },
+        "fit_users": 185588,
+        "early_stop_users": 20621,
+        "fit_candidate_rows": 18558800,
+        "early_stop_candidate_rows": 2062100,
+        "fit_positive_rows": 551636,
+        "early_stop_positive_rows": 61808,
+        "best_iteration": 117,
+        "candidate_coverage": {
+          "users": 206209,
+          "heldout_positive_products": 2129254,
+          "recall@100": 0.3162373181108038,
+          "ndcg@100": 0.17377553826136946,
+          "micro_recall@100": 0.28810278153757135,
+          "definition": "macro mean over users; Recall divides by full distinct held-out basket; NDCG ideal length min(k,basket size)"
+        },
+        "feature_gain": {
+          "tt_score": 7579.373886108398,
+          "tt_rank": 62187.34920883179,
+          "log_train_purchases": 26786.80625152588,
+          "log_train_buyers": 278728.00077819824,
+          "train_reorder_share": 118152.93287658691,
+          "log_history_orders": 52046.35325241089,
+          "log_history_items": 2880.758632659912,
+          "log_unique_products": 9457.317611694336,
+          "user_product_count": 132511.97649002075,
+          "user_product_frequency": 6722844.840877533,
+          "orders_since_product": 609904.3619651794,
+          "user_product_reorder_share": 0.0,
+          "aisle_affinity": 3328.794906616211,
+          "department_affinity": 2079.4624977111816,
+          "aisle_id": 3623.1047973632812,
+          "department_id": 1250.0479125976562
+        },
+        "feature_seconds": 37.30795751698315,
+        "fit_seconds": 73.14488730000448,
+        "labels": "validation baskets only; deterministic disjoint user groups for fitting and early stopping",
+        "early_stopping_metric": "LightGBM built-in NDCG@10 over the candidate labels; published next-basket metrics use every held-out positive"
+      },
+      "faiss": {
+        "index": "HNSW32 inner product on normalized vectors",
+        "efConstruction": 100,
+        "efSearch": 128,
+        "catalog_products": 49688,
+        "reorders_eligible": true,
+        "exact_topk_agreement": 0.984535,
+        "agreement_users": 2000,
+        "agreement_user_sha256": "8e9fc6e0f5aa7e1fcd963a34d1b40343ca048ba9379c13b4e935f63beaaf776e"
+      },
+      "runtime": {
+        "python": "3.12.3",
+        "torch": "2.15.0+cu132",
+        "numpy": "2.5.4",
+        "faiss": "1.15.1",
+        "lightgbm": "4.7.0",
+        "threads": 4,
+        "device": "cpu",
+        "peak_process_rss_mib": 4151.5078125
+      },
+      "evaluation_seconds": 42.10107640901697,
+      "total_pipeline_seconds": 447.78014995800913,
+      "timing_scope": "elapsed execution records; model fitting/evaluation can overlap separate GPU training, not a latency benchmark",
+      "process": {
+        "started_utc": "2026-11-03T12:36:11.373538+00:00",
+        "finished_utc": "2026-11-03T12:43:41.758622+00:00",
+        "wall_seconds": 450.4081575630116,
+        "timer_includes": "process startup, command execution, stdout/stderr file writes"
+      }
+    },
+    {
+      "seed": 43,
+      "model_run_id": "05960fa821fd8131c34a4516d1dccda9ca3f52507b7a7444690537582fd8e139",
+      "test": {
+        "two_tower_hnsw": {
+          "users": 206209,
+          "heldout_positive_products": 2165417,
+          "recall@10": 0.08571021789966114,
+          "ndcg@10": 0.09934214831590735,
+          "micro_recall@10": 0.07240822437433529,
+          "recall@100": 0.31638398659228245,
+          "ndcg@100": 0.1749119479421451,
+          "micro_recall@100": 0.28886122164922506,
+          "definition": "macro mean over users; Recall divides by full distinct held-out basket; NDCG ideal length min(k,basket size)"
+        },
+        "two_tower_lambdamart": {
+          "users": 206209,
+          "heldout_positive_products": 2165417,
+          "recall@10": 0.22230725355820524,
+          "ndcg@10": 0.30285442840102755,
+          "micro_recall@10": 0.186504954934777,
+          "recall@100": 0.31638398659228245,
+          "ndcg@100": 0.3029244112883698,
+          "micro_recall@100": 0.28886122164922506,
+          "definition": "macro mean over users; Recall divides by full distinct held-out basket; NDCG ideal length min(k,basket size)"
+        },
+        "training_popularity": {
+          "users": 206209,
+          "heldout_positive_products": 2165417,
+          "recall@10": 0.06994193249055376,
+          "ndcg@10": 0.0976164022909881,
+          "micro_recall@10": 0.06867083799563779,
+          "recall@100": 0.2175380782881585,
+          "ndcg@100": 0.14122916657486423,
+          "micro_recall@100": 0.22433092563695584,
+          "definition": "macro mean over users; Recall divides by full distinct held-out basket; NDCG ideal length min(k,basket size)"
+        }
+      },
+      "two_tower": {
+        "seed": 43,
+        "epochs": [
+          {
+            "epoch": 1,
+            "examples": 29524435,
+            "loss": 0.38681982431272094,
+            "seconds": 92.59205974201905
+          },
+          {
+            "epoch": 2,
+            "examples": 29524435,
+            "loss": 0.32255097184005366,
+            "seconds": 91.99370306698256
+          },
+          {
+            "epoch": 3,
+            "examples": 29524435,
+            "loss": 0.3081092116054411,
+            "seconds": 91.68407429702347
+          }
+        ],
+        "seconds": 278.29177008298575,
+        "positive_rows_per_epoch": 29524435,
+        "initial_weights_sha256": "9f1edcd6ced9a9be618e006c0968582adeb9dddb084dba93cc450c2c6785cd9b",
+        "final_weights_sha256": "92e1149270b2ff9fb9d528b83ae5e105408c603f26fdc64a4890ca4b40d906d0",
+        "batch_size": 4096,
+        "dimension": 32,
+        "negatives_per_positive": 4,
+        "threads": 4,
+        "negative_rule": "uniform product IDs, exact target collisions replaced; other observed products remain eligible implicit negatives",
+        "objective": "balanced positive and sampled-negative logistic loss on normalized dot products / 0.1",
+        "device": "cpu"
+      },
+      "ranker": {
+        "identity": {
+          "split_sha256": "b3d8bbef2396dd302465ed4511bf36fce55dd151dd7914f99aa69acd6ea9994b",
+          "feature_fingerprint": "936de0e402c75b6438fc68ea906f1c66235ddf15b490cbe6527bca3271530011",
+          "model_definition_sha256": "bdee7590adb2e87da11002c5f69026f78b6c73466fed850bc7dd8218dfac8ec8",
+          "epochs": 3,
+          "seed": 43,
+          "dimension": 32,
+          "candidates": 100,
+          "rounds": 120,
+          "fit_user_sha256": "7dfb6025492b17d32581451ec3e4bc2153bd25a30fef45bab556d6786766b55f",
+          "early_stop_user_sha256": "6e410a87b648d7c08e20b65c2d69c2072445921487f1e6df940c0bda8b913a6b",
+          "ranking_definition_sha256": "7afc24671fd3d1794bc90fb320b870a29a801910c15aeee194b49bd743e1a2d6"
+        },
+        "fit_users": 185588,
+        "early_stop_users": 20621,
+        "fit_candidate_rows": 18558800,
+        "early_stop_candidate_rows": 2062100,
+        "fit_positive_rows": 550159,
+        "early_stop_positive_rows": 61422,
+        "best_iteration": 97,
+        "candidate_coverage": {
+          "users": 206209,
+          "heldout_positive_products": 2129254,
+          "recall@100": 0.31547629027795315,
+          "ndcg@100": 0.172869752890546,
+          "micro_recall@100": 0.2872278272108447,
+          "definition": "macro mean over users; Recall divides by full distinct held-out basket; NDCG ideal length min(k,basket size)"
+        },
+        "feature_gain": {
+          "tt_score": 6363.659866333008,
+          "tt_rank": 63539.960693359375,
+          "log_train_purchases": 11706.758960723877,
+          "log_train_buyers": 289354.89556121826,
+          "train_reorder_share": 114018.26149368286,
+          "log_history_orders": 74854.00508499146,
+          "log_history_items": 1845.0970001220703,
+          "log_unique_products": 7831.200199127197,
+          "user_product_count": 159628.68369293213,
+          "user_product_frequency": 6732903.931301117,
+          "orders_since_product": 568753.6213378906,
+          "user_product_reorder_share": 0.0,
+          "aisle_affinity": 2839.6705207824707,
+          "department_affinity": 1167.3863067626953,
+          "aisle_id": 1534.41060256958,
+          "department_id": 520.5315055847168
+        },
+        "feature_seconds": 40.709722187020816,
+        "fit_seconds": 68.20824388298206,
+        "labels": "validation baskets only; deterministic disjoint user groups for fitting and early stopping",
+        "early_stopping_metric": "LightGBM built-in NDCG@10 over the candidate labels; published next-basket metrics use every held-out positive"
+      },
+      "faiss": {
+        "index": "HNSW32 inner product on normalized vectors",
+        "efConstruction": 100,
+        "efSearch": 128,
+        "catalog_products": 49688,
+        "reorders_eligible": true,
+        "exact_topk_agreement": 0.98646,
+        "agreement_users": 2000,
+        "agreement_user_sha256": "5e54b65375f15188ca9c03b8af579fe5d3ce31c8bf39cb907243e437d56a6b08"
+      },
+      "runtime": {
+        "python": "3.12.3",
+        "torch": "2.15.0+cu132",
+        "numpy": "2.5.4",
+        "faiss": "1.15.1",
+        "lightgbm": "4.7.0",
+        "threads": 4,
+        "device": "cpu",
+        "peak_process_rss_mib": 4138.29296875
+      },
+      "evaluation_seconds": 39.80197281000437,
+      "total_pipeline_seconds": 429.39362243699725,
+      "timing_scope": "elapsed execution records; model fitting/evaluation can overlap separate GPU training, not a latency benchmark",
+      "process": {
+        "started_utc": "2026-11-03T12:43:41.783082+00:00",
+        "finished_utc": "2026-11-03T12:50:54.194035+00:00",
+        "wall_seconds": 432.4316811999888,
+        "timer_includes": "process startup, command execution, stdout/stderr file writes"
+      }
+    },
+    {
+      "seed": 44,
+      "model_run_id": "7c7beaa66662125342102e1cdb54348490f0a41b273d29b79e74d0a077289747",
+      "test": {
+        "two_tower_hnsw": {
+          "users": 206209,
+          "heldout_positive_products": 2165417,
+          "recall@10": 0.0847481255105585,
+          "ndcg@10": 0.09866983948519553,
+          "micro_recall@10": 0.07202862081529793,
+          "recall@100": 0.3160518962494862,
+          "ndcg@100": 0.1744919799447365,
+          "micro_recall@100": 0.2887212947898719,
+          "definition": "macro mean over users; Recall divides by full distinct held-out basket; NDCG ideal length min(k,basket size)"
+        },
+        "two_tower_lambdamart": {
+          "users": 206209,
+          "heldout_positive_products": 2165417,
+          "recall@10": 0.22165789506828845,
+          "ndcg@10": 0.30220762491878117,
+          "micro_recall@10": 0.1861886186355792,
+          "recall@100": 0.3160518962494862,
+          "ndcg@100": 0.30254143642377745,
+          "micro_recall@100": 0.2887212947898719,
+          "definition": "macro mean over users; Recall divides by full distinct held-out basket; NDCG ideal length min(k,basket size)"
+        },
+        "training_popularity": {
+          "users": 206209,
+          "heldout_positive_products": 2165417,
+          "recall@10": 0.06994193249055376,
+          "ndcg@10": 0.0976164022909881,
+          "micro_recall@10": 0.06867083799563779,
+          "recall@100": 0.2175380782881585,
+          "ndcg@100": 0.14122916657486423,
+          "micro_recall@100": 0.22433092563695584,
+          "definition": "macro mean over users; Recall divides by full distinct held-out basket; NDCG ideal length min(k,basket size)"
+        }
+      },
+      "two_tower": {
+        "seed": 44,
+        "epochs": [
+          {
+            "epoch": 1,
+            "examples": 29524435,
+            "loss": 0.3861508496438344,
+            "seconds": 92.32599839800969
+          },
+          {
+            "epoch": 2,
+            "examples": 29524435,
+            "loss": 0.32291602011053544,
+            "seconds": 92.13070730000618
+          },
+          {
+            "epoch": 3,
+            "examples": 29524435,
+            "loss": 0.30850235268964754,
+            "seconds": 91.69583748202422
+          }
+        ],
+        "seconds": 278.1208006719826,
+        "positive_rows_per_epoch": 29524435,
+        "initial_weights_sha256": "14e9d1934a1b96da70dc6f3244842ffc0e6410f554fe2fc0f9802d940a38c4cc",
+        "final_weights_sha256": "d9711a247ba74e929a56c4025ddbc78d03011442ef4dd45dc5eff2f0e359f187",
+        "batch_size": 4096,
+        "dimension": 32,
+        "negatives_per_positive": 4,
+        "threads": 4,
+        "negative_rule": "uniform product IDs, exact target collisions replaced; other observed products remain eligible implicit negatives",
+        "objective": "balanced positive and sampled-negative logistic loss on normalized dot products / 0.1",
+        "device": "cpu"
+      },
+      "ranker": {
+        "identity": {
+          "split_sha256": "b3d8bbef2396dd302465ed4511bf36fce55dd151dd7914f99aa69acd6ea9994b",
+          "feature_fingerprint": "936de0e402c75b6438fc68ea906f1c66235ddf15b490cbe6527bca3271530011",
+          "model_definition_sha256": "bdee7590adb2e87da11002c5f69026f78b6c73466fed850bc7dd8218dfac8ec8",
+          "epochs": 3,
+          "seed": 44,
+          "dimension": 32,
+          "candidates": 100,
+          "rounds": 120,
+          "fit_user_sha256": "beb3c584e0b07a79367b5ebc410e3ac9f1a2f9b2c8d8f6de4badb19e0c9df042",
+          "early_stop_user_sha256": "bb687dfd818b90a48d3836520beea9fb271c6816f56c771e79a8c2953fbff550",
+          "ranking_definition_sha256": "7afc24671fd3d1794bc90fb320b870a29a801910c15aeee194b49bd743e1a2d6"
+        },
+        "fit_users": 185588,
+        "early_stop_users": 20621,
+        "fit_candidate_rows": 18558800,
+        "early_stop_candidate_rows": 2062100,
+        "fit_positive_rows": 550114,
+        "early_stop_positive_rows": 61130,
+        "best_iteration": 120,
+        "candidate_coverage": {
+          "users": 206209,
+          "heldout_positive_products": 2129254,
+          "recall@100": 0.3143549868943145,
+          "ndcg@100": 0.17250295706089738,
+          "micro_recall@100": 0.2870695558162624,
+          "definition": "macro mean over users; Recall divides by full distinct held-out basket; NDCG ideal length min(k,basket size)"
+        },
+        "feature_gain": {
+          "tt_score": 7037.140296936035,
+          "tt_rank": 57346.22426223755,
+          "log_train_purchases": 7539.905014038086,
+          "log_train_buyers": 300688.5278892517,
+          "train_reorder_share": 116094.30472946167,
+          "log_history_orders": 65388.08206176758,
+          "log_history_items": 151.72850036621094,
+          "log_unique_products": 10357.344165802002,
+          "user_product_count": 148238.28369140625,
+          "user_product_frequency": 6667212.400836945,
+          "orders_since_product": 615986.025592804,
+          "user_product_reorder_share": 0.0,
+          "aisle_affinity": 3669.5639839172363,
+          "department_affinity": 1440.4940948486328,
+          "aisle_id": 2931.118911743164,
+          "department_id": 1647.9722900390625
+        },
+        "feature_seconds": 26.617805763002252,
+        "fit_seconds": 72.49159350400441,
+        "labels": "validation baskets only; deterministic disjoint user groups for fitting and early stopping",
+        "early_stopping_metric": "LightGBM built-in NDCG@10 over the candidate labels; published next-basket metrics use every held-out positive"
+      },
+      "faiss": {
+        "index": "HNSW32 inner product on normalized vectors",
+        "efConstruction": 100,
+        "efSearch": 128,
+        "catalog_products": 49688,
+        "reorders_eligible": true,
+        "exact_topk_agreement": 0.9857550000000002,
+        "agreement_users": 2000,
+        "agreement_user_sha256": "93c83acc59c73e2676d648b567f1d74f7f5cfa014998d56f229dfe345b305016"
+      },
+      "runtime": {
+        "python": "3.12.3",
+        "torch": "2.15.0+cu132",
+        "numpy": "2.5.4",
+        "faiss": "1.15.1",
+        "lightgbm": "4.7.0",
+        "threads": 4,
+        "device": "cpu",
+        "peak_process_rss_mib": 4158.1875
+      },
+      "evaluation_seconds": 42.1038413339993,
+      "total_pipeline_seconds": 421.2850731140061,
+      "timing_scope": "elapsed execution records; model fitting/evaluation can overlap separate GPU training, not a latency benchmark",
+      "process": {
+        "started_utc": "2026-11-03T12:50:54.210762+00:00",
+        "finished_utc": "2026-11-03T12:58:07.006491+00:00",
+        "wall_seconds": 432.815330804995,
+        "timer_includes": "process startup, command execution, stdout/stderr file writes"
+      }
+    }
+  ],
+  "test_aggregate": {
+    "two_tower_hnsw": {
+      "users": {
+        "mean": 206209,
+        "std": 0.0,
+        "std_definition": "population ddof=0",
+        "values": [
+          206209,
+          206209,
+          206209
+        ]
+      },
+      "heldout_positive_products": {
+        "mean": 2165417,
+        "std": 0.0,
+        "std_definition": "population ddof=0",
+        "values": [
+          2165417,
+          2165417,
+          2165417
+        ]
+      },
+      "recall@10": {
+        "mean": 0.08552376752885146,
+        "std": 0.0005725763642754559,
+        "std_definition": "population ddof=0",
+        "values": [
+          0.08611295917633474,
+          0.08571021789966114,
+          0.0847481255105585
+        ]
+      },
+      "ndcg@10": {
+        "mean": 0.0994148865452334,
+        "std": 0.0006400934179676538,
+        "std_definition": "population ddof=0",
+        "values": [
+          0.10023267183459729,
+          0.09934214831590735,
+          0.09866983948519553
+        ]
+      },
+      "micro_recall@10": {
+        "mean": 0.07244593843433697,
+        "std": 0.000357132176471054,
+        "std_definition": "population ddof=0",
+        "values": [
+          0.0729009701133777,
+          0.07240822437433529,
+          0.07202862081529793
+        ]
+      },
+      "recall@100": {
+        "mean": 0.3165785397337195,
+        "std": 0.0005276769394262569,
+        "std_definition": "population ddof=0",
+        "values": [
+          0.3172997363593899,
+          0.31638398659228245,
+          0.3160518962494862
+        ]
+      },
+      "ndcg@100": {
+        "mean": 0.1750683643003641,
+        "std": 0.0005457966314617008,
+        "std_definition": "population ddof=0",
+        "values": [
+          0.1758011650142107,
+          0.1749119479421451,
+          0.1744919799447365
+        ]
+      },
+      "micro_recall@100": {
+        "mean": 0.28908242615625535,
+        "std": 0.00041571719841781193,
+        "std_definition": "population ddof=0",
+        "values": [
+          0.2896647620296691,
+          0.28886122164922506,
+          0.2887212947898719
+        ]
+      }
+    },
+    "two_tower_lambdamart": {
+      "users": {
+        "mean": 206209,
+        "std": 0.0,
+        "std_definition": "population ddof=0",
+        "values": [
+          206209,
+          206209,
+          206209
+        ]
+      },
+      "heldout_positive_products": {
+        "mean": 2165417,
+        "std": 0.0,
+        "std_definition": "population ddof=0",
+        "values": [
+          2165417,
+          2165417,
+          2165417
+        ]
+      },
+      "recall@10": {
+        "mean": 0.22224348960850274,
+        "std": 0.00045434714041296497,
+        "std_definition": "population ddof=0",
+        "values": [
+          0.22276532019901452,
+          0.22230725355820524,
+          0.22165789506828845
+        ]
+      },
+      "ndcg@10": {
+        "mean": 0.3028080968202312,
+        "std": 0.0004725055960107005,
+        "std_definition": "population ddof=0",
+        "values": [
+          0.3033622371408849,
+          0.30285442840102755,
+          0.30220762491878117
+        ]
+      },
+      "micro_recall@10": {
+        "mean": 0.18652065629853282,
+        "std": 0.00027773967015912035,
+        "std_definition": "population ddof=0",
+        "values": [
+          0.18686839532524221,
+          0.186504954934777,
+          0.1861886186355792
+        ]
+      },
+      "recall@100": {
+        "mean": 0.3165785397337195,
+        "std": 0.0005276769394262569,
+        "std_definition": "population ddof=0",
+        "values": [
+          0.3172997363593899,
+          0.31638398659228245,
+          0.3160518962494862
+        ]
+      },
+      "ndcg@100": {
+        "mean": 0.30302870154927636,
+        "std": 0.00044655777387807755,
+        "std_definition": "population ddof=0",
+        "values": [
+          0.3036202569356819,
+          0.3029244112883698,
+          0.30254143642377745
+        ]
+      },
+      "micro_recall@100": {
+        "mean": 0.28908242615625535,
+        "std": 0.00041571719841781193,
+        "std_definition": "population ddof=0",
+        "values": [
+          0.2896647620296691,
+          0.28886122164922506,
+          0.2887212947898719
+        ]
+      }
+    },
+    "training_popularity": {
+      "users": {
+        "mean": 206209,
+        "std": 0.0,
+        "std_definition": "population ddof=0",
+        "values": [
+          206209,
+          206209,
+          206209
+        ]
+      },
+      "heldout_positive_products": {
+        "mean": 2165417,
+        "std": 0.0,
+        "std_definition": "population ddof=0",
+        "values": [
+          2165417,
+          2165417,
+          2165417
+        ]
+      },
+      "recall@10": {
+        "mean": 0.06994193249055376,
+        "std": 0.0,
+        "std_definition": "population ddof=0",
+        "values": [
+          0.06994193249055376,
+          0.06994193249055376,
+          0.06994193249055376
+        ]
+      },
+      "ndcg@10": {
+        "mean": 0.0976164022909881,
+        "std": 0.0,
+        "std_definition": "population ddof=0",
+        "values": [
+          0.0976164022909881,
+          0.0976164022909881,
+          0.0976164022909881
+        ]
+      },
+      "micro_recall@10": {
+        "mean": 0.06867083799563779,
+        "std": 0.0,
+        "std_definition": "population ddof=0",
+        "values": [
+          0.06867083799563779,
+          0.06867083799563779,
+          0.06867083799563779
+        ]
+      },
+      "recall@100": {
+        "mean": 0.2175380782881585,
+        "std": 0.0,
+        "std_definition": "population ddof=0",
+        "values": [
+          0.2175380782881585,
+          0.2175380782881585,
+          0.2175380782881585
+        ]
+      },
+      "ndcg@100": {
+        "mean": 0.14122916657486423,
+        "std": 0.0,
+        "std_definition": "population ddof=0",
+        "values": [
+          0.14122916657486423,
+          0.14122916657486423,
+          0.14122916657486423
+        ]
+      },
+      "micro_recall@100": {
+        "mean": 0.22433092563695584,
+        "std": 0.0,
+        "std_definition": "population ddof=0",
+        "values": [
+          0.22433092563695584,
+          0.22433092563695584,
+          0.22433092563695584
+        ]
+      }
+    }
+  },
+  "http": {
+    "started_utc": "2026-11-03T12:58:12.972519+00:00",
+    "finished_utc": "2026-11-03T12:59:01.603295+00:00",
+    "requests": 5000,
+    "successful_responses": 5000,
+    "errors": 0,
+    "failures": {},
+    "status_counts": {
+      "200": 5000
+    },
+    "concurrency": 8,
+    "warmup_requests": 50,
+    "seed": 0,
+    "k": 10,
+    "users": 206209,
+    "products": 49688,
+    "model_run_id": "c9f3f9052ae6a10793dc0ed2887a1f37e517079b7ee49aeca60e3f2ecfac6106",
+    "elapsed_seconds": 48.018627654004376,
+    "throughput_rps": 104.12625775203801,
+    "client_latency_ms": {
+      "p50": 52.75989450456109,
+      "p95": 202.52809095691194,
+      "p99": 375.4151066186026
+    },
+    "handler_latency_ms": {
+      "p50": 0.7707859913352877,
+      "p95": 2.54449196800124,
+      "p99": 3.3538684525410676
+    },
+    "protocol": "closed-loop persistent localhost HTTP; client timer includes queueing within the server and network/serialization; handler timer covers retrieval/features/reranking/response construction",
+    "lifecycle": {
+      "owned_process_started": true,
+      "owned_process_terminated": true,
+      "wall_seconds": 52.41708157400717
+    },
+    "process": {
+      "started_utc": "2026-11-03T12:58:12.044235+00:00",
+      "finished_utc": "2026-11-03T12:59:01.701502+00:00",
+      "wall_seconds": 49.66002778298571,
+      "timer_includes": "process startup, command execution, stdout/stderr file writes"
+    },
+    "serving_seed": 42,
+    "repetitions": 1,
+    "client_timer": "request start through complete response body; existing validator retained",
+    "handler_timer": "retrieval, features, ranking and response items; unchanged implementation"
+  },
+  "verification": {
+    "materialized_assets": [
+      "recsys_train_eval",
+      "api_benchmark"
+    ],
+    "population_summary_checked": true,
+    "http_aggregates_checked_against_all_samples": true,
+    "numeric_comparison": {
+      "maximum_binary64_ulps": 32,
+      "scale": "max(1,abs(original),abs(recomputed))",
+      "formula": "abs(original-recomputed) <= 32*math.ulp(scale)",
+      "published_values": "copied from original JSON; no recomputed aggregate replaces measurements"
+    }
+  }
+}

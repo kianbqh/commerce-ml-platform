@@ -1,0 +1,4 @@
+# Combined fixture environment; excludes torch/FAISS/LightGBM. Java >=17 is provisioned separately.
+-r requirements-runtime.txt
+-r ../spark/requirements-runtime.txt
+pytest==9.2.0

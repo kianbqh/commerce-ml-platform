@@ -1,0 +1,549 @@
+{
+  "schema": "m4-dashboard-v1",
+  "generated_at_utc": "2026-11-03T13:03:25.376337+00:00",
+  "data_kind": "runtime",
+  "run": {
+    "status": "completed",
+    "id": "913dbb54-c51d-49bf-a225-3741fe84d2d1",
+    "environment": "WSL2"
+  },
+  "replay": {
+    "status": "passed",
+    "line_rows": 33819106,
+    "order_rows": 3346083,
+    "received_batches": 10,
+    "declared_batches": 10,
+    "full_seconds": 31.87071651799488,
+    "incremental_seconds": 342.0939878000354,
+    "batches": [
+      {
+        "partition": "000000",
+        "seconds": 44.00095809902996,
+        "source": "summary.json#/per_batch",
+        "status": "completed"
+      },
+      {
+        "partition": "000001",
+        "seconds": 31.287909818958724,
+        "source": "summary.json#/per_batch",
+        "status": "completed"
+      },
+      {
+        "partition": "000002",
+        "seconds": 33.41941640002187,
+        "source": "summary.json#/per_batch",
+        "status": "completed"
+      },
+      {
+        "partition": "000003",
+        "seconds": 35.26338200099417,
+        "source": "summary.json#/per_batch",
+        "status": "completed"
+      },
+      {
+        "partition": "000004",
+        "seconds": 32.4460314620228,
+        "source": "summary.json#/per_batch",
+        "status": "completed"
+      },
+      {
+        "partition": "000005",
+        "seconds": 33.411834694998106,
+        "source": "summary.json#/per_batch",
+        "status": "completed"
+      },
+      {
+        "partition": "000006",
+        "seconds": 32.562673061009264,
+        "source": "summary.json#/per_batch",
+        "status": "completed"
+      },
+      {
+        "partition": "000007",
+        "seconds": 33.09105380199617,
+        "source": "summary.json#/per_batch",
+        "status": "completed"
+      },
+      {
+        "partition": "000008",
+        "seconds": 33.8200043909892,
+        "source": "summary.json#/per_batch",
+        "status": "completed"
+      },
+      {
+        "partition": "000009",
+        "seconds": 32.79072407001513,
+        "source": "summary.json#/per_batch",
+        "status": "completed"
+      }
+    ]
+  },
+  "quality": {
+    "status": "passed",
+    "checks": [
+      {
+        "name": "batch_row_reconciliation",
+        "status": "passed"
+      },
+      {
+        "name": "null_key_rate_zero",
+        "status": "passed"
+      },
+      {
+        "name": "unique_grains",
+        "status": "passed"
+      },
+      {
+        "name": "arrived_order_catalog_fk",
+        "status": "passed"
+      },
+      {
+        "name": "order_line_correction_closure",
+        "status": "passed"
+      },
+      {
+        "name": "arrival_completeness",
+        "status": "passed"
+      },
+      {
+        "name": "source_fact_exact_values",
+        "status": "passed"
+      },
+      {
+        "name": "processing_freshness",
+        "status": "passed"
+      }
+    ],
+    "passed_count": 8,
+    "failed_count": 0
+  },
+  "freshness": {
+    "status": "passed",
+    "age_seconds": 625.643058,
+    "maximum_age_seconds": 86400,
+    "materialized_at": "2026-11-03T09:21:42.893345+00:00",
+    "scope": "检查执行时的处理时效与回放进度；不是真实订单事件时效",
+    "controlled_demo": {
+      "fresh": "passed",
+      "stale": "failed",
+      "clock_injected": true
+    }
+  },
+  "spark": {
+    "status": "passed",
+    "seconds": 150.11370449900278,
+    "master": "local[8]",
+    "tables": [
+      {
+        "name": "fct_order_lines",
+        "rows": 33819106,
+        "partitions": 10,
+        "files": 160,
+        "bytes": 252345948
+      },
+      {
+        "name": "batch_department_integer_stats",
+        "rows": 210,
+        "partitions": 10,
+        "files": 119,
+        "bytes": 222563
+      },
+      {
+        "name": "batch_hourly_integer_stats",
+        "rows": 1678,
+        "partitions": 10,
+        "files": 160,
+        "bytes": 298259
+      },
+      {
+        "name": "batch_product_integer_stats",
+        "rows": 310819,
+        "partitions": 10,
+        "files": 160,
+        "bytes": 2959850
+      }
+    ]
+  },
+  "backfill": {
+    "status": "passed",
+    "selected": [
+      "000000",
+      "000001"
+    ],
+    "changed": [
+      "000000",
+      "000001"
+    ],
+    "unchanged": [
+      "000002",
+      "000003",
+      "000004",
+      "000005",
+      "000006",
+      "000007",
+      "000008",
+      "000009"
+    ],
+    "blocking_demo": "passed",
+    "recovery": "passed"
+  },
+  "alerts": [
+    {
+      "status": "not_run",
+      "count": null,
+      "records": [],
+      "scope": "主回放"
+    },
+    {
+      "status": "completed",
+      "count": 1,
+      "records": [
+        {
+          "alert_id": "176e3e17bb4dd93915168ea5294298297ae75072ebc6f71165bc8e445d5f40ba",
+          "timestamp_utc": "2026-11-03T11:39:16.874293+00:00",
+          "partition": "000001",
+          "check": "dbt_input_quality",
+          "reason": "输入质量检查未通过。",
+          "private_reason_sha256": "c06ddea1f9105617d842fb52cf433b01b002626a5f1d4ae908bfa4bae6a61001"
+        }
+      ],
+      "display_limited": false,
+      "scope": "拦截演示"
+    }
+  ],
+  "recommendations": {
+    "status": "completed",
+    "rows": [
+      {
+        "method": "training_popularity",
+        "metrics": {
+          "ndcg@10": {
+            "mean": 0.0976164022909881,
+            "std": 0.0
+          },
+          "recall@10": {
+            "mean": 0.06994193249055376,
+            "std": 0.0
+          }
+        }
+      },
+      {
+        "method": "two_tower_hnsw",
+        "metrics": {
+          "ndcg@10": {
+            "mean": 0.0994148865452334,
+            "std": 0.0006400934179676538
+          },
+          "recall@10": {
+            "mean": 0.08552376752885146,
+            "std": 0.0005725763642754559
+          }
+        }
+      },
+      {
+        "method": "two_tower_lambdamart",
+        "metrics": {
+          "ndcg@10": {
+            "mean": 0.3028080968202312,
+            "std": 0.0004725055960107005
+          },
+          "recall@10": {
+            "mean": 0.22224348960850274,
+            "std": 0.00045434714041296497
+          }
+        }
+      }
+    ],
+    "seeds": [
+      42,
+      43,
+      44
+    ],
+    "std_definition": "copied standard deviations; the run artifact declares the estimator"
+  },
+  "api": {
+    "status": "completed",
+    "requests": 5000,
+    "errors": 0,
+    "client_p50_ms": 52.75989450456109,
+    "client_p99_ms": 375.4151066186026
+  },
+  "sources": [
+    {
+      "evidence_identity": "parent:manual-run.json",
+      "status": "loaded",
+      "bytes": 2003,
+      "sha256": "21bdd4d54f7bcc9c935bcc0517ae3d5d4fdc7b295f3911ed0f32c780dab5355d",
+      "hash_scope": "private source bytes; metadata only",
+      "public_payload_available": false
+    },
+    {
+      "evidence_identity": "parent:summary.json",
+      "status": "loaded",
+      "bytes": 577008,
+      "sha256": "b0de8f256696a888139deefb00f5cfab3ebf61b54ac9bdc8a879fb19b53414c3",
+      "hash_scope": "private source bytes; metadata only",
+      "public_payload_available": false
+    },
+    {
+      "evidence_identity": "parent:provenance.json",
+      "status": "loaded",
+      "bytes": 1752,
+      "sha256": "f579b0e05841d69fdafb0ae2bf9864632e29c0f891768f4530c8c589605e9b2d",
+      "hash_scope": "private source bytes; metadata only",
+      "public_payload_available": false
+    },
+    {
+      "evidence_identity": "parent:config.json",
+      "status": "loaded",
+      "bytes": 985,
+      "sha256": "9f182d93fc33f4679554485adaed46eb9aa68c33fe331f37ef36a5a500e56c0d",
+      "hash_scope": "private source bytes; metadata only",
+      "public_payload_available": false
+    },
+    {
+      "evidence_identity": "parent:arrival_manifest.json",
+      "status": "loaded",
+      "bytes": 4183,
+      "sha256": "d67e1c12b198ef57fff1ab6276a69eea5442a4df60288673fc43885b2299f4e1",
+      "hash_scope": "private source bytes; metadata only",
+      "public_payload_available": false
+    },
+    {
+      "evidence_identity": "parent:promoted.json",
+      "status": "loaded",
+      "bytes": 3404,
+      "sha256": "d2ed1e2722b9ecf1f1d17069c4e9332ac38dde155c3867a12a01e7049a319642",
+      "hash_scope": "private source bytes; metadata only",
+      "public_payload_available": false
+    },
+    {
+      "evidence_identity": "parent:full-incremental-parity.json",
+      "status": "loaded",
+      "bytes": 13659,
+      "sha256": "bef693aa8277b2c31d4a11460769f7e76a09b29b1cef83ccc34f88da9773546e",
+      "hash_scope": "private source bytes; metadata only",
+      "public_payload_available": false
+    },
+    {
+      "evidence_identity": "parent:full-reference/reference.json",
+      "status": "loaded",
+      "bytes": 14144,
+      "sha256": "68f3516b7341eea4f54645c893d7e56aa095888b5a82f61ca8d79d202cf7d5bf",
+      "hash_scope": "private source bytes; metadata only",
+      "public_payload_available": false
+    },
+    {
+      "evidence_identity": "parent:coordinator.json",
+      "status": "loaded",
+      "bytes": 2601,
+      "sha256": "777c124b8ea5a5355eb94231949a2121b7c7cb735471af90d17329d1b96f9a6f",
+      "hash_scope": "private source bytes; metadata only",
+      "public_payload_available": false
+    },
+    {
+      "evidence_identity": "parent:spark-original/spark-run.json",
+      "status": "loaded",
+      "bytes": 460318,
+      "sha256": "159b700e6e1038db162a3f208ec0cf7430138189bdf23f24325c67809a1a8c8c",
+      "hash_scope": "private source bytes; metadata only",
+      "public_payload_available": false
+    },
+    {
+      "evidence_identity": "parent:spark-original/spark-dbt-parity.json",
+      "status": "loaded",
+      "bytes": 89856,
+      "sha256": "ff4ca82783904402cc8c7349d67dfa04b577faadceef66ac0e18ddbf059d877f",
+      "hash_scope": "private source bytes; metadata only",
+      "public_payload_available": false
+    },
+    {
+      "evidence_identity": "parent:model-run.json",
+      "status": "loaded",
+      "bytes": 1997,
+      "sha256": "2689dd98dab0956af02adbd892b4dfbbd026f3c96d219e40a1d7d935e254e9a4",
+      "hash_scope": "private source bytes; metadata only",
+      "public_payload_available": false
+    },
+    {
+      "evidence_identity": "parent:api-run.json",
+      "status": "loaded",
+      "bytes": 1963,
+      "sha256": "de3378340200bf0a25a89cb013728e9d79164016e89d69edff6ea3db6a4c1617",
+      "hash_scope": "private source bytes; metadata only",
+      "public_payload_available": false
+    },
+    {
+      "evidence_identity": "parent:demonstrations.json",
+      "status": "loaded",
+      "bytes": 2405,
+      "sha256": "65b56c77cd8135e698dc780409f15f4845a32f71d8cb246305c725350a80877f",
+      "hash_scope": "private source bytes; metadata only",
+      "public_payload_available": false
+    },
+    {
+      "evidence_identity": "parent:freshness-demo.json",
+      "status": "loaded",
+      "bytes": 3073,
+      "sha256": "48ad05620d927e1e0b6e119c55fc61ee30c75d5a6b8fb24a37429b9c2ba8b31d",
+      "hash_scope": "private source bytes; metadata only",
+      "public_payload_available": false
+    },
+    {
+      "evidence_identity": "parent:attempts/f13de1dd-6701-4f72-a238-ed08c1983dec/output-checks.json",
+      "status": "loaded",
+      "bytes": 10199,
+      "sha256": "572a86b3deea0db5030be30b787a4b36b1d3d54223db0decf0ada15d294de1fd",
+      "hash_scope": "private source bytes; metadata only",
+      "public_payload_available": false
+    },
+    {
+      "evidence_identity": "parent:demonstrations/corrected-5588f9721bf1453e843ae70f6d37866a/backfill-proof.json",
+      "status": "loaded",
+      "bytes": 93387,
+      "sha256": "7e35d7766db938132b6cb443f88d2f4d11c7c822313fa42d7f8829c9331d7d98",
+      "hash_scope": "private source bytes; metadata only",
+      "public_payload_available": false
+    },
+    {
+      "evidence_identity": "parent:demonstrations/bad-2ea9d3ddf0cb411696429c72fe314a0f/bad-batch-proof.json",
+      "status": "loaded",
+      "bytes": 2382,
+      "sha256": "5b793be4dd690ffe92461b9032c3a5cf893d8ac99799709e961bf9b3902dedbb",
+      "hash_scope": "private source bytes; metadata only",
+      "public_payload_available": false
+    },
+    {
+      "evidence_identity": "parent:demonstrations/bad-2ea9d3ddf0cb411696429c72fe314a0f/recovery-proof.json",
+      "status": "loaded",
+      "bytes": 15146,
+      "sha256": "d6a34e20b40abf94a8412fddd0c6452bb02e64ce0cc7fe4e8a0b02c82a20c488",
+      "hash_scope": "private source bytes; metadata only",
+      "public_payload_available": false
+    },
+    {
+      "evidence_identity": "parent:alerts/alerts.jsonl",
+      "status": "missing",
+      "bytes": null,
+      "sha256": null,
+      "hash_scope": "private source bytes; metadata only",
+      "public_payload_available": false
+    },
+    {
+      "evidence_identity": "parent:demonstrations/bad-2ea9d3ddf0cb411696429c72fe314a0f/alerts/alerts.jsonl",
+      "status": "loaded",
+      "bytes": 2067,
+      "sha256": "9795f1c7be82e83584b518d4386744da14adb6ec75d3adae84e9a87a07a9a6f5",
+      "hash_scope": "private source bytes; metadata only",
+      "public_payload_available": false
+    },
+    {
+      "evidence_identity": "parent:initialization.json",
+      "status": "loaded",
+      "bytes": 2392,
+      "sha256": "7500cbc044a1e8a9a833fa3f373aae978fe0c43f11be67ddde6ba1ce613a9ce6",
+      "hash_scope": "private source bytes; metadata only",
+      "public_payload_available": false
+    },
+    {
+      "evidence_identity": "parent:terminal/gate.json",
+      "status": "loaded",
+      "bytes": 2550,
+      "sha256": "82f7f03dd18b88ad90bc294e89359c9d129c45ef7d26679dbbe18d9787ba9d8d",
+      "hash_scope": "private source bytes; metadata only",
+      "public_payload_available": false
+    },
+    {
+      "evidence_identity": "parent:terminal/feature-export.json",
+      "status": "loaded",
+      "bytes": 2507,
+      "sha256": "d75565a6f06eeb6416dbb6cd8f505b0eadf8cb5db51a98e7e76c1553485cf410",
+      "hash_scope": "private source bytes; metadata only",
+      "public_payload_available": false
+    },
+    {
+      "evidence_identity": "child:input-binding.json",
+      "status": "loaded",
+      "bytes": 6188,
+      "sha256": "75f45f3cc1e8409d024c413c4bf9e705b06885490b454a9c0215a340fd26ce2c",
+      "hash_scope": "private source bytes; metadata only",
+      "public_payload_available": false
+    },
+    {
+      "evidence_identity": "child:downstream-run.json",
+      "status": "loaded",
+      "bytes": 2187,
+      "sha256": "8ceda87c8986bdd10260c6f2654d4208534c43f44511d3c95ecd076a93250c2f",
+      "hash_scope": "private source bytes; metadata only",
+      "public_payload_available": false
+    },
+    {
+      "evidence_identity": "child:input-verification.json",
+      "status": "loaded",
+      "bytes": 5857,
+      "sha256": "23a91f5896fa3c58672b09e2c8eb54e1fe6b1d2a04ae5df5d1b619104fb29843",
+      "hash_scope": "private source bytes; metadata only",
+      "public_payload_available": false
+    },
+    {
+      "evidence_identity": "child:downstream-events.json",
+      "status": "loaded",
+      "bytes": 2739,
+      "sha256": "505c662942c5605a4cc6c0fbb9df07825ec6245e26f0c7364e45e01254467337",
+      "hash_scope": "private source bytes; metadata only",
+      "public_payload_available": false
+    },
+    {
+      "evidence_identity": "child:model-run.json",
+      "status": "loaded",
+      "bytes": 10840,
+      "sha256": "9a6e4da54be399700ec8c7e9097f20d381bbe02d5f8adf7bbddff3bc6e3dacc2",
+      "hash_scope": "private source bytes; metadata only",
+      "public_payload_available": false
+    },
+    {
+      "evidence_identity": "child:api-run.json",
+      "status": "loaded",
+      "bytes": 4388,
+      "sha256": "9e628b4213250a1c94761455f248d9b7e576bfbd6b3e3dd878201b76c8bd4605",
+      "hash_scope": "private source bytes; metadata only",
+      "public_payload_available": false
+    },
+    {
+      "evidence_identity": "child:api/raw-http.json",
+      "status": "loaded",
+      "bytes": 792431,
+      "sha256": "646482968cc04180d308ee5c5fa832bf8e1760df3d23000399277ed3ea2d7c85",
+      "hash_scope": "private source bytes; metadata only",
+      "public_payload_available": false
+    }
+  ],
+  "issues": [],
+  "downstream_lineage": {
+    "parent_run_id": "913dbb54-c51d-49bf-a225-3741fe84d2d1",
+    "child_run_id": "5b083057-a84b-4c0a-b471-bec98aa04f12",
+    "parent_source_git_sha": "829250d93e5e436e98e4a5df41296b0d121a52a8",
+    "scope": "data replay from parent; model/API from independent append-only child"
+  },
+  "refresh": "manual regeneration only; no polling, daemon, schedule or external requests",
+  "provenance": {
+    "git_sha": "829250d93e5e436e98e4a5df41296b0d121a52a8",
+    "config_sha256": "ebcb8f3d544778e2f9da6c253a98441f02b0ed2792955564f197cc42b54f515e",
+    "timestamp_utc": "2026-11-03T06:54:07.771437+00:00",
+    "environment": "WSL2",
+    "python": "3.12.3",
+    "packages": {
+      "dagster": "1.13.28",
+      "dagster-dbt": "0.29.28",
+      "dbt-core": "1.12.6",
+      "dbt-duckdb": "1.11.1",
+      "duckdb": "2.0.0",
+      "pyspark": "4.2.0",
+      "torch": "not installed",
+      "numpy": "2.5.4",
+      "faiss-cpu": "not installed",
+      "lightgbm": "not installed",
+      "fastapi": "not installed"
+    }
+  }
+}

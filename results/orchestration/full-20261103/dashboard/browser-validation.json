@@ -1,0 +1,163 @@
+{
+  "schema": "m4-public-browser-validation-v1",
+  "status": "passed",
+  "scope": "Actual Windows headless Chromium functional checks; not a GPU/FPS benchmark",
+  "parent_run_id": "913dbb54-c51d-49bf-a225-3741fe84d2d1",
+  "child_run_id": "5b083057-a84b-4c0a-b471-bec98aa04f12",
+  "private_browser": {
+    "status": "passed",
+    "receipt_sha256": "af630b64ec9966db8193c895703fcc05487cb81a1dfd6aa7d1bb658a149267d5",
+    "snapshot_sha256": "c93c5d270e1265a4213c2cbacfc14dda8eb847e18393cc1b821d97109aeae9c5",
+    "checks": {
+      "visible_parent_child_run_ids": true,
+      "controlled_stale_is_separate_from_current_freshness": {
+        "current": "passed",
+        "controlled": {
+          "fresh": "passed",
+          "stale": "failed",
+          "clock_injected": true
+        }
+      },
+      "status_cards_and_all_rendered_tables_match_snapshot": true,
+      "json_link_export": {
+        "clicked_actual_href": "snapshot.json",
+        "response_sha256": "c93c5d270e1265a4213c2cbacfc14dda8eb847e18393cc1b821d97109aeae9c5",
+        "saved_sha256": "c93c5d270e1265a4213c2cbacfc14dda8eb847e18393cc1b821d97109aeae9c5",
+        "native_download_attribute": false,
+        "native_download_event_claimed": false
+      },
+      "exact_html_snapshot_refresh_and_json_link": true
+    },
+    "views": [
+      {
+        "name": "desktop",
+        "viewport": [
+          1440,
+          1000
+        ],
+        "layout": {
+          "width": 1440,
+          "scrollWidth": 1440,
+          "gridColumns": 2,
+          "cardColumns": 4,
+          "headerDirection": "row"
+        }
+      },
+      {
+        "name": "narrow",
+        "viewport": [
+          390,
+          844
+        ],
+        "layout": {
+          "width": 390,
+          "scrollWidth": 390,
+          "gridColumns": 1,
+          "cardColumns": 2,
+          "headerDirection": "column"
+        }
+      }
+    ],
+    "cleanup": {
+      "browser_context_closed": true,
+      "server_closed": true,
+      "owned_port_connection_refused": true
+    }
+  },
+  "public_browser": {
+    "status": "passed",
+    "receipt_sha256": "e44bab279f735e01e9ff2e420e2b442088992d385a5398b83aaaf721eb0b44d4",
+    "browser_version": "156.0.8078.4",
+    "checks": {
+      "derivation_and_privacy_preflight": true,
+      "visible_parent_child_run_ids": true,
+      "controlled_stale_is_separate_from_current_freshness": {
+        "current": "passed",
+        "controlled": {
+          "fresh": "passed",
+          "stale": "failed",
+          "clock_injected": true
+        }
+      },
+      "status_cards_and_all_rendered_tables_match_snapshot": true,
+      "json_link_export": {
+        "clicked_actual_href": "snapshot.json",
+        "response_sha256": "9919eac4d21336ba6109126dfa607aa78bcd546adfbd596246d29686e95d0edd",
+        "saved_sha256": "9919eac4d21336ba6109126dfa607aa78bcd546adfbd596246d29686e95d0edd",
+        "native_download_attribute": false,
+        "native_download_event_claimed": false
+      },
+      "exact_html_snapshot_refresh_and_json_link": true
+    },
+    "views": [
+      {
+        "name": "desktop",
+        "viewport": [
+          1440,
+          1000
+        ],
+        "layout": {
+          "width": 1440,
+          "scrollWidth": 1440,
+          "gridColumns": 2,
+          "cardColumns": 4,
+          "headerDirection": "row"
+        }
+      },
+      {
+        "name": "narrow",
+        "viewport": [
+          390,
+          844
+        ],
+        "layout": {
+          "width": 390,
+          "scrollWidth": 390,
+          "gridColumns": 1,
+          "cardColumns": 2,
+          "headerDirection": "column"
+        }
+      }
+    ],
+    "cleanup": {
+      "browser_context_closed": true,
+      "server_closed": true,
+      "owned_port_connection_refused": true
+    },
+    "page_errors": 0,
+    "console_errors": 0,
+    "external_request_attempts": 0
+  },
+  "derivation": {
+    "receipt_sha256": "ac1769e270ccff2e4e1585c524ee6736e145e5637c3b2e61cea587961e33713b",
+    "display_values_unchanged": true,
+    "declared_metadata_changes": 154,
+    "display_invariants_sha256": "e5925c2ee15079eb8b4ad13c9aeedd6f6f9aa3fb248330d76260f38b95a534e7",
+    "renderer_sha256": "b53f34751dc5957784b1822e81f24e621ef6474c19df5ebfed2c861180f8691e",
+    "exporter_sha256": "bc4e79338796569a01baafcc74e43e5957f61b8115046dddec0e50f13dd5bd71"
+  },
+  "root_visual_review": {
+    "reviewed_utc": "2026-11-03T13:16:03.852076+00:00",
+    "desktop_and_narrow_reviewed": true,
+    "whole_page_horizontal_overflow": false
+  },
+  "files": {
+    "index.html": {
+      "bytes": 8971,
+      "sha256": "9e1ec860572ec9cc5c6aea8474ab4c881aabd0227dbe40b04c95c7dba2a041e3"
+    },
+    "snapshot.json": {
+      "bytes": 16969,
+      "sha256": "9919eac4d21336ba6109126dfa607aa78bcd546adfbd596246d29686e95d0edd"
+    },
+    "desktop.png": {
+      "bytes": 185428,
+      "sha256": "96ab8b833eb924aafa050ea715dc0ff76f6f2de8c37b9fb9ec7f8865617fbce0"
+    },
+    "narrow.png": {
+      "bytes": 178797,
+      "sha256": "4ef1e70845d685c350ace4f3239058144f904ec492d91a29b8409db62bc1b72f"
+    }
+  },
+  "first_private_attempt": "Restricted-environment localhost access failed before UI checks; retained privately. Same driver passed with localhost access enabled."
+}

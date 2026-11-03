@@ -1,0 +1,35 @@
+{
+  "schema": "m4-config-v1",
+  "orders_per_batch": 10,
+  "seed": 42,
+  "simulated_start_day": "2026-01-01",
+  "simulated_late_receipt_days": {
+    "000001": 1
+  },
+  "maximum_processing_age_seconds": 86400,
+  "dbt_threads": 4,
+  "dbt_memory_limit": "4GB",
+  "training_enabled": true,
+  "training_seeds": [
+    42,
+    43,
+    44
+  ],
+  "training_epochs": 3,
+  "ranker_rounds": 120,
+  "candidates": 100,
+  "http_seed": 42,
+  "http_requests": 5000,
+  "http_concurrency": 8,
+  "http_port": 8098,
+  "spark_master": "local[8]",
+  "spark_driver_memory": "4g",
+  "spark_shuffle_partitions": 16,
+  "benchmark_repetitions": 1,
+  "backfill_first": "000000",
+  "backfill_last": "000001",
+  "runtime_root": "/opt/codex-resume/all-modules-v2/m4",
+  "raw_dir": "/opt/codex-resume/consolidation-f4/raw",
+  "frozen_split_sha256": "b3d8bbef2396dd302465ed4511bf36fce55dd151dd7914f99aa69acd6ea9994b",
+  "frozen_feature_fingerprint": "936de0e402c75b6438fc68ea906f1c66235ddf15b490cbe6527bca3271530011"
+}

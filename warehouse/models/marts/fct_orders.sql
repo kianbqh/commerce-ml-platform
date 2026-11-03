@@ -1,13 +1,12 @@
-{{ config(materialized='incremental', incremental_strategy='append', on_schema_change='fail') }}
--- Order grain fact with basket metrics; only orders that have line items.
+{{ config(materialized='incremental', incremental_strategy='delete+insert',
+          unique_key='order_id', on_schema_change='fail') }}
+-- Corrections must update basket metrics too, not only line rows.
 with lines as (
-    select order_id,
-           count(*)                       as basket_size,
-           sum(reordered)                 as n_reordered,
-           count(distinct department_id)  as n_departments
+    select order_id, count(*) as basket_size, sum(reordered) as n_reordered,
+           count(distinct department_id) as n_departments
     from {{ ref('fct_order_lines') }}
     {% if is_incremental() %}
-    where order_id not in (select order_id from {{ this }})
+    where {{ m4_affected('order_number') }}
     {% endif %}
     group by order_id
 )
