@@ -169,7 +169,7 @@ class Runtime:
                             "TMPDIR": str(self.root / "tmp")})
         return environment
 
-    def dbt(self, receipt, label, command, selection, *, full_refresh=False, allow_failure=False):
+    def dbt(self, receipt, label, command, selection, *, full_refresh=False, allow_failure=False, indirect_selection=None):
         for source in self.manifest["sources"].values():
             stat = Path(source["path"]).stat()
             if stat.st_size != source["bytes"] or stat.st_mtime_ns != source["mtime_ns"]:
@@ -182,6 +182,8 @@ class Runtime:
                 "--target", "duckdb", "--threads", str(self.config["dbt_threads"]),
                 "--vars", json.dumps(self.variables(receipt), sort_keys=True), "--select", *selection,
                 "--target-path", str(directory / "dbt-target")]
+        if indirect_selection is not None:
+            argv.extend(["--indirect-selection", indirect_selection])
         if full_refresh:
             argv.append("--full-refresh")
         return run_command(argv, cwd=self.repo, env=self.environment(receipt["database"], directory),
@@ -193,7 +195,7 @@ class Runtime:
 
     def input_checks(self, run_id):
         receipt = self.receipt(run_id)
-        result = self.dbt(receipt, "dbt-input-tests", "test", ["path:models/staging", "tag:m4_input"], allow_failure=True)
+        result = self.dbt(receipt, "dbt-input-tests", "test", ["path:models/staging", "tag:m4_input"], allow_failure=True, indirect_selection="cautious")
         passed = result["returncode"] == 0
         self.evidence(f"attempts/{run_id}/input-check.json", {"name": "dbt_input_quality", "passed": passed,
                                                            "process_evidence": "dbt-input-tests/process.json"})
