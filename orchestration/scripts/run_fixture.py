@@ -1,4 +1,4 @@
-"""CI/local manual real-subset fixture suite. Never downloads full data."""
+"""CI/local manual fixture suite. Never downloads data."""
 from __future__ import annotations
 
 import argparse
@@ -28,11 +28,16 @@ def main():
               str(base).startswith("/opt/codex-resume/all-modules-v2/m4")):
         raise ValueError("local scratch must stay on the configured G-backed paths")
     identity = read_json(fixture / "attribution.json")
+    data_kind = identity.get("data_kind")
+    if data_kind not in (None, "synthetic_test"):
+        raise ValueError("unsupported fixture data_kind")
     for name, record in identity["files"].items():
         if sha256_file(fixture / name) != record["sha256"]:
             raise ValueError("fixture identity mismatch: " + name)
     config = read_json(Path(__file__).resolve().parents[1] / "config/fixture.json")
     config.update({"runtime_root": str(base), "raw_dir": str(fixture)})
+    if data_kind == "synthetic_test":
+        config["data_kind"] = "synthetic_test"
     base.mkdir(parents=True, exist_ok=True)
     identifier = "fixture-" + uuid.uuid4().hex
     path = write_json_new(base / (identifier + ".config.json"), config)
@@ -45,8 +50,12 @@ def main():
     if completed.returncode:
         raise SystemExit(completed.returncode)
     manifest = read_json(base / identifier / "arrival_manifest.json")
+    if data_kind == "synthetic_test":
+        provenance = read_json(base / identifier / "provenance.json")
+        if manifest.get("data_kind") != data_kind or provenance.get("data_kind") != data_kind:
+            raise ValueError("synthetic fixture label lost at runtime boundary")
     if [b["key"] for b in manifest["batches"]] != ["000000", "000001", "000002"] or any(b["lines"] == 0 for b in manifest["batches"]):
-        raise ValueError("fixture did not exercise three nonempty real arrival batches")
+        raise ValueError("fixture did not exercise three nonempty arrival batches")
     if read_json(base / identifier / "model-run.json")["status"] != "not run":
         raise ValueError("light fixture unexpectedly trained a model")
     print(base / identifier)

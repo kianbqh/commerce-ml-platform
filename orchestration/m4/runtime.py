@@ -34,6 +34,8 @@ def initialize(repo, config_path, root, *, raw_dir=None):
     audit_options = duck.connection_options(config, root / "tmp")
     raw = Path(raw_dir or config["raw_dir"]).resolve()
     provenance = collect(repo, config, sys.argv)
+    if config.get("data_kind") == "synthetic_test":
+        provenance["data_kind"] = "synthetic_test"
     started = time.perf_counter()
     sources = {name: {"path": str(raw / (name + ".csv")), "bytes": (raw / (name + ".csv")).stat().st_size,
                       "mtime_ns": (raw / (name + ".csv")).stat().st_mtime_ns,
@@ -56,7 +58,8 @@ def initialize(repo, config_path, root, *, raw_dir=None):
     finally:
         con.close()
     manifest = make_manifest(counts, width=width, sources=sources, seed=config["seed"],
-                             start_day=config["simulated_start_day"], delays=config["simulated_late_receipt_days"])
+                             start_day=config["simulated_start_day"], delays=config["simulated_late_receipt_days"],
+                             data_kind=config.get("data_kind"))
     validate_manifest(manifest)
     write_json_new(root / "config.json", config)
     write_json_new(root / "arrival_manifest.json", manifest)

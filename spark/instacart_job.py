@@ -181,7 +181,9 @@ def run(rt, destination, *, selected=None, base=None):
                   "selected_backfill_partitions": selected, "tables": outputs,
                   "master_actual": spark.sparkContext.master, "default_parallelism_actual": spark.sparkContext.defaultParallelism,
                   "driver_memory_effective": effective.get("spark.driver.memory", "unreported"),
-                  "logical_contract": "real static Instacart CSVs; ordered simulated arrivals; explicit schemas; integer sufficient statistics"}
+                  "logical_contract": ("synthetic grocery fixture; simulated arrivals; explicit schemas; integer sufficient statistics"
+                                       if rt.provenance.get("data_kind") == "synthetic_test" else
+                                       "real static Instacart CSVs; ordered simulated arrivals; explicit schemas; integer sufficient statistics")}
         write_json_new(destination / "spark-run.json", result)
         if base:
             assert_base_unchanged(base)

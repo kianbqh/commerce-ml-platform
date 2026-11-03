@@ -44,3 +44,110 @@ jobs:
       - run: bash scripts/run_all.sh
       - uses: actions/upload-artifact@v4
         with: {name: hillstrom-analysis, path: results/experiments/}
+  orchestration-controls:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    env:
+      PYTHONPATH: orchestration
+      PYTHONDONTWRITEBYTECODE: '1'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: {python-version: '3.12'}
+      - name: Pure replay, bounded-resource adapter and dashboard contracts
+        run: |
+          python -B -m unittest discover -s orchestration/tests -p test_pure.py -v
+          python -B -m unittest discover -s orchestration/tests -p test_resources.py -v
+          python -B -m unittest discover -s orchestration/tests -p test_dashboard.py -v
+  orchestration-synthetic-fixture:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      PYTHONPATH: orchestration
+      PYTHONDONTWRITEBYTECODE: '1'
+      SPARK_LOCAL_IP: 127.0.0.1
+      OMP_NUM_THREADS: '2'
+      MKL_NUM_THREADS: '2'
+      OPENBLAS_NUM_THREADS: '2'
+    steps:
+      - name: Bind isolated runner scratch paths
+        env:
+          M4_CI_ROOT: ${{ runner.temp }}/m4
+        run: |
+          echo "M4_CI_ROOT=$M4_CI_ROOT" >> "$GITHUB_ENV"
+          echo "M4_SYNTHETIC_FIXTURE=$M4_CI_ROOT/synthetic-fixture" >> "$GITHUB_ENV"
+          echo "M4_RUNTIME_TEST_ROOT=$M4_CI_ROOT/definitions" >> "$GITHUB_ENV"
+          echo "M4_DBT_MANIFEST=$M4_CI_ROOT/definitions/manifest-parse/dbt-target/manifest.json" >> "$GITHUB_ENV"
+          echo "PIP_CACHE_DIR=$RUNNER_TEMP/m4-pip-cache" >> "$GITHUB_ENV"
+          echo "TMPDIR=$RUNNER_TEMP/m4-tmp" >> "$GITHUB_ENV"
+          mkdir -p "$RUNNER_TEMP/m4-pip-cache" "$RUNNER_TEMP/m4-tmp"
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: pip
+          cache-dependency-path: |
+            orchestration/requirements-runtime.txt
+            orchestration/requirements-ci.txt
+            spark/requirements-runtime.txt
+      - name: Generate independent synthetic baskets and retained hashes
+        run: |
+          mkdir -p "$M4_CI_ROOT"
+          python orchestration/scripts/build_synthetic_fixture.py --out "$M4_SYNTHETIC_FIXTURE" --source-sha "$GITHUB_SHA"
+      - uses: actions/setup-java@v4
+        with: {distribution: temurin, java-version: '21.0.13+9'}
+      - name: Install the combined fixture environment and record actual versions
+        run: |
+          mkdir -p "$M4_CI_ROOT/environment"
+          python -m pip install -r orchestration/requirements-ci.txt
+          python -m pip check > "$M4_CI_ROOT/environment/pip-check.txt"
+          java -version 2> "$M4_CI_ROOT/environment/java-version.txt"
+          python -m pip freeze --all > "$M4_CI_ROOT/environment/pip-freeze.txt"
+      - name: Prepare synthetic definitions and check import side effects
+        run: |
+          python - <<'PY'
+          import json, os
+          from pathlib import Path
+          root=Path(os.environ['M4_CI_ROOT'])
+          fixture=Path(os.environ['M4_SYNTHETIC_FIXTURE'])
+          identity=json.loads((fixture/'attribution.json').read_text())
+          assert identity['data_kind']=='synthetic_test'
+          config=json.loads(Path('orchestration/config/fixture.json').read_text())
+          config.update(runtime_root=str(root),raw_dir=str(fixture),data_kind='synthetic_test')
+          (root/'fixture.config.json').write_text(json.dumps(config))
+          PY
+          python orchestration/scripts/run_manual.py --config "$M4_CI_ROOT/fixture.config.json" --run-root "$M4_RUNTIME_TEST_ROOT" --raw-dir "$M4_SYNTHETIC_FIXTURE" --definitions-only
+          python -B -m unittest discover -s orchestration/tests -p test_runtime_contract.py -v
+      - name: Three synthetic batches, actual blocking recovery and Spark Parquet parity
+        run: python orchestration/scripts/run_fixture.py --fixture "$M4_SYNTHETIC_FIXTURE" --runtime-root "$M4_CI_ROOT/runs"
+      - name: Summarize actual synthetic outputs and verify the visible data label
+        run: |
+          python - <<'PY'
+          import json, os, subprocess, sys
+          from pathlib import Path
+          base=Path(os.environ['M4_CI_ROOT'])
+          runs=[p for p in (base/'runs').iterdir() if p.is_dir() and p.name.startswith('fixture-')]
+          assert len(runs)==1
+          root=runs[0]
+          assert json.loads((root/'provenance.json').read_text())['data_kind']=='synthetic_test'
+          assert json.loads((root/'arrival_manifest.json').read_text())['data_kind']=='synthetic_test'
+          assert json.loads((root/'model-run.json').read_text())['status']=='not run'
+          assert json.loads((root/'api-run.json').read_text())['status']=='not run'
+          subprocess.run([sys.executable,'orchestration/scripts/summarize_run.py','--run-root',str(root)],check=True)
+          output=base/'dashboard'
+          subprocess.run([sys.executable,'orchestration/scripts/build_dashboard.py','--run-root',str(root),'--out',str(output)],check=True)
+          assert json.loads((output/'snapshot.json').read_text())['data_kind']=='synthetic_test'
+          assert 'Synthetic test fixture' in (output/'index.html').read_text()
+          PY
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: m4-synthetic-fixture-evidence
+          path: |
+            ${{ runner.temp }}/m4/**/*.json
+            ${{ runner.temp }}/m4/**/*.jsonl
+            ${{ runner.temp }}/m4/**/*.log
+            ${{ runner.temp }}/m4/**/*.txt
+            ${{ runner.temp }}/m4/**/active-overlay.csv
+            ${{ runner.temp }}/m4/dashboard/index.html
+          retention-days: 7

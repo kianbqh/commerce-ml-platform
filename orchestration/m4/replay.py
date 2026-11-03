@@ -29,7 +29,7 @@ def key(index):
     return f"{index:06d}"
 
 
-def make_manifest(batch_counts, *, width, sources, seed=42, start_day="2026-01-01", delays=None):
+def make_manifest(batch_counts, *, width, sources, seed=42, start_day="2026-01-01", delays=None, data_kind=None):
     """Counts come from runtime metadata SQL, never invented full-data constants.
 
     A delayed partition is received late in a simulated daily receipt calendar.
@@ -61,6 +61,9 @@ def make_manifest(batch_counts, *, width, sources, seed=42, start_day="2026-01-0
              "batch_formula": "(order_number-1)//orders_per_batch", "seed": seed,
              "simulation": "arrival calendar and late receipt metadata only; ordered prefix exposure; not production CDC",
              "sources": sources, "batches": batches}
+    if data_kind == "synthetic_test":
+        value.update(data_kind="synthetic_test", source="Deterministic synthetic grocery CSV fixture",
+                     simulation="synthetic toy baskets and simulated ordered receipt metadata; correctness test only")
     value["manifest_sha256"] = json_hash(value)
     return value
 
