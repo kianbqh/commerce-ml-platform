@@ -84,10 +84,12 @@ def build_definitions(rt, manifest_path, *, coordinator=True):
     project = DbtProject(project_dir=rt.warehouse)
 
     def guarded(context, label, function):
+        # AssetCheckExecutionContext exposes run, not the asset-only run_id alias.
+        run_id = context.run.run_id
         try:
-            return function(context.run_id)
+            return function(run_id)
         except Exception as exc:
-            rt.fail(context.run_id, context.partition_key, label, exc)
+            rt.fail(run_id, context.partition_key, label, exc)
             raise
 
     @asset(partitions_def=partitions, group_name="arrival_replay")
@@ -105,7 +107,7 @@ def build_definitions(rt, manifest_path, *, coordinator=True):
     def input_quality(context):
         passed = guarded(context, "dbt_input_quality", rt.input_checks)
         return AssetCheckResult(passed=passed, severity=AssetCheckSeverity.ERROR,
-                                metadata={"evidence": str(rt.attempt(context.run_id) / "input-check.json")})
+                                metadata={"evidence": str(rt.attempt(context.run.run_id) / "input-check.json")})
 
     @asset(partitions_def=partitions, deps=[dbt_staging], group_name="arrival_replay")
     def operational_marts(context):
@@ -117,7 +119,7 @@ def build_definitions(rt, manifest_path, *, coordinator=True):
     def quality_and_processing_freshness(context):
         passed = guarded(context, "output_quality", rt.output_checks)
         return AssetCheckResult(passed=passed, severity=AssetCheckSeverity.ERROR,
-                                metadata={"evidence": str(rt.attempt(context.run_id) / "output-checks.json"),
+                                metadata={"evidence": str(rt.attempt(context.run.run_id) / "output-checks.json"),
                                           "maximum_processing_age_seconds": rt.config["maximum_processing_age_seconds"]})
 
     @asset(partitions_def=partitions, deps=[operational_marts], group_name="arrival_replay")
